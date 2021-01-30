@@ -42,6 +42,8 @@ Partial Class frmResourcesTable
         Me.labDateFrom = New System.Windows.Forms.Label()
         Me.dtpDateFrom = New System.Windows.Forms.DateTimePicker()
         Me.dgvPlanning = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grpManageResources.SuspendLayout()
         Me.grpResourcesPlan.SuspendLayout()
         Me.grpFilters.SuspendLayout()
@@ -224,15 +226,31 @@ Partial Class frmResourcesTable
         '
         Me.dgvPlanning.AllowUserToAddRows = False
         Me.dgvPlanning.AllowUserToDeleteRows = False
-        Me.dgvPlanning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dgvPlanning.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvPlanning.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvPlanning.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPlanning.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
         Me.dgvPlanning.Location = New System.Drawing.Point(67, 122)
         Me.dgvPlanning.Name = "dgvPlanning"
         Me.dgvPlanning.ReadOnly = True
         Me.dgvPlanning.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders
-        Me.dgvPlanning.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvPlanning.Size = New System.Drawing.Size(1042, 405)
+        Me.dgvPlanning.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.dgvPlanning.Size = New System.Drawing.Size(1448, 553)
         Me.dgvPlanning.TabIndex = 31
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Column1"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Column2"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
         '
         'frmResourcesTable
         '
@@ -248,6 +266,7 @@ Partial Class frmResourcesTable
         Me.Name = "frmResourcesTable"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Tableau de planification"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.grpManageResources.ResumeLayout(False)
         Me.grpResourcesPlan.ResumeLayout(False)
         Me.grpFilters.ResumeLayout(False)
@@ -276,4 +295,6 @@ Partial Class frmResourcesTable
     Friend WithEvents labDateFrom As Label
     Friend WithEvents dtpDateFrom As DateTimePicker
     Friend WithEvents dgvPlanning As DataGridView
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
 End Class

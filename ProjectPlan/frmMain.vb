@@ -215,4 +215,8 @@ Public Class frmMain
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
+
+    Private Sub mniReportingDashboard_Click(sender As Object, e As EventArgs) Handles mniReportingDashboard.Click
+
+    End Sub
 End Class

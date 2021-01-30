@@ -1,101 +1,27 @@
 ﻿Imports MySql.Data.MySqlClient
 
+
 Public Class frmResourcesTable
+
+
+    Dim thisRow As String = ""
+    Dim thisColumn As String = ""
+
+
     Private Sub frmResourcesTable_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
 
-            Me.dtpDateFrom.Value = DateSerial(Year(Today), Month(Today), 1)
-            Me.dtpDateTo.Value = DateSerial(Year(Today), Month(Today) + 1, 0)
-
-            Me.dtpDateFrom.Value = DateSerial(2020, 1, 1)
-            Me.dtpDateTo.Value = DateSerial(2020, 1, 10)
-
-            Me.dgvPlanning.Columns.Clear()
+            Me.dtpDateFrom.Value = Today
+            Me.dtpDateFrom.Value = New Date(2021, 1, 1)
+            Me.dtpDateTo.Value = DateAdd(DateInterval.Day, 10, Today)
 
             Me.Cursor = Cursors.WaitCursor
 
-
-            Dim FilterStartDate As Date = Me.dtpDateFrom.Value
-            Dim FilterEndDate As Date = Me.dtpDateTo.Value
-            Dim FilterCurrentDate As Date = FilterStartDate
-
-            Dim StartHours() As Integer = {8, 9, 10, 11, 13, 14, 15, 16}
-            Dim thisHour As Integer = 0
-
-            Dim ProjectMemberForDateFilter As String = fGetProjectMemberForDateFilter(FilterStartDate, FilterEndDate)
-
-            While FilterCurrentDate <= FilterEndDate
-                For Each thisHour In StartHours
-
-
-                    Console.WriteLine(FilterCurrentDate & " " & Format(thisHour, "00") & ":00")
-                Next thishour
-                FilterCurrentDate = DateAdd(DateInterval.Day, 1, FilterCurrentDate)
-
-            End While
-
-
-
-
-            'Dim StartTime As DateTime = Now
-
             pCreateDGVColumns()
-            'pDisplayDGVContent()
 
-            'Me.Cursor = Cursors.Default
-            'Dim EndTime As DateTime = Now
+            pDisplayDGVContent()
 
-            'MessageBox.Show(StartTime & vbCrLf & EndTime)
-            'Dim StartHours() As Integer = {8, 9, 10, 11, 13, 14, 15, 16}
-
-            'Me.dgvPlanning.Columns.Clear()
-
-            'Dim col As New DataGridViewColumn
-
-            'Dim thisDay As Date = Today
-            'Dim MaxDay As Date = DateAdd(DateInterval.Day, 4, thisDay)
-
-            'While thisDay < MaxDay
-            '    For Each thisHour In StartHours
-            '        col = New DataGridViewColumn
-            '        col.HeaderText = Format(thisDay, "dd") & vbCrLf & Format(thisHour, "00") & "h00"
-            '        dgvPlanning.Columns.Add(col)
-            '    Next thisHour
-            '    thisDay = DateAdd(DateInterval.Day, 1, thisDay)
-            'End While
-
-
-            'Dim myRow As New DataGridViewRow
-            'Dim myID As Integer = dgvPlanning.Rows.Add()
-
-            'myRow = dgvPlanning.Rows(myID)
-            'myRow.Cells(0).Value = "valeur 0"
-            'myRow.Cells(1).Value = "valeur 1"
-
-
-            'Dim myRow As String() = {"1", "2", "3"}
-            'dgvPlanning.Rows.Add(myRow)
-
-
-
-
-
-            'Dim thisDGVTest1 As DataGridView = Me.dgvPlanning
-
-            'thisDGV.Item(0, 0).Value = "0.0"
-            'thisDGV.Item(0, 1).Value = "0.1"
-            'thisDGV.Item(0, 2).Value = "0.2"
-            'thisDGV.Item(1, 0).Value = "1.0"
-            'thisDGV.Item(1, 1).Value = "1.1"
-            'thisDGV.Item(1, 2).Value = "1.2"
-            'thisDGV.Item(2, 0).Value = "2.0"
-            'thisDGV.Item(2, 1).Value = "2.1"
-            'thisDGV.Item(2, 2).Value = "2.2"
-
-            'Dim thisTextBox As New TextBox
-            'thisTextBox.Text = "Toto"
-
-
+            Me.Cursor = Cursors.Default
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
@@ -109,16 +35,16 @@ Public Class frmResourcesTable
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
-    Private Function fGetProjectMemberForDateFilter(FromDate As Date, ToDate As Date) As String
+    Private Function fGetProjectMemberForDateFilter(FromDate As Date, ToDate As Date) As List(Of Integer)
 
-        Dim ProjectPlanResultString As String = ""
+        Dim myMemberList As New List(Of Integer)
+
 
         Try
 
             Dim MyDBConnection As New MySqlConnection
             Dim myDBDataReader As MySqlDataReader
             Dim SQL As String = ""
-            Dim ProjectPlanResult As New List(Of Integer)
 
 
             SQL &= "SELECT DISTINCT ID_ProjectMember FROM planresources "
@@ -140,7 +66,7 @@ Public Class frmResourcesTable
 
                 'Lecture du premier paramètre
                 Try
-                    ProjectPlanResult.Add(myDBDataReader.GetValue(0))
+                    myMemberList.Add(myDBDataReader.GetValue(0))
                 Catch ex As Exception
                 End Try
 
@@ -149,37 +75,21 @@ Public Class frmResourcesTable
             myDBDataReader.Close()
             MyDBConnection.Close()
 
-            If ProjectPlanResult.Count > 0 Then
-
-                ProjectPlanResultString = "{"
-
-                For I = 0 To ProjectPlanResult.Count - 1
-                    If ProjectPlanResult.Count = 1 Then
-                        ProjectPlanResultString &= CStr(ProjectPlanResult(I))
-                    Else
-                        If Len(ProjectPlanResultString) = 1 Then
-                            ProjectPlanResultString &= CStr(ProjectPlanResult(I))
-                        Else
-                            ProjectPlanResultString &= ", " & CStr(ProjectPlanResult(I))
-                        End If
-                    End If
-                Next I
-                ProjectPlanResultString &= "}"
-            Else
-                ProjectPlanResultString = "{}"
-            End If
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
 
-        fGetProjectMemberForDateFilter = ProjectPlanResultString
+        Dim myResponse As Integer() = myMemberList.ToArray
+
+        fGetProjectMemberForDateFilter = myMemberList
 
     End Function
 
     Private Sub pCreateDGVColumns()
 
         Try
+
 
             Dim myDateFrom As Date = Me.dtpDateFrom.Value
             Dim myDateTo As Date = Me.dtpDateTo.Value
@@ -194,6 +104,8 @@ Public Class frmResourcesTable
             Dim myDBDataReader As MySqlDataReader
             Dim SQL As String = ""
 
+            Me.dgvPlanning.Columns.Clear()
+
 
             SQL &= "SELECT DISTINCT ID_ProjectMember, FirstName, LastName FROM planresources "
             SQL &= "LEFT JOIN projectsmembers ON CE_ID_ProjectMember = ID_ProjectMember "
@@ -206,7 +118,7 @@ Public Class frmResourcesTable
             MyDBConnection.ConnectionString = cnProjectPlan
             MyDBConnection.Open()
 
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
 
             myDBDataReader = myDBCommand.ExecuteReader()
 
@@ -232,8 +144,14 @@ Public Class frmResourcesTable
 
 
                 thisDGV.Columns.Add(ThisIDMember, FirstName & " " & LastName & " (" & ThisIDMember & ")")
+                thisDGV.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
 
             End While
+
+            For I = 0 To dgvPlanning.ColumnCount - 1
+                thisDGV.Columns(I).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            Next
+
 
             myDBDataReader.Close()
             MyDBConnection.Close()
@@ -254,120 +172,141 @@ Public Class frmResourcesTable
             If thisDGV.Columns.Count = 0 Then Exit Sub
 
 
-            Dim myDateFrom As Date = Me.dtpDateFrom.Value
-            Dim myDateTo As Date = Me.dtpDateTo.Value
 
-            Dim thisIDResource As Integer = 0
-            Dim thisPlanDate As Date = Nothing
+            Dim myAdminResource As String = ""
+            Dim myProject As String = ""
+
+            Dim myRow As Integer = 0
+            Dim myCol As Integer = 0
+
+
+            'Me.dtpDateFrom.Value = DateSerial(Year(Today), Month(Today), 1)
+            'Me.dtpDateTo.Value = DateSerial(Year(Today), Month(Today) + 1, 0)
+
+            'Me.dgvPlanning.Columns.Clear()
+
+
+            Dim FilterStartDate As Date = Me.dtpDateFrom.Value
+            Dim FilterEndDate As Date = Me.dtpDateTo.Value
+            Dim thisCurrentDate As Date = FilterStartDate
+
+            Dim StartHours As New List(Of Integer)
+            StartHours.Add(8)
+            StartHours.Add(9)
+            StartHours.Add(10)
+            StartHours.Add(11)
+            StartHours.Add(13)
+            StartHours.Add(14)
+            StartHours.Add(15)
+            StartHours.Add(16)
             Dim thisHour As Integer = 0
-            Dim thisCEIDProjectMember As Integer = 0
-            Dim thisIDProject As Integer = 0
-            Dim thisTitle As String = ""
-            Dim thisIDAdminResource As Integer = 0
-            Dim thisAdminResource As String = ""
+
+            Dim ProjectMemberForDateFilterList As List(Of Integer) = fGetProjectMemberForDateFilter(FilterStartDate, FilterEndDate)
+            Dim thisMember As Integer = 0
+
+
+
+            'Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+
+
+
+
 
             Dim MyDBConnection As New MySqlConnection
-            Dim myDBDataReader As MySqlDataReader
-            Dim SQL As String = ""
 
-            SQL &= "SELECT ID_Resource, PlanDate, Hour, CE_ID_ProjectMember, ID_Project, Title, ID_AdminResource, AdminResource "
-            SQL &= "FROM planresources "
-            SQL &= "LEFT JOIN adminresources ON (CE_ID_AdminResource = ID_AdminResource) "
-            SQL &= "LEFT JOIN projects ON (CE_ID_Project = ID_Project) "
-            SQL &= "WHERE (PlanDate >='" & fConvertDateOnlyMySQL(myDateFrom) & "' "
-            SQL &= "AND PlanDate <='" & fConvertDateOnlyMySQL(myDateTo) & "') "
-            SQL &= "ORDER BY PlanDate, Hour, CE_ID_ProjectMember ASC; "
+            Dim SQL As String = ""
 
             MyDBConnection.ConnectionString = cnProjectPlan
             MyDBConnection.Open()
 
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
 
-            myDBDataReader = myDBCommand.ExecuteReader()
+            While thisCurrentDate <= FilterEndDate
+                For Each thisHour In StartHours
 
-            While myDBDataReader.Read
-
-                'Lecture du premier paramètre
-                Try
-                    thisIDResource = myDBDataReader.GetValue(0)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 2e paramètre
-                Try
-                    thisPlanDate = myDBDataReader.GetDateTime(1)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 3e paramètre
-                Try
-                    thisHour = myDBDataReader.GetValue(2)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 4e paramètre
-                Try
-                    thisCEIDProjectMember = myDBDataReader.GetValue(3)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 5e paramètre
-                Try
-                    thisIDProject = myDBDataReader.GetValue(4)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 6e paramètre
-                Try
-                    thisTitle = myDBDataReader.GetString(5)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 7e paramètre
-                Try
-                    thisIDAdminResource = myDBDataReader.GetValue(6)
-                Catch ex As Exception
-                End Try
-
-                'Lecture du 8e paramètre
-                Try
-                    thisAdminResource = myDBDataReader.GetString(7)
-                Catch ex As Exception
-                End Try
+                    dgvPlanning.Rows.Add()
+                    dgvPlanning.Rows(myRow).HeaderCell.Value = Format(thisCurrentDate, "D") & " " & Format(thisHour, "00") & ":00"
+                    If Weekday(thisCurrentDate) = vbSaturday Or Weekday(thisCurrentDate) = vbSunday Then
+                        dgvPlanning.Rows(myRow).DefaultCellStyle.BackColor = Color.LightGray
+                    End If
 
 
+                    For Each thisMember In ProjectMemberForDateFilterList
 
-                'Dim thisRow As New DataGridViewRow
-                'thisRow.CreateCells(thisDGV)
-                'thisRow.SetValues("Col 1", "Col 2", "Col 3", "Col 4", "Col 5", "Col 6")
-                'thisRow.HeaderCell.Value = Format(thisPlanDate, "D") & " " & Format(thisHour, "00") & "h00"
+                        SQL = ""
+                        SQL &= " SELECT planresources.ID_Resource,"
+                        SQL &= " planresources.CE_ID_ProjectMember,"
+                        SQL &= " planresources.CE_ID_Project,"
+                        SQL &= " planresources.CE_ID_AdminResource,"
+                        SQL &= " planresources.PlanDate,"
+                        SQL &= " planresources.Hour,"
+                        SQL &= " projects.Title,"
+                        SQL &= " adminresources.AdminResource"
+                        SQL &= " FROM planresources"
+                        SQL &= " LEFT JOIN adminresources ON (planresources.CE_ID_AdminResource=adminresources.ID_AdminResource)"
+                        SQL &= " LEFT JOIN projects ON (planresources.CE_ID_Project=projects.ID_Project)"
+                        SQL &= " WHERE planresources.PlanDate='" & fConvertDateOnlyMySQL(thisCurrentDate) & "' AND planresources.Hour = " & thisHour & " AND planresources.CE_ID_ProjectMember=" & thisMember & ";"
 
-                'If Weekday(thisPlanDate) = vbSaturday Or Weekday(thisPlanDate) = vbSunday Then
-                '    thisRow.DefaultCellStyle.BackColor = Color.Gray
-                'End If
 
-                'thisDGV.Rows.Add(thisRow)
+                        Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+                        Dim myDBDataReader As MySqlDataReader
+                        myDBDataReader = myDBCommand.ExecuteReader()
+
+                        While myDBDataReader.Read
+
+                            myProject = ""
+                            myAdminResource = ""
+
+                            'Lecture du premier paramètre
+                            Try
+                                myProject = myDBDataReader.GetString(6)
+                            Catch ex As Exception
+                            End Try
+                            Try
+                                myAdminResource = myDBDataReader.GetString(7)
+
+                            Catch ex As Exception
+                            End Try
+
+                            Dim msg As String = ""
+                            msg &= "myCol: " & myCol
+                            msg &= ", myRow: " & myRow
+                            msg &= ", Col count: " & dgvPlanning.ColumnCount
+                            msg &= ", Row count: " & dgvPlanning.RowCount
+
+                            Console.WriteLine(msg)
+
+                            If myProject <> "" Then
+                                dgvPlanning.Item(myCol, myRow).Value = myProject
+                                dgvPlanning.Item(myCol, myRow).Style.BackColor = Color.LightGreen
+                            End If
+                            If myAdminResource <> "" Then
+                                dgvPlanning.Item(myCol, myRow).Value = myAdminResource
+                                dgvPlanning.Item(myCol, myRow).Style.BackColor = Color.LightYellow
+                            End If
+
+
+
+                        End While
+                        myDBDataReader.Close()
+
+
+                        myCol += 1
+                    Next thisMember
+
+                    myCol = 0
+                    myRow += 1
+                Next thisHour
+
+                thisCurrentDate = DateAdd(DateInterval.Day, 1, thisCurrentDate)
 
             End While
 
-            myDBDataReader.Close()
             MyDBConnection.Close()
 
 
 
-            'dgvPlanning.Rows.Add(10)
-            'dgvPlanning.Rows.Add()
-            'dgvPlanning.Rows.Add()
-
-            'thisDGV.Rows(0).HeaderCell.Value = Format(Today, "D") & " " & "08h00"
-            'thisDGV.Rows(1).HeaderCell.Value = Format(Today, "D") & " " & "09h00"
-            'thisDGV.Rows(2).HeaderCell.Value = Format(Today, "D") & " " & "10h00"
-
-            'thisDGV.Item(1, 1).Value = "Test"
 
 
-            'MessageBox.Show(thisDGV.Item(1, 1).ColumnIndex.ToString)
-            'MessageBox.Show(thisDGV.Columns("1").ToString())
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
@@ -377,19 +316,152 @@ Public Class frmResourcesTable
     Private Sub btcFilter_Click(sender As Object, e As EventArgs) Handles btcFilter.Click
         Try
 
-            Dim StartTime As DateTime = Now
-
+            Me.Cursor = Cursors.WaitCursor
 
             Me.dgvPlanning.Columns.Clear()
+
             pCreateDGVColumns()
+
             pDisplayDGVContent()
 
-            Dim EndTime As DateTime = Now
-
-            MessageBox.Show(StartTime & vbCrLf & EndTime)
+            Me.Cursor = Cursors.Default
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
+
+
+
+
+    Private Sub dgvPlanning_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles dgvPlanning.MouseUp
+        Try
+            If e.Button <> MouseButtons.Right Then Return
+
+            Dim cms = New ContextMenuStrip
+
+            'Pour détermine la cellule sélectionnée
+            Dim ht As DataGridView.HitTestInfo
+            ht = Me.dgvPlanning.HitTest(e.X, e.Y)
+            thisRow = ht.RowIndex
+            thisColumn = ht.ColumnIndex
+
+            Dim _row As Integer = CInt(thisRow)
+            Dim _col As Integer = CInt(thisColumn)
+            Me.dgvPlanning.CurrentCell = Me.dgvPlanning(_col, _row)
+
+            Dim item1 = cms.Items.Add("Effacer")
+            item1.Tag = 1
+            AddHandler item1.Click, AddressOf menuChoice
+
+            Dim item2 = cms.Items.Add("Insérer une/des tâche/s administrative/s")
+            item2.Tag = 2
+            AddHandler item2.Click, AddressOf menuChoice
+
+            Dim item3 = cms.Items.Add("Insérer un/des projet/s")
+            item3.Tag = 3
+            AddHandler item3.Click, AddressOf menuChoice
+
+            Dim item4 = cms.Items.Add(StrDup(20, Chr(151)))
+            item4.Tag = 4
+            AddHandler item4.Click, AddressOf menuChoice
+
+            Dim item5 = cms.Items.Add("Bloquer une/des date/s")
+            item5.Tag = 5
+            AddHandler item5.Click, AddressOf menuChoice
+
+            Dim item6 = cms.Items.Add("Débloquer une/des date/s")
+            item6.Tag = 6
+            AddHandler item6.Click, AddressOf menuChoice
+
+            Dim item7 = cms.Items.Add(StrDup(20, Chr(151)))
+            item7.Tag = 7
+            AddHandler item7.Click, AddressOf menuChoice
+
+            Dim item8 = cms.Items.Add("Ajouter une/des remarque/s")
+            item8.Tag = 8
+            AddHandler item8.Click, AddressOf menuChoice
+
+            Dim item9 = cms.Items.Add("Effacer une/des remarque/s")
+            item9.Tag = 9
+            AddHandler item9.Click, AddressOf menuChoice
+
+            '-- etc
+            '..
+
+            cms.Show(dgvPlanning, e.Location)
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
+
+    Private Sub menuChoice(ByVal sender As Object, ByVal e As EventArgs)
+        Try
+            Dim item = CType(sender, ToolStripMenuItem)
+            Dim selection = CInt(item.Tag)
+
+            If selection = 1 Then
+
+                'effacer des ressources avec sélection multiple
+
+                'On enclenche le sablier
+                Cursor.Current = Cursors.WaitCursor
+
+                Dim mySelectedCell As DataGridViewTextBoxCell
+                'For Each mySelectedCell In dgvResources.SelectedCells
+                '    Dim myCol As Integer = mySelectedCell.ColumnIndex
+                '    Dim myRow As Integer = mySelectedCell.RowIndex
+
+                '    Dim myText As String = dgvResources.Item(0, myRow).Value
+                '    Dim myDate As Date = dgvResources.Item(0, myRow).Value
+                '    Dim myHalfDay As Integer = 0
+                '    Dim myMember As String = ""
+
+                '    Select Case UCase(Strings.Right(myText, 2))
+                '        Case "AM"
+                '            myHalfDay = 1
+                '        Case "PM"
+                '            myHalfDay = 2
+                '    End Select
+
+                '    'Recherche de l'ID_ProjectMember
+                '    Dim myFindMember As New myProjectMember
+                '    myMember = dgvResources.Columns(myCol).HeaderText
+                '    myFindMember.FullName = myMember
+                '    myFindMember.GetIDMemberFromFullName()
+
+                '    'On determe l'ID de la resource et on efface l'enregistrement
+                '    Dim myPlanRes As New myPlanResource
+                '    myPlanRes.CE_ID_ProjectMember = myFindMember.ID_ProjectMember
+                '    myPlanRes.PlanDate = myDate
+                '    myPlanRes.HalfDay = myHalfDay
+                '    myPlanRes.GetResourceFromDateAndMember()
+                '    myPlanRes.Delete()
+
+                '    'MsgBox("Row : " & myRow & ", Column : " & myCol & vbCrLf & "Text : " & myText & vbCrLf & "Date : " & myDate & vbCrLf & "Member : " & myFindMember.FullName)
+
+                'Next mySelectedCell
+
+                'On actualise la table
+                pDisplayDGVContent()
+
+                'On déclenche le sablier
+                Cursor.Current = Cursors.Default
+
+            End If
+
+
+
+
+        Catch ex As Exception
+
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+
+        End Try
+    End Sub
+
 End Class
