@@ -1,0 +1,38 @@
+SELECT
+    `planresources`.`CE_ID_ProjectMember`
+    , `projectsmembers`.`LastName`
+    , `projectsmembers`.`FirstName`
+    , `planresources`.`CE_ID_Project`
+    , `projects`.`Title`
+    , `planresources`.`CE_ID_AdminResource`
+    , `adminresources`.`AdminResource`
+    , `planresources`.`PlanDate`
+    , `planresources`.`Hour`
+    , `planresources_1`.`CE_ID_ProjectMember`
+    , `projectsmembers_1`.`LastName`
+    , `projectsmembers_1`.`FirstName`
+    , `planresources_1`.`CE_ID_Project`
+    , `projects_1`.`Title`
+    , `planresources_1`.`CE_ID_AdminResource`
+    , `adminresources_1`.`AdminResource`
+FROM
+    `ProjectPlan`.`planresources`
+    LEFT JOIN `ProjectPlan`.`projects` 
+        ON (`planresources`.`CE_ID_Project` = `projects`.`ID_Project`)
+    LEFT JOIN `ProjectPlan`.`adminresources` 
+        ON (`planresources`.`CE_ID_AdminResource` = `adminresources`.`ID_AdminResource`)
+    LEFT JOIN `ProjectPlan`.`projectsmembers` 
+        ON (`planresources`.`CE_ID_ProjectMember` = `projectsmembers`.`ID_ProjectMember`)
+    , `ProjectPlan`.`planresources` AS `planresources_1` 
+    LEFT JOIN `ProjectPlan`.`adminresources` AS `adminresources_1` 
+        ON (`planresources_1`.`CE_ID_AdminResource` = `adminresources_1`.`ID_AdminResource`)
+    LEFT JOIN `ProjectPlan`.`projects` AS `projects_1`
+        ON (`planresources_1`.`CE_ID_Project` = `projects_1`.`ID_Project`)
+    LEFT JOIN `ProjectPlan`.`projectsmembers` AS `projectsmembers_1`
+        ON (`planresources_1`.`CE_ID_ProjectMember` = `projectsmembers_1`.`ID_ProjectMember`)
+WHERE (`planresources`.`CE_ID_ProjectMember` =1
+    AND `planresources`.`PlanDate` ='2021-01-01'
+    AND `planresources`.`Hour` =11
+    AND `planresources_1`.`CE_ID_ProjectMember` =3
+    AND `planresources_1`.`PlanDate` ='2021-01-01'
+    AND `planresources_1`.`Hour` =11);

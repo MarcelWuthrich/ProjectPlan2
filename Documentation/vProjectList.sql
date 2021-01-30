@@ -1,0 +1,4 @@
+CREATE VIEW [vProjectList]
+	AS 
+SELECT Projects.ID_Project, Projects.CE_ID_Status, Status.Status, Projects.CE_ID_ProjectManager, Projects.CE_ID_Priority, Projects.CE_ID_Category, Projects.CE_ID_Customer, Projects.CE_ID_Urgency, Projects.Title, Projects.Description, Projects.BeginDate, Projects.Deadline, Projects.EstimatedResources, Projects.ImplementationRate, Projects.EffectiveResources, Urgencies.Urgency, ProjectCategories.Category, ProjectPriority.Priority, ProjectManagers.FirstName, ProjectManagers.LastName
+FROM ((((Projects LEFT JOIN Status ON Projects.CE_ID_Status = Status.ID_Status) LEFT JOIN Urgencies ON Projects.CE_ID_Urgency = Urgencies.ID_Urgency) LEFT JOIN ProjectCategories ON Projects.CE_ID_Category = ProjectCategories.ID_Category) LEFT JOIN ProjectPriority ON Projects.CE_ID_Priority = ProjectPriority.ID_Priority) LEFT JOIN ProjectManagers ON Projects.CE_ID_ProjectManager = ProjectManagers.ID_ProjectManager;

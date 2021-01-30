@@ -1,0 +1,8 @@
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (1, N'Heinz', N'Binggeli', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (2, N'Andreas', N'Hirt', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (3, N'Gaël', N'Langlois', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (4, N'Martin', N'Kamber', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (5, N'Matthias', N'Widmer', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (6, N'Roger', N'Gloor', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (7, N'Board', N'IT', 1, NULL)
+INSERT INTO [dbo].[Customers] ([ID_Customer], [FirstName], [LastName], [Enable], [DisplayOrder]) VALUES (8, N'Marcel', N'Wüthrich', 1, NULL)

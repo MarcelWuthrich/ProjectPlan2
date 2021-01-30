@@ -1,0 +1,5 @@
+INSERT INTO [dbo].[ProjectPriority] ([ID_Priority], [Priority], [Enable], [DisplayOrder]) VALUES (1, N'Urgent', 1, 1)
+INSERT INTO [dbo].[ProjectPriority] ([ID_Priority], [Priority], [Enable], [DisplayOrder]) VALUES (2, N'Important', 1, 2)
+INSERT INTO [dbo].[ProjectPriority] ([ID_Priority], [Priority], [Enable], [DisplayOrder]) VALUES (3, N'Moyen', 1, 3)
+INSERT INTO [dbo].[ProjectPriority] ([ID_Priority], [Priority], [Enable], [DisplayOrder]) VALUES (4, N'Basse', 1, 4)
+INSERT INTO [dbo].[ProjectPriority] ([ID_Priority], [Priority], [Enable], [DisplayOrder]) VALUES (5, N'Très basse', 1, 5)
