@@ -97,11 +97,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsProjectMembers.xsd</DependentUpon>
     </Compile>
-    <Compile Include="dsProjects.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dsProjects.xsd</DependentUpon>
-    </Compile>
     <Compile Include="dsProjectsList.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,16 +159,10 @@
     <Compile Include="frmProjectMemberDetails.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmResourcesPlanSeries.Designer.vb">
-      <DependentUpon>frmResourcesPlanSeries.vb</DependentUpon>
+    <Compile Include="frmResourcesAdmin.Designer.vb">
+      <DependentUpon>frmResourcesAdmin.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmResourcesPlanSeries.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmResourcesTable.Designer.vb">
-      <DependentUpon>frmResourcesTable.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmResourcesTable.vb">
+    <Compile Include="frmResourcesAdmin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmStatus.Designer.vb">
@@ -218,12 +207,6 @@
     <Compile Include="frmTasks.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTest.Designer.vb">
-      <DependentUpon>frmTest.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmTest.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="GlobalProjectPlan.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -241,7 +224,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="myAdminResource.vb" />
     <Compile Include="myCustomer.vb" />
     <Compile Include="myEstimatedResource.vb" />
     <Compile Include="myExecuteResource.vb" />
@@ -259,11 +241,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>projectplanDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="projectplanDataSet11.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>projectplanDataSet11.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -288,11 +265,8 @@
     <EmbeddedResource Include="frmProjectMemberDetails.resx">
       <DependentUpon>frmProjectMemberDetails.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmResourcesPlanSeries.resx">
-      <DependentUpon>frmResourcesPlanSeries.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmResourcesTable.resx">
-      <DependentUpon>frmResourcesTable.vb</DependentUpon>
+    <EmbeddedResource Include="frmResourcesAdmin.resx">
+      <DependentUpon>frmResourcesAdmin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStatus.resx">
       <DependentUpon>frmStatus.vb</DependentUpon>
@@ -314,9 +288,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmTasks.resx">
       <DependentUpon>frmTasks.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmTest.resx">
-      <DependentUpon>frmTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -369,17 +340,6 @@
     </None>
     <None Include="dsProjectMembers.xss">
       <DependentUpon>dsProjectMembers.xsd</DependentUpon>
-    </None>
-    <None Include="dsProjects.xsc">
-      <DependentUpon>dsProjects.xsd</DependentUpon>
-    </None>
-    <None Include="dsProjects.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsProjects.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="dsProjects.xss">
-      <DependentUpon>dsProjects.xsd</DependentUpon>
     </None>
     <None Include="dsProjectsList.xsc">
       <DependentUpon>dsProjectsList.xsd</DependentUpon>
@@ -445,17 +405,6 @@
     </None>
     <None Include="projectplanDataSet.xss">
       <DependentUpon>projectplanDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="projectplanDataSet11.xsc">
-      <DependentUpon>projectplanDataSet11.xsd</DependentUpon>
-    </None>
-    <None Include="projectplanDataSet11.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>projectplanDataSet11.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="projectplanDataSet11.xss">
-      <DependentUpon>projectplanDataSet11.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
