@@ -59,8 +59,6 @@ Partial Class frmMain
         Me.mniResource = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniResourcePlanSeries = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniResourcePlaningTable = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mniResourceVisualization = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mniResourcePlaned = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniResourceValidate = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniReporting = New System.Windows.Forms.ToolStripMenuItem()
         Me.mniReportingDashboard = New System.Windows.Forms.ToolStripMenuItem()
@@ -110,7 +108,7 @@ Partial Class frmMain
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.MdiWindowListItem = Me.WindowsMenu
         Me.MenuStrip.Name = "MenuStrip"
-        Me.MenuStrip.Size = New System.Drawing.Size(943, 27)
+        Me.MenuStrip.Size = New System.Drawing.Size(1058, 27)
         Me.MenuStrip.TabIndex = 5
         Me.MenuStrip.Text = "MenuStrip"
         '
@@ -326,7 +324,7 @@ Partial Class frmMain
         '
         'mniResource
         '
-        Me.mniResource.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniResourcePlanSeries, Me.mniResourcePlaningTable, Me.mniResourceVisualization, Me.mniResourcePlaned, Me.mniResourceValidate})
+        Me.mniResource.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mniResourcePlanSeries, Me.mniResourcePlaningTable, Me.mniResourceValidate})
         Me.mniResource.Name = "mniResource"
         Me.mniResource.Size = New System.Drawing.Size(77, 23)
         Me.mniResource.Text = "Ressources"
@@ -342,18 +340,6 @@ Partial Class frmMain
         Me.mniResourcePlaningTable.Name = "mniResourcePlaningTable"
         Me.mniResourcePlaningTable.Size = New System.Drawing.Size(199, 22)
         Me.mniResourcePlaningTable.Text = "Tableau de planification"
-        '
-        'mniResourceVisualization
-        '
-        Me.mniResourceVisualization.Name = "mniResourceVisualization"
-        Me.mniResourceVisualization.Size = New System.Drawing.Size(199, 22)
-        Me.mniResourceVisualization.Text = "Visualisation"
-        '
-        'mniResourcePlaned
-        '
-        Me.mniResourcePlaned.Name = "mniResourcePlaned"
-        Me.mniResourcePlaned.Size = New System.Drawing.Size(199, 22)
-        Me.mniResourcePlaned.Text = "Ressources planifiées"
         '
         'mniResourceValidate
         '
@@ -518,7 +504,7 @@ Partial Class frmMain
         Me.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.ToolStripSeparator1, Me.PrintToolStripButton, Me.PrintPreviewToolStripButton, Me.ToolStripSeparator2, Me.HelpToolStripButton, Me.ToolStripSeparator9, Me.CreateDBToolStripButton})
         Me.ToolStrip.Location = New System.Drawing.Point(0, 27)
         Me.ToolStrip.Name = "ToolStrip"
-        Me.ToolStrip.Size = New System.Drawing.Size(943, 25)
+        Me.ToolStrip.Size = New System.Drawing.Size(1058, 25)
         Me.ToolStrip.TabIndex = 6
         Me.ToolStrip.Text = "ToolStrip"
         '
@@ -603,9 +589,9 @@ Partial Class frmMain
         'StatusStrip
         '
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 509)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 584)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(943, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(1058, 22)
         Me.StatusStrip.TabIndex = 7
         Me.StatusStrip.Text = "StatusStrip"
         '
@@ -619,7 +605,7 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(943, 531)
+        Me.ClientSize = New System.Drawing.Size(1058, 606)
         Me.Controls.Add(Me.ToolStrip)
         Me.Controls.Add(Me.MenuStrip)
         Me.Controls.Add(Me.StatusStrip)
@@ -704,8 +690,6 @@ Partial Class frmMain
     Friend WithEvents mniProjectManager As ToolStripMenuItem
     Friend WithEvents mniResource As ToolStripMenuItem
     Friend WithEvents mniResourcePlaningTable As ToolStripMenuItem
-    Friend WithEvents mniResourceVisualization As ToolStripMenuItem
-    Friend WithEvents mniResourcePlaned As ToolStripMenuItem
     Friend WithEvents mniResourceValidate As ToolStripMenuItem
     Friend WithEvents mniReporting As ToolStripMenuItem
     Friend WithEvents mniReportingDashboard As ToolStripMenuItem

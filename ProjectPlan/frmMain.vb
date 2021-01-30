@@ -219,4 +219,14 @@ Public Class frmMain
     Private Sub mniReportingDashboard_Click(sender As Object, e As EventArgs) Handles mniReportingDashboard.Click
 
     End Sub
+
+    Private Sub mniResourceValidate_Click(sender As Object, e As EventArgs) Handles mniResourceValidate.Click
+        Try
+            Dim myForm As Form = frmResourcesValidation
+            myForm.MdiParent = Me
+            myForm.Show()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 End Class

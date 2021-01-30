@@ -9,19 +9,18 @@ Public Class frmResourcesTable
 
 
     Private Sub frmResourcesTable_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'LOAD : avant que la fenêtre soit visible
         Try
 
-            Me.dtpDateFrom.Value = Today
-            Me.dtpDateFrom.Value = New Date(2021, 1, 1)
-            Me.dtpDateTo.Value = DateAdd(DateInterval.Day, 10, Today)
+            Dim myDateFrom As Date = New Date(2021, 1, 1)
+            Dim myDateTo As Date = DateAdd(DateInterval.Day, 30, myDateFrom)
 
-            Me.Cursor = Cursors.WaitCursor
+            'myDateFrom = Today
 
-            pCreateDGVColumns()
+            Me.dtpDateFrom.Value = myDateFrom
+            Me.dtpDateTo.Value = myDateTo
 
-            pDisplayDGVContent()
 
-            Me.Cursor = Cursors.Default
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
@@ -411,7 +410,7 @@ Public Class frmResourcesTable
                 'On enclenche le sablier
                 Cursor.Current = Cursors.WaitCursor
 
-                Dim mySelectedCell As DataGridViewTextBoxCell
+                'Dim mySelectedCell As DataGridViewTextBoxCell
                 'For Each mySelectedCell In dgvResources.SelectedCells
                 '    Dim myCol As Integer = mySelectedCell.ColumnIndex
                 '    Dim myRow As Integer = mySelectedCell.RowIndex
@@ -464,4 +463,22 @@ Public Class frmResourcesTable
         End Try
     End Sub
 
+
+    Private Sub frmResourcesTable_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        'SHOWN : après que la fenêtre soit visible
+
+        Try
+
+            Me.Cursor = Cursors.WaitCursor
+
+            pCreateDGVColumns()
+            pDisplayDGVContent()
+
+            Me.Cursor = Cursors.Default
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+    End Sub
 End Class

@@ -266,7 +266,6 @@ Partial Class frmResourcesTable
         Me.Name = "frmResourcesTable"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Tableau de planification"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.grpManageResources.ResumeLayout(False)
         Me.grpResourcesPlan.ResumeLayout(False)
         Me.grpFilters.ResumeLayout(False)
