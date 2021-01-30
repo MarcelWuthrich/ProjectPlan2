@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsProjectMembers" targetNamespace="http://tempuri.org/dsProjectMembers.xsd" xmlns:mstns="http://tempuri.org/dsProjectMembers.xsd" xmlns="http://tempuri.org/dsProjectMembers.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="cnProjectplan_mySQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="cnProjectplan_mySQL (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ProjectPlan.My.MySettings.GlobalReference.Default.cnProjectplan_mySQL" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vprojectmembersTableAdapter" GeneratorDataComponentClassName="vprojectmembersTableAdapter" Name="vprojectmembers" UserDataComponentName="vprojectmembersTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vprojectmembers" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `ID_ProjectMember`, `CE_ID_Task`, `Task`, `FirstName`, `LastName`, `Enable` FROM `projectplan`.`vprojectmembers`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID_ProjectMember" DataSetColumn="ID_ProjectMember" />
+              <Mapping SourceColumn="CE_ID_Task" DataSetColumn="CE_ID_Task" />
+              <Mapping SourceColumn="Task" DataSetColumn="Task" />
+              <Mapping SourceColumn="FirstName" DataSetColumn="FirstName" />
+              <Mapping SourceColumn="LastName" DataSetColumn="LastName" />
+              <Mapping SourceColumn="Enable" DataSetColumn="Enable" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsProjectMembers" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="dsProjectMembers" msprop:Generator_UserDSName="dsProjectMembers">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vprojectmembers" msprop:Generator_TableClassName="vprojectmembersDataTable" msprop:Generator_TableVarName="tablevprojectmembers" msprop:Generator_TablePropName="vprojectmembers" msprop:Generator_RowDeletingName="vprojectmembersRowDeleting" msprop:Generator_RowChangingName="vprojectmembersRowChanging" msprop:Generator_RowEvHandlerName="vprojectmembersRowChangeEventHandler" msprop:Generator_RowDeletedName="vprojectmembersRowDeleted" msprop:Generator_UserTableName="vprojectmembers" msprop:Generator_RowChangedName="vprojectmembersRowChanged" msprop:Generator_RowEvArgName="vprojectmembersRowChangeEvent" msprop:Generator_RowClassName="vprojectmembersRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_ProjectMember" msprop:Generator_ColumnVarNameInTable="columnID_ProjectMember" msprop:Generator_ColumnPropNameInRow="ID_ProjectMember" msprop:Generator_ColumnPropNameInTable="ID_ProjectMemberColumn" msprop:Generator_UserColumnName="ID_ProjectMember" type="xs:int" />
+              <xs:element name="CE_ID_Task" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Task" msprop:Generator_ColumnPropNameInRow="CE_ID_Task" msprop:Generator_ColumnPropNameInTable="CE_ID_TaskColumn" msprop:Generator_UserColumnName="CE_ID_Task" type="xs:int" minOccurs="0" />
+              <xs:element name="Task" msprop:Generator_ColumnVarNameInTable="columnTask" msprop:Generator_ColumnPropNameInRow="Task" msprop:Generator_ColumnPropNameInTable="TaskColumn" msprop:Generator_UserColumnName="Task" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FirstName" msprop:Generator_ColumnVarNameInTable="columnFirstName" msprop:Generator_ColumnPropNameInRow="FirstName" msprop:Generator_ColumnPropNameInTable="FirstNameColumn" msprop:Generator_UserColumnName="FirstName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LastName" msprop:Generator_ColumnVarNameInTable="columnLastName" msprop:Generator_ColumnPropNameInRow="LastName" msprop:Generator_ColumnPropNameInTable="LastNameColumn" msprop:Generator_UserColumnName="LastName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Enable" msprop:Generator_ColumnVarNameInTable="columnEnable" msprop:Generator_ColumnPropNameInRow="Enable" msprop:Generator_ColumnPropNameInTable="EnableColumn" msprop:Generator_UserColumnName="Enable" type="xs:unsignedLong" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsCustomers" targetNamespace="http://tempuri.org/dsCustomers.xsd" xmlns:mstns="http://tempuri.org/dsCustomers.xsd" xmlns="http://tempuri.org/dsCustomers.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="cnProjectplan_mySQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="cnProjectplan_mySQL (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ProjectPlan.My.MySettings.GlobalReference.Default.cnProjectplan_mySQL" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vcustomersTableAdapter" GeneratorDataComponentClassName="vcustomersTableAdapter" Name="vcustomers" UserDataComponentName="vcustomersTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vcustomers" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `ID_Customer`, `FirstName`, `LastName`, `CompanyName`, `CompanyLocation`, `Enable`, `DisplayOrder` FROM `projectplan`.`vcustomers`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID_Customer" DataSetColumn="ID_Customer" />
+              <Mapping SourceColumn="FirstName" DataSetColumn="FirstName" />
+              <Mapping SourceColumn="LastName" DataSetColumn="LastName" />
+              <Mapping SourceColumn="CompanyName" DataSetColumn="CompanyName" />
+              <Mapping SourceColumn="CompanyLocation" DataSetColumn="CompanyLocation" />
+              <Mapping SourceColumn="Enable" DataSetColumn="Enable" />
+              <Mapping SourceColumn="DisplayOrder" DataSetColumn="DisplayOrder" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsCustomers" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="dsCustomers" msprop:Generator_UserDSName="dsCustomers">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vcustomers" msprop:Generator_TableClassName="vcustomersDataTable" msprop:Generator_TableVarName="tablevcustomers" msprop:Generator_TablePropName="vcustomers" msprop:Generator_RowDeletingName="vcustomersRowDeleting" msprop:Generator_RowChangingName="vcustomersRowChanging" msprop:Generator_RowEvHandlerName="vcustomersRowChangeEventHandler" msprop:Generator_RowDeletedName="vcustomersRowDeleted" msprop:Generator_UserTableName="vcustomers" msprop:Generator_RowChangedName="vcustomersRowChanged" msprop:Generator_RowEvArgName="vcustomersRowChangeEvent" msprop:Generator_RowClassName="vcustomersRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Customer" msprop:Generator_ColumnVarNameInTable="columnID_Customer" msprop:Generator_ColumnPropNameInRow="ID_Customer" msprop:Generator_ColumnPropNameInTable="ID_CustomerColumn" msprop:Generator_UserColumnName="ID_Customer" type="xs:int" />
+              <xs:element name="FirstName" msprop:Generator_ColumnVarNameInTable="columnFirstName" msprop:Generator_ColumnPropNameInRow="FirstName" msprop:Generator_ColumnPropNameInTable="FirstNameColumn" msprop:Generator_UserColumnName="FirstName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LastName" msprop:Generator_ColumnVarNameInTable="columnLastName" msprop:Generator_ColumnPropNameInRow="LastName" msprop:Generator_ColumnPropNameInTable="LastNameColumn" msprop:Generator_UserColumnName="LastName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CompanyName" msprop:Generator_ColumnVarNameInTable="columnCompanyName" msprop:Generator_ColumnPropNameInRow="CompanyName" msprop:Generator_ColumnPropNameInTable="CompanyNameColumn" msprop:Generator_UserColumnName="CompanyName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CompanyLocation" msprop:Generator_ColumnVarNameInTable="columnCompanyLocation" msprop:Generator_ColumnPropNameInRow="CompanyLocation" msprop:Generator_ColumnPropNameInTable="CompanyLocationColumn" msprop:Generator_UserColumnName="CompanyLocation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Enable" msprop:Generator_ColumnVarNameInTable="columnEnable" msprop:Generator_ColumnPropNameInRow="Enable" msprop:Generator_ColumnPropNameInTable="EnableColumn" msprop:Generator_UserColumnName="Enable" type="xs:unsignedLong" minOccurs="0" />
+              <xs:element name="DisplayOrder" msprop:Generator_ColumnVarNameInTable="columnDisplayOrder" msprop:Generator_ColumnPropNameInRow="DisplayOrder" msprop:Generator_ColumnPropNameInTable="DisplayOrderColumn" msprop:Generator_UserColumnName="DisplayOrder" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vcustomers" />
+      <xs:field xpath="mstns:ID_Customer" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

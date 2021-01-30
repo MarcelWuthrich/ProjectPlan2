@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{57182B31-D1B7-4267-A6E2-126F7B879297}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>ProjectPlan.My.MyApplication</StartupObject>
+    <RootNamespace>ProjectPlan</RootNamespace>
+    <AssemblyName>ProjectPlan</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>ProjectPlan.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>ProjectPlan.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.22.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 8.0.22\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="dsCustomers.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCustomers.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsProjectEstimatedResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProjectEstimatedResources.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsProjectManagers.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProjectManagers.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsProjectMembers.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProjectMembers.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsProjects.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProjects.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsProjectsList.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProjectsList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsResoucesAdmin.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsResoucesAdmin.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsStatus.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsStatus.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsTasks.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsTasks.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomerDetails.Designer.vb">
+      <DependentUpon>frmCustomerDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomerDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCustomers.Designer.vb">
+      <DependentUpon>frmCustomers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectDetails.designer.vb">
+      <DependentUpon>frmProjectDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectManagerDetails.Designer.vb">
+      <DependentUpon>frmProjectManagerDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectManagerDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectManagers.Designer.vb">
+      <DependentUpon>frmProjectManagers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectManagers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectMemberDetails.designer.vb">
+      <DependentUpon>frmProjectMemberDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectMemberDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmResourcesPlanSeries.Designer.vb">
+      <DependentUpon>frmResourcesPlanSeries.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResourcesPlanSeries.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmResourcesTable.Designer.vb">
+      <DependentUpon>frmResourcesTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResourcesTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatus.Designer.vb">
+      <DependentUpon>frmStatus.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStatus.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatusDetails.Designer.vb">
+      <DependentUpon>frmStatusDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStatusDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTaskDetails.Designer.vb">
+      <DependentUpon>frmTaskDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTaskDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectMembers.Designer.vb">
+      <DependentUpon>frmProjectMembers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectMembers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectEstimatedResources.Designer.vb">
+      <DependentUpon>frmProjectEstimatedResources.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectEstimatedResources.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProjectsList.Designer.vb">
+      <DependentUpon>frmProjectsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmProjectsList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTasks.Designer.vb">
+      <DependentUpon>frmTasks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTasks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTest.Designer.vb">
+      <DependentUpon>frmTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GlobalProjectPlan.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="myAdminResource.vb" />
+    <Compile Include="myCustomer.vb" />
+    <Compile Include="myEstimatedResource.vb" />
+    <Compile Include="myExecuteResource.vb" />
+    <Compile Include="myPlanResource.vb" />
+    <Compile Include="myPriority.vb" />
+    <Compile Include="myProject.vb" />
+    <Compile Include="myProjectCategory.vb" />
+    <Compile Include="myProjectHistory.vb" />
+    <Compile Include="myProjectManager.vb" />
+    <Compile Include="myProjectMember.vb" />
+    <Compile Include="myStatus.vb" />
+    <Compile Include="myTask.vb" />
+    <Compile Include="myUrgency.vb" />
+    <Compile Include="projectplanDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>projectplanDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="projectplanDataSet11.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>projectplanDataSet11.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="frmCustomerDetails.resx">
+      <DependentUpon>frmCustomerDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCustomers.resx">
+      <DependentUpon>frmCustomers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectDetails.resx">
+      <DependentUpon>frmProjectDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectManagerDetails.resx">
+      <DependentUpon>frmProjectManagerDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectManagers.resx">
+      <DependentUpon>frmProjectManagers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectMemberDetails.resx">
+      <DependentUpon>frmProjectMemberDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResourcesPlanSeries.resx">
+      <DependentUpon>frmResourcesPlanSeries.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResourcesTable.resx">
+      <DependentUpon>frmResourcesTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatus.resx">
+      <DependentUpon>frmStatus.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatusDetails.resx">
+      <DependentUpon>frmStatusDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTaskDetails.resx">
+      <DependentUpon>frmTaskDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectMembers.resx">
+      <DependentUpon>frmProjectMembers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectEstimatedResources.resx">
+      <DependentUpon>frmProjectEstimatedResources.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProjectsList.resx">
+      <DependentUpon>frmProjectsList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTasks.resx">
+      <DependentUpon>frmTasks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTest.resx">
+      <DependentUpon>frmTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dsCustomers.xsc">
+      <DependentUpon>dsCustomers.xsd</DependentUpon>
+    </None>
+    <None Include="dsCustomers.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCustomers.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsCustomers.xss">
+      <DependentUpon>dsCustomers.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectEstimatedResources.xsc">
+      <DependentUpon>dsProjectEstimatedResources.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectEstimatedResources.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProjectEstimatedResources.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsProjectEstimatedResources.xss">
+      <DependentUpon>dsProjectEstimatedResources.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectManagers.xsc">
+      <DependentUpon>dsProjectManagers.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectManagers.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProjectManagers.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsProjectManagers.xss">
+      <DependentUpon>dsProjectManagers.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectMembers.xsc">
+      <DependentUpon>dsProjectMembers.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectMembers.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProjectMembers.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsProjectMembers.xss">
+      <DependentUpon>dsProjectMembers.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjects.xsc">
+      <DependentUpon>dsProjects.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjects.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProjects.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsProjects.xss">
+      <DependentUpon>dsProjects.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectsList.xsc">
+      <DependentUpon>dsProjectsList.xsd</DependentUpon>
+    </None>
+    <None Include="dsProjectsList.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProjectsList.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsProjectsList.xss">
+      <DependentUpon>dsProjectsList.xsd</DependentUpon>
+    </None>
+    <None Include="dsResoucesAdmin.xsc">
+      <DependentUpon>dsResoucesAdmin.xsd</DependentUpon>
+    </None>
+    <None Include="dsResoucesAdmin.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsResoucesAdmin.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsResoucesAdmin.xss">
+      <DependentUpon>dsResoucesAdmin.xsd</DependentUpon>
+    </None>
+    <None Include="dsStatus.xsc">
+      <DependentUpon>dsStatus.xsd</DependentUpon>
+    </None>
+    <None Include="dsStatus.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsStatus.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsStatus.xss">
+      <DependentUpon>dsStatus.xsd</DependentUpon>
+    </None>
+    <None Include="dsTasks.xsc">
+      <DependentUpon>dsTasks.xsd</DependentUpon>
+    </None>
+    <None Include="dsTasks.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsTasks.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsTasks.xss">
+      <DependentUpon>dsTasks.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="projectplanDataSet.xsc">
+      <DependentUpon>projectplanDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="projectplanDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>projectplanDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="projectplanDataSet.xss">
+      <DependentUpon>projectplanDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="projectplanDataSet11.xsc">
+      <DependentUpon>projectplanDataSet11.xsd</DependentUpon>
+    </None>
+    <None Include="projectplanDataSet11.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>projectplanDataSet11.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="projectplanDataSet11.xss">
+      <DependentUpon>projectplanDataSet11.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
