@@ -30,10 +30,6 @@ Partial Class frmResourcesValidation
         Me.dptDateTo = New System.Windows.Forms.DateTimePicker()
         Me.chkDateTo = New System.Windows.Forms.CheckBox()
         Me.dgvPlanResources = New System.Windows.Forms.DataGridView()
-        Me.btcFermer = New System.Windows.Forms.Button()
-        Me.DsVResourceToday = New ProjectPlan.dsVResourceToday()
-        Me.VplanresourcetodayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.VplanresourcetodayTableAdapter = New ProjectPlan.dsVResourceTodayTableAdapters.vplanresourcetodayTableAdapter()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -41,10 +37,14 @@ Partial Class frmResourcesValidation
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.VplanresourcetodayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DsVResourceToday = New ProjectPlan.dsVResourceToday()
+        Me.btcFermer = New System.Windows.Forms.Button()
+        Me.VplanresourcetodayTableAdapter = New ProjectPlan.dsVResourceTodayTableAdapters.vplanresourcetodayTableAdapter()
         Me.grpResources.SuspendLayout()
         CType(Me.dgvPlanResources, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsVResourceToday, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VplanresourcetodayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DsVResourceToday, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btcValidate
@@ -93,6 +93,8 @@ Partial Class frmResourcesValidation
         'chkDateTo
         '
         Me.chkDateTo.AutoSize = True
+        Me.chkDateTo.Checked = True
+        Me.chkDateTo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkDateTo.Location = New System.Drawing.Point(183, 27)
         Me.chkDateTo.Name = "chkDateTo"
         Me.chkDateTo.Size = New System.Drawing.Size(125, 17)
@@ -116,31 +118,6 @@ Partial Class frmResourcesValidation
         Me.dgvPlanResources.RowHeadersVisible = False
         Me.dgvPlanResources.Size = New System.Drawing.Size(893, 273)
         Me.dgvPlanResources.TabIndex = 17
-        '
-        'btcFermer
-        '
-        Me.btcFermer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btcFermer.Location = New System.Drawing.Point(980, 58)
-        Me.btcFermer.Name = "btcFermer"
-        Me.btcFermer.Size = New System.Drawing.Size(75, 23)
-        Me.btcFermer.TabIndex = 16
-        Me.btcFermer.Text = "Fermer"
-        Me.btcFermer.UseVisualStyleBackColor = True
-        '
-        'DsVResourceToday
-        '
-        Me.DsVResourceToday.DataSetName = "dsVResourceToday"
-        Me.DsVResourceToday.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'VplanresourcetodayBindingSource
-        '
-        Me.VplanresourcetodayBindingSource.DataMember = "vplanresourcetoday"
-        Me.VplanresourcetodayBindingSource.DataSource = Me.DsVResourceToday
-        '
-        'VplanresourcetodayTableAdapter
-        '
-        Me.VplanresourcetodayTableAdapter.ClearBeforeFill = True
         '
         'DataGridViewTextBoxColumn1
         '
@@ -192,6 +169,31 @@ Partial Class frmResourcesValidation
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         Me.DataGridViewTextBoxColumn7.ReadOnly = True
         '
+        'VplanresourcetodayBindingSource
+        '
+        Me.VplanresourcetodayBindingSource.DataMember = "vplanresourcetoday"
+        Me.VplanresourcetodayBindingSource.DataSource = Me.DsVResourceToday
+        '
+        'DsVResourceToday
+        '
+        Me.DsVResourceToday.DataSetName = "dsVResourceToday"
+        Me.DsVResourceToday.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'btcFermer
+        '
+        Me.btcFermer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btcFermer.Location = New System.Drawing.Point(980, 58)
+        Me.btcFermer.Name = "btcFermer"
+        Me.btcFermer.Size = New System.Drawing.Size(75, 23)
+        Me.btcFermer.TabIndex = 16
+        Me.btcFermer.Text = "Fermer"
+        Me.btcFermer.UseVisualStyleBackColor = True
+        '
+        'VplanresourcetodayTableAdapter
+        '
+        Me.VplanresourcetodayTableAdapter.ClearBeforeFill = True
+        '
         'frmResourcesValidation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -206,8 +208,8 @@ Partial Class frmResourcesValidation
         Me.grpResources.ResumeLayout(False)
         Me.grpResources.PerformLayout()
         CType(Me.dgvPlanResources, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsVResourceToday, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.VplanresourcetodayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DsVResourceToday, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

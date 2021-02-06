@@ -14,11 +14,12 @@ Public Class myExecuteResource
     Private _IsAdminResource As Boolean
     Private _IsProjectResource As Boolean
     Private _PlanDate As Date
-    Private _HalfDay As Integer
+    Private _Hour As Integer
     Private _Timestamp As DateTime
     Private _MinPlanDate As Date
     Private _MaxPlanDate As Date
     Private _ExecutedProjectResourcesPerTaskAndProject As Single
+
 
 
 
@@ -80,12 +81,12 @@ Public Class myExecuteResource
         End Set
     End Property
 
-    Public Property HalfDay As Integer
+    Public Property Hour As Integer
         Get
-            Return _HalfDay
+            Return _Hour
         End Get
         Set(value As Integer)
-            _HalfDay = value
+            _Hour = value
         End Set
     End Property
 
@@ -154,7 +155,7 @@ Public Class myExecuteResource
             Dim MyDBConnection As New MySqlConnection
 
             Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT ID_Resource, CE_ID_ProjectMember, CE_ID_Project, CE_ID_AdminResource, PlanDate, HalfDay, Timestamp FROM ExecutedResources WHERE ID_Resource=" & Me.ID_Resource
+            Dim Sql As String = "SELECT ID_Resource, CE_ID_ProjectMember, CE_ID_Project, CE_ID_AdminResource, PlanDate, Hour, Timestamp FROM ExecutedResources WHERE ID_Resource=" & Me.ID_Resource
 
             'Remise à zéro des variables
             ID_Resource = Nothing
@@ -162,7 +163,7 @@ Public Class myExecuteResource
             CE_ID_Project = Nothing
             CE_ID_AdminResource = Nothing
             PlanDate = Nothing
-            HalfDay = Nothing
+            Hour = Nothing
             Timestamp = Nothing
 
 
@@ -209,7 +210,7 @@ Public Class myExecuteResource
 
                 'Lecture du 6e paramètre 
                 Try
-                    Me.HalfDay = myDBDataReader.GetValue(5)
+                    Me.Hour = myDBDataReader.GetValue(5)
                 Catch ex As Exception
                 End Try
 
@@ -345,16 +346,16 @@ Public Class myExecuteResource
     Public Function GetIDResourceFromDateAndMember() As myExecuteResource
 
         Try
-            'Recherche le ID_Resource en fonction du CE_ID_Membre, d'une date PlanDate et d'une HalfDay
+            'Recherche le ID_Resource en fonction du CE_ID_Membre, d'une date PlanDate et d'une Hour
             'INPUT : CE_ID_ProjectMember
             'INPUT : PlanDate
-            'INPUT : HalfDay
+            'INPUT : Hour
             'OUTPUT : ID_Resource
 
             Dim MyDBConnection As New MySqlConnection
 
             Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT ID_Resource FROM ExecutedResources WHERE CE_ID_ProjectMember = " & Me.CE_ID_ProjectMember & " AND PlanDate = '" & fConvertDateOnlyMySQL(Me.PlanDate) & "' AND HalfDay = " & Me.HalfDay & ";"
+            Dim Sql As String = "SELECT ID_Resource FROM ExecutedResources WHERE CE_ID_ProjectMember = " & Me.CE_ID_ProjectMember & " AND PlanDate = '" & fConvertDateOnlyMySQL(Me.PlanDate) & "' AND Hour = " & Me.Hour & ";"
 
             MyDBConnection.ConnectionString = cnProjectPlan
 
@@ -412,7 +413,7 @@ Public Class myExecuteResource
 
             While myDBDataReader.Read
 
-                'Lecture du paramètre HalfDay
+                'Lecture du paramètre Hour
                 Try
                     'On lit et on divise par 2 parce que les valeurs de la DB sont des demi-jours
                     ProjectResources = myDBDataReader.GetValue(0) / 2

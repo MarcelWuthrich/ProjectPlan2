@@ -564,7 +564,7 @@ Public Class myProject
             Dim myResource As New myExecuteResource
 
             If ID_Project <> 0 Then
-                Sql = "SELECT ID_Resource,HalfDay FROM ExecutedResources WHERE CE_ID_Project = " & Me.ID_Project & ";"
+                Sql = "SELECT ID_Resource FROM ExecutedResources WHERE CE_ID_Project = " & Me.ID_Project & ";"
 
                 MyDBConnection.ConnectionString = cnProjectPlan
                 MyDBConnection.Open()
@@ -573,22 +573,25 @@ Public Class myProject
 
                 While myDBDataReader.Read
 
-                    'Lecture du premier paramètre HalfDay
+                    'Lecture du premier paramètre ID_Resource
                     Try
                         myResource.ID_Resource = myDBDataReader.GetValue(0)
                         myResource.Read()
                     Catch ex As Exception
                     End Try
 
+                    '=================================================
+                    'Refaire la fonction et remplacer HalfDay par Hour
+                    '=================================================
 
-                    Select Case myResource.HalfDay
-                        Case 1, 2
-                            'Si c'est un demi jour, on ajoute 0.5 jour
-                            Total = Total + 0.5
-                        Case Else
-                            'Dans les autres cas (0, null, etc), on ajoute 1 jour
-                            Total = Total + 1
-                    End Select
+                    'Select Case myResource.HalfDay
+                    '    Case 1, 2
+                    '        'Si c'est un demi jour, on ajoute 0.5 jour
+                    '        Total = Total + 0.5
+                    '    Case Else
+                    '        'Dans les autres cas (0, null, etc), on ajoute 1 jour
+                    '        Total = Total + 1
+                    'End Select
                 End While
 
                 Me.EffectiveResources = Total

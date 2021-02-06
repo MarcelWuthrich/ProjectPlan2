@@ -67,41 +67,41 @@ Module GlobalProjectPlan
 
     End Function
 
-    Public Function fConvertDateTimeSQL(ByVal tDate As Date) As String
+    'Public Function fConvertDateTimeSQL(ByVal tDate As Date) As String
 
-        'Converti une variable de type Date en une variable de type String que l'on peut utiliser dans une commande SQL
-        Dim DateString As String = ""
-        Dim DateNull As New Date
+    '    'Converti une variable de type Date en une variable de type String que l'on peut utiliser dans une commande SQL
+    '    Dim DateString As String = ""
+    '    Dim DateNull As New Date
 
-        Try
-            If DateNull <> tDate Then
-                DateString = Month(tDate) & "/" & Day(tDate) & "/" & Year(tDate) & " " & Hour(tDate) & ":" & Minute(tDate) & ":" & Second(tDate)
-            End If
-        Catch ex As Exception
+    '    Try
+    '        If DateNull <> tDate Then
+    '            DateString = Month(tDate) & "/" & Day(tDate) & "/" & Year(tDate) & " " & Hour(tDate) & ":" & Minute(tDate) & ":" & Second(tDate)
+    '        End If
+    '    Catch ex As Exception
 
-        End Try
+    '    End Try
 
-        Return DateString
+    '    Return DateString
 
-    End Function
+    'End Function
 
-    Public Function fConvertDateonlySQL(ByVal tDate As Date) As String
+    'Public Function fConvertDateonlySQL(ByVal tDate As Date) As String
 
-        'Converti une variable de type Date en une variable de type String que l'on peut utiliser dans une commande SQL
-        Dim DateString As String = ""
-        Dim DateNull As New Date
+    '    'Converti une variable de type Date en une variable de type String que l'on peut utiliser dans une commande SQL
+    '    Dim DateString As String = ""
+    '    Dim DateNull As New Date
 
-        Try
-            If DateNull <> tDate Then
-                DateString = Month(tDate) & "/" & Day(tDate) & "/" & Year(tDate)
-            End If
-        Catch ex As Exception
+    '    Try
+    '        If DateNull <> tDate Then
+    '            DateString = Month(tDate) & "/" & Day(tDate) & "/" & Year(tDate)
+    '        End If
+    '    Catch ex As Exception
 
-        End Try
+    '    End Try
 
-        Return DateString
+    '    Return DateString
 
-    End Function
+    'End Function
 
     Public Function fPlanResourceGetMinDate() As Date
 
