@@ -69,4 +69,21 @@ Public Class frmTaskDetails
 
         End Try
     End Sub
+
+    Private Sub btcColor_Click(sender As Object, e As EventArgs) Handles btcColor.Click
+        Try
+
+            Dim MyDialog As New ColorDialog()
+            MyDialog.AllowFullOpen = True
+            MyDialog.ShowHelp = False
+            MyDialog.ShowDialog()
+            Me.texColor.BackColor = MyDialog.Color
+
+            MessageBox.Show(Me.texColor.BackColor.ToString)
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 End Class

@@ -32,11 +32,14 @@ Partial Class frmTaskDetails
         Me.texDisplayOrder = New System.Windows.Forms.TextBox()
         Me.labTask = New System.Windows.Forms.Label()
         Me.texTask = New System.Windows.Forms.TextBox()
+        Me.labColor = New System.Windows.Forms.Label()
+        Me.texColor = New System.Windows.Forms.TextBox()
+        Me.btcColor = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btcOK
         '
-        Me.btcOK.Location = New System.Drawing.Point(257, 145)
+        Me.btcOK.Location = New System.Drawing.Point(257, 171)
         Me.btcOK.Name = "btcOK"
         Me.btcOK.Size = New System.Drawing.Size(75, 23)
         Me.btcOK.TabIndex = 0
@@ -45,7 +48,7 @@ Partial Class frmTaskDetails
         '
         'btcAnnuler
         '
-        Me.btcAnnuler.Location = New System.Drawing.Point(119, 145)
+        Me.btcAnnuler.Location = New System.Drawing.Point(119, 171)
         Me.btcAnnuler.Name = "btcAnnuler"
         Me.btcAnnuler.Size = New System.Drawing.Size(75, 23)
         Me.btcAnnuler.TabIndex = 1
@@ -72,7 +75,7 @@ Partial Class frmTaskDetails
         'chkActive
         '
         Me.chkActive.AutoSize = True
-        Me.chkActive.Location = New System.Drawing.Point(119, 107)
+        Me.chkActive.Location = New System.Drawing.Point(119, 133)
         Me.chkActive.Name = "chkActive"
         Me.chkActive.Size = New System.Drawing.Size(56, 17)
         Me.chkActive.TabIndex = 51
@@ -82,7 +85,7 @@ Partial Class frmTaskDetails
         'labDisplayOrder
         '
         Me.labDisplayOrder.AutoSize = True
-        Me.labDisplayOrder.Location = New System.Drawing.Point(25, 84)
+        Me.labDisplayOrder.Location = New System.Drawing.Point(25, 110)
         Me.labDisplayOrder.Name = "labDisplayOrder"
         Me.labDisplayOrder.Size = New System.Drawing.Size(88, 13)
         Me.labDisplayOrder.TabIndex = 53
@@ -90,7 +93,7 @@ Partial Class frmTaskDetails
         '
         'texDisplayOrder
         '
-        Me.texDisplayOrder.Location = New System.Drawing.Point(119, 81)
+        Me.texDisplayOrder.Location = New System.Drawing.Point(119, 107)
         Me.texDisplayOrder.Name = "texDisplayOrder"
         Me.texDisplayOrder.Size = New System.Drawing.Size(213, 20)
         Me.texDisplayOrder.TabIndex = 50
@@ -111,11 +114,39 @@ Partial Class frmTaskDetails
         Me.texTask.Size = New System.Drawing.Size(213, 20)
         Me.texTask.TabIndex = 49
         '
+        'labColor
+        '
+        Me.labColor.AutoSize = True
+        Me.labColor.Location = New System.Drawing.Point(19, 84)
+        Me.labColor.Name = "labColor"
+        Me.labColor.Size = New System.Drawing.Size(43, 13)
+        Me.labColor.TabIndex = 57
+        Me.labColor.Text = "Couleur"
+        '
+        'texColor
+        '
+        Me.texColor.Location = New System.Drawing.Point(119, 81)
+        Me.texColor.Name = "texColor"
+        Me.texColor.Size = New System.Drawing.Size(172, 20)
+        Me.texColor.TabIndex = 56
+        '
+        'btcColor
+        '
+        Me.btcColor.Location = New System.Drawing.Point(297, 80)
+        Me.btcColor.Name = "btcColor"
+        Me.btcColor.Size = New System.Drawing.Size(35, 20)
+        Me.btcColor.TabIndex = 58
+        Me.btcColor.Text = "..."
+        Me.btcColor.UseVisualStyleBackColor = True
+        '
         'frmTaskDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(372, 209)
+        Me.ClientSize = New System.Drawing.Size(402, 234)
+        Me.Controls.Add(Me.btcColor)
+        Me.Controls.Add(Me.labColor)
+        Me.Controls.Add(Me.texColor)
         Me.Controls.Add(Me.labID_Task)
         Me.Controls.Add(Me.texID_Task)
         Me.Controls.Add(Me.chkActive)
@@ -128,7 +159,7 @@ Partial Class frmTaskDetails
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmTaskDetails"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Détails des membres des projets"
+        Me.Text = "Détails des domaines d'activités"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -143,4 +174,7 @@ Partial Class frmTaskDetails
     Friend WithEvents texDisplayOrder As TextBox
     Friend WithEvents labTask As Label
     Friend WithEvents texTask As TextBox
+    Friend WithEvents labColor As Label
+    Friend WithEvents texColor As TextBox
+    Friend WithEvents btcColor As Button
 End Class

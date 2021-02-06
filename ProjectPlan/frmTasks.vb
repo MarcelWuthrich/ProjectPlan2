@@ -72,6 +72,7 @@ Public Class frmTasks
     End Sub
 
     Private Sub btcEdit_Click(sender As Object, e As EventArgs) Handles btcEdit.Click
+
         Try
             Dim myForm As Form = frmTaskDetails
             myForm.ShowDialog()
