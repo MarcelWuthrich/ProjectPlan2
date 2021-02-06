@@ -22,15 +22,29 @@ Partial Class frmResourcesValidation
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmResourcesValidation))
         Me.btcValidate = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.grpResources = New System.Windows.Forms.GroupBox()
-        Me.lstPlanResources = New System.Windows.Forms.ListBox()
         Me.dptDateTo = New System.Windows.Forms.DateTimePicker()
         Me.chkDateTo = New System.Windows.Forms.CheckBox()
+        Me.dgvPlanResources = New System.Windows.Forms.DataGridView()
         Me.btcFermer = New System.Windows.Forms.Button()
+        Me.DsVResourceToday = New ProjectPlan.dsVResourceToday()
+        Me.VplanresourcetodayBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.VplanresourcetodayTableAdapter = New ProjectPlan.dsVResourceTodayTableAdapters.vplanresourcetodayTableAdapter()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grpResources.SuspendLayout()
+        CType(Me.dgvPlanResources, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DsVResourceToday, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.VplanresourcetodayBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btcValidate
@@ -53,25 +67,20 @@ Partial Class frmResourcesValidation
         '
         'grpResources
         '
-        Me.grpResources.Controls.Add(Me.lstPlanResources)
+        Me.grpResources.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grpResources.Controls.Add(Me.dptDateTo)
         Me.grpResources.Controls.Add(Me.chkDateTo)
         Me.grpResources.Controls.Add(Me.btcValidate)
         Me.grpResources.Controls.Add(Me.Label3)
+        Me.grpResources.Controls.Add(Me.dgvPlanResources)
         Me.grpResources.Location = New System.Drawing.Point(32, 31)
         Me.grpResources.Name = "grpResources"
-        Me.grpResources.Size = New System.Drawing.Size(626, 366)
+        Me.grpResources.Size = New System.Drawing.Size(919, 366)
         Me.grpResources.TabIndex = 15
         Me.grpResources.TabStop = False
         Me.grpResources.Text = "Ressources"
-        '
-        'lstPlanResources
-        '
-        Me.lstPlanResources.FormattingEnabled = True
-        Me.lstPlanResources.Location = New System.Drawing.Point(9, 75)
-        Me.lstPlanResources.Name = "lstPlanResources"
-        Me.lstPlanResources.Size = New System.Drawing.Size(588, 264)
-        Me.lstPlanResources.TabIndex = 11
         '
         'dptDateTo
         '
@@ -91,14 +100,97 @@ Partial Class frmResourcesValidation
         Me.chkDateTo.Text = "Uniquement jusqu'au"
         Me.chkDateTo.UseVisualStyleBackColor = True
         '
+        'dgvPlanResources
+        '
+        Me.dgvPlanResources.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvPlanResources.AutoGenerateColumns = False
+        Me.dgvPlanResources.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvPlanResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPlanResources.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7})
+        Me.dgvPlanResources.DataSource = Me.VplanresourcetodayBindingSource
+        Me.dgvPlanResources.Location = New System.Drawing.Point(9, 75)
+        Me.dgvPlanResources.Name = "dgvPlanResources"
+        Me.dgvPlanResources.ReadOnly = True
+        Me.dgvPlanResources.RowHeadersVisible = False
+        Me.dgvPlanResources.Size = New System.Drawing.Size(893, 273)
+        Me.dgvPlanResources.TabIndex = 17
+        '
         'btcFermer
         '
-        Me.btcFermer.Location = New System.Drawing.Point(808, 106)
+        Me.btcFermer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btcFermer.Location = New System.Drawing.Point(980, 58)
         Me.btcFermer.Name = "btcFermer"
         Me.btcFermer.Size = New System.Drawing.Size(75, 23)
         Me.btcFermer.TabIndex = 16
         Me.btcFermer.Text = "Fermer"
         Me.btcFermer.UseVisualStyleBackColor = True
+        '
+        'DsVResourceToday
+        '
+        Me.DsVResourceToday.DataSetName = "dsVResourceToday"
+        Me.DsVResourceToday.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'VplanresourcetodayBindingSource
+        '
+        Me.VplanresourcetodayBindingSource.DataMember = "vplanresourcetoday"
+        Me.VplanresourcetodayBindingSource.DataSource = Me.DsVResourceToday
+        '
+        'VplanresourcetodayTableAdapter
+        '
+        Me.VplanresourcetodayTableAdapter.ClearBeforeFill = True
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "ID_Resource"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "ID_Resource"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.DataPropertyName = "PlanDate"
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Date"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.DataPropertyName = "Hour"
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Heure"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.DataPropertyName = "FirstName"
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Prénom"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.DataPropertyName = "LastName"
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Nom"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.DataPropertyName = "AdminResource"
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Ressource adminsitrative"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.DataPropertyName = "Title"
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Projet"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
         '
         'frmResourcesValidation
         '
@@ -109,9 +201,13 @@ Partial Class frmResourcesValidation
         Me.Controls.Add(Me.grpResources)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmResourcesValidation"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Validation des ressources"
         Me.grpResources.ResumeLayout(False)
         Me.grpResources.PerformLayout()
+        CType(Me.dgvPlanResources, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DsVResourceToday, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.VplanresourcetodayBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -119,8 +215,25 @@ Partial Class frmResourcesValidation
     Friend WithEvents btcValidate As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents grpResources As GroupBox
-    Friend WithEvents lstPlanResources As ListBox
     Friend WithEvents dptDateTo As DateTimePicker
     Friend WithEvents chkDateTo As CheckBox
     Friend WithEvents btcFermer As Button
+    Friend WithEvents dgvPlanResources As DataGridView
+    Friend WithEvents IDResourceDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents PlanDateDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents HourDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents FirstNameDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents LastNameDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents AdminResourceDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TitleDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents DsVResourceToday As dsVResourceToday
+    Friend WithEvents VplanresourcetodayBindingSource As BindingSource
+    Friend WithEvents VplanresourcetodayTableAdapter As dsVResourceTodayTableAdapters.vplanresourcetodayTableAdapter
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
 End Class

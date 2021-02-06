@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetvProjectList" targetNamespace="http://tempuri.org/DataSetvProjectList.xsd" xmlns:mstns="http://tempuri.org/DataSetvProjectList.xsd" xmlns="http://tempuri.org/DataSetvProjectList.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="cnProjectplan_mySQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="cnProjectplan_mySQL (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ProjectPlan.My.MySettings.GlobalReference.Default.cnProjectplan_mySQL" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vprojectlistTableAdapter" GeneratorDataComponentClassName="vprojectlistTableAdapter" Name="vprojectlist" UserDataComponentName="vprojectlistTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vprojectlist" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `ID_Project`, `CE_ID_Status`, `Status`, `CE_ID_ProjectManager`, `ManagerFirstname`, `ManagerLastname`, `CE_ID_Priority`, `Priority`, `CE_ID_Category`, `Category`, `CE_ID_Customer`, `CustomerFirstname`, `CustomerLastname`, `CE_ID_Urgency`, `Urgency`, `Title`, `Description`, `BeginDate`, `Deadline`, `EstimatedResources`, `ImplementationRate`, `EffectiveResources` FROM `projectplan`.`vprojectlist`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID_Project" DataSetColumn="ID_Project" />
+              <Mapping SourceColumn="CE_ID_Status" DataSetColumn="CE_ID_Status" />
+              <Mapping SourceColumn="Status" DataSetColumn="Status" />
+              <Mapping SourceColumn="CE_ID_ProjectManager" DataSetColumn="CE_ID_ProjectManager" />
+              <Mapping SourceColumn="ManagerFirstname" DataSetColumn="ManagerFirstname" />
+              <Mapping SourceColumn="ManagerLastname" DataSetColumn="ManagerLastname" />
+              <Mapping SourceColumn="CE_ID_Priority" DataSetColumn="CE_ID_Priority" />
+              <Mapping SourceColumn="Priority" DataSetColumn="Priority" />
+              <Mapping SourceColumn="CE_ID_Category" DataSetColumn="CE_ID_Category" />
+              <Mapping SourceColumn="Category" DataSetColumn="Category" />
+              <Mapping SourceColumn="CE_ID_Customer" DataSetColumn="CE_ID_Customer" />
+              <Mapping SourceColumn="CustomerFirstname" DataSetColumn="CustomerFirstname" />
+              <Mapping SourceColumn="CustomerLastname" DataSetColumn="CustomerLastname" />
+              <Mapping SourceColumn="CE_ID_Urgency" DataSetColumn="CE_ID_Urgency" />
+              <Mapping SourceColumn="Urgency" DataSetColumn="Urgency" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+              <Mapping SourceColumn="Description" DataSetColumn="Description" />
+              <Mapping SourceColumn="BeginDate" DataSetColumn="BeginDate" />
+              <Mapping SourceColumn="Deadline" DataSetColumn="Deadline" />
+              <Mapping SourceColumn="EstimatedResources" DataSetColumn="EstimatedResources" />
+              <Mapping SourceColumn="ImplementationRate" DataSetColumn="ImplementationRate" />
+              <Mapping SourceColumn="EffectiveResources" DataSetColumn="EffectiveResources" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetvProjectList" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DataSetvProjectList" msprop:Generator_UserDSName="DataSetvProjectList">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vprojectlist" msprop:Generator_TableClassName="vprojectlistDataTable" msprop:Generator_TableVarName="tablevprojectlist" msprop:Generator_TablePropName="vprojectlist" msprop:Generator_RowDeletingName="vprojectlistRowDeleting" msprop:Generator_RowChangingName="vprojectlistRowChanging" msprop:Generator_RowEvHandlerName="vprojectlistRowChangeEventHandler" msprop:Generator_RowDeletedName="vprojectlistRowDeleted" msprop:Generator_UserTableName="vprojectlist" msprop:Generator_RowChangedName="vprojectlistRowChanged" msprop:Generator_RowEvArgName="vprojectlistRowChangeEvent" msprop:Generator_RowClassName="vprojectlistRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_Project" msprop:Generator_ColumnVarNameInTable="columnID_Project" msprop:Generator_ColumnPropNameInRow="ID_Project" msprop:Generator_ColumnPropNameInTable="ID_ProjectColumn" msprop:Generator_UserColumnName="ID_Project" type="xs:int" />
+              <xs:element name="CE_ID_Status" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Status" msprop:Generator_ColumnPropNameInRow="CE_ID_Status" msprop:Generator_ColumnPropNameInTable="CE_ID_StatusColumn" msprop:Generator_UserColumnName="CE_ID_Status" type="xs:int" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CE_ID_ProjectManager" msprop:Generator_ColumnVarNameInTable="columnCE_ID_ProjectManager" msprop:Generator_ColumnPropNameInRow="CE_ID_ProjectManager" msprop:Generator_ColumnPropNameInTable="CE_ID_ProjectManagerColumn" msprop:Generator_UserColumnName="CE_ID_ProjectManager" type="xs:int" minOccurs="0" />
+              <xs:element name="ManagerFirstname" msprop:Generator_ColumnVarNameInTable="columnManagerFirstname" msprop:Generator_ColumnPropNameInRow="ManagerFirstname" msprop:Generator_ColumnPropNameInTable="ManagerFirstnameColumn" msprop:Generator_UserColumnName="ManagerFirstname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ManagerLastname" msprop:Generator_ColumnVarNameInTable="columnManagerLastname" msprop:Generator_ColumnPropNameInRow="ManagerLastname" msprop:Generator_ColumnPropNameInTable="ManagerLastnameColumn" msprop:Generator_UserColumnName="ManagerLastname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CE_ID_Priority" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Priority" msprop:Generator_ColumnPropNameInRow="CE_ID_Priority" msprop:Generator_ColumnPropNameInTable="CE_ID_PriorityColumn" msprop:Generator_UserColumnName="CE_ID_Priority" type="xs:int" minOccurs="0" />
+              <xs:element name="Priority" msprop:Generator_ColumnVarNameInTable="columnPriority" msprop:Generator_ColumnPropNameInRow="Priority" msprop:Generator_ColumnPropNameInTable="PriorityColumn" msprop:Generator_UserColumnName="Priority" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CE_ID_Category" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Category" msprop:Generator_ColumnPropNameInRow="CE_ID_Category" msprop:Generator_ColumnPropNameInTable="CE_ID_CategoryColumn" msprop:Generator_UserColumnName="CE_ID_Category" type="xs:int" minOccurs="0" />
+              <xs:element name="Category" msprop:Generator_ColumnVarNameInTable="columnCategory" msprop:Generator_ColumnPropNameInRow="Category" msprop:Generator_ColumnPropNameInTable="CategoryColumn" msprop:Generator_UserColumnName="Category" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CE_ID_Customer" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Customer" msprop:Generator_ColumnPropNameInRow="CE_ID_Customer" msprop:Generator_ColumnPropNameInTable="CE_ID_CustomerColumn" msprop:Generator_UserColumnName="CE_ID_Customer" type="xs:int" minOccurs="0" />
+              <xs:element name="CustomerFirstname" msprop:Generator_ColumnVarNameInTable="columnCustomerFirstname" msprop:Generator_ColumnPropNameInRow="CustomerFirstname" msprop:Generator_ColumnPropNameInTable="CustomerFirstnameColumn" msprop:Generator_UserColumnName="CustomerFirstname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CustomerLastname" msprop:Generator_ColumnVarNameInTable="columnCustomerLastname" msprop:Generator_ColumnPropNameInRow="CustomerLastname" msprop:Generator_ColumnPropNameInTable="CustomerLastnameColumn" msprop:Generator_UserColumnName="CustomerLastname" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CE_ID_Urgency" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Urgency" msprop:Generator_ColumnPropNameInRow="CE_ID_Urgency" msprop:Generator_ColumnPropNameInTable="CE_ID_UrgencyColumn" msprop:Generator_UserColumnName="CE_ID_Urgency" type="xs:int" minOccurs="0" />
+              <xs:element name="Urgency" msprop:Generator_ColumnVarNameInTable="columnUrgency" msprop:Generator_ColumnPropNameInRow="Urgency" msprop:Generator_ColumnPropNameInTable="UrgencyColumn" msprop:Generator_UserColumnName="Urgency" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BeginDate" msprop:Generator_ColumnVarNameInTable="columnBeginDate" msprop:Generator_ColumnPropNameInRow="BeginDate" msprop:Generator_ColumnPropNameInTable="BeginDateColumn" msprop:Generator_UserColumnName="BeginDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Deadline" msprop:Generator_ColumnVarNameInTable="columnDeadline" msprop:Generator_ColumnPropNameInRow="Deadline" msprop:Generator_ColumnPropNameInTable="DeadlineColumn" msprop:Generator_UserColumnName="Deadline" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EstimatedResources" msprop:Generator_ColumnVarNameInTable="columnEstimatedResources" msprop:Generator_ColumnPropNameInRow="EstimatedResources" msprop:Generator_ColumnPropNameInTable="EstimatedResourcesColumn" msprop:Generator_UserColumnName="EstimatedResources" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ImplementationRate" msprop:Generator_ColumnVarNameInTable="columnImplementationRate" msprop:Generator_ColumnPropNameInRow="ImplementationRate" msprop:Generator_ColumnPropNameInTable="ImplementationRateColumn" msprop:Generator_UserColumnName="ImplementationRate" type="xs:decimal" minOccurs="0" />
+              <xs:element name="EffectiveResources" msprop:Generator_ColumnVarNameInTable="columnEffectiveResources" msprop:Generator_ColumnPropNameInRow="EffectiveResources" msprop:Generator_ColumnPropNameInTable="EffectiveResourcesColumn" msprop:Generator_UserColumnName="EffectiveResources" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

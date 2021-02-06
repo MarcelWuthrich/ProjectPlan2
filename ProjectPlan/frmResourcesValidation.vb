@@ -6,6 +6,12 @@ Public Class frmResourcesValidation
 
 
     Private Sub frmResourcesValidation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: This line of code loads data into the 'DsVResourceToday.vplanresourcetoday' table. You can move, or remove it, as needed.
+        Me.VplanresourcetodayTableAdapter.Fill(Me.DsVResourceToday.vplanresourcetoday)
+
+
+        Exit Sub
+
         Try
             pLoadPlanResources()
         Catch ex As Exception
@@ -18,7 +24,8 @@ Public Class frmResourcesValidation
 
         Try
 
-            Me.lstPlanResources.Items.Clear()
+
+            'Me.lstPlanResources.Items.Clear()
 
             Dim thisResource As New myPlanResource
             Dim thisProject As New myProject
@@ -31,8 +38,31 @@ Public Class frmResourcesValidation
             Dim ID_Category As Integer = 0
 
             Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT ID_Resource FROM PlanResources WHERE PlanDate < '" & fConvertDateonlySQL(Today) & "' ORDER BY PlanDate, HalfDay ASC;"
+            Dim SQL As String = "SELECT ID_Resource FROM PlanResources WHERE PlanDate < '" & fConvertDateOnlyMySQL(Today) & "' ORDER BY PlanDate, HalfDay ASC;"
             Dim MyDBConnection As New MySqlConnection
+
+            SQL = ""
+            SQL &= "SELECT "
+            SQL &= "    planresources.ID_Resource "
+            SQL &= "    , planresources.PlanDate "
+            SQL &= "    , planresources.HalfDay "
+            SQL &= "    , planresources.Hour "
+            SQL &= "    , projectsmembers.FirstName "
+            SQL &= "    , projectsmembers.LastName "
+            SQL &= "    , adminresources.AdminResource "
+            SQL &= "    , projects.Title "
+            SQL &= "FROM "
+            SQL &= "    ProjectPlan.planresources "
+            SQL &= "    LEFT JOIN ProjectPlan.projectsmembers  "
+            SQL &= "        ON (planresources.CE_ID_ProjectMember = projectsmembers.ID_ProjectMember) "
+            SQL &= "    LEFT JOIN ProjectPlan.adminresources  "
+            SQL &= "        ON (planresources.CE_ID_AdminResource = adminresources.ID_AdminResource) "
+            SQL &= "    LEFT JOIN ProjectPlan.projects  "
+            SQL &= "        ON (planresources.CE_ID_Project = projects.ID_Project) "
+            SQL &= "WHERE (planresources.PlanDate < '" & fConvertDateOnlyMySQL(Today) & "' "
+            SQL &= "    AND planresources.CE_ID_ProjectMember <>0);' "
+
+
 
 
             MyDBConnection.ConnectionString = cnProjectPlan
@@ -55,44 +85,33 @@ Public Class frmResourcesValidation
                     thisMember.ID_ProjectMember = thisResource.CE_ID_ProjectMember
                     thisMember.Read()
 
-                    If thisResource.CE_ID_AdminResource <> 0 Then
+                    If thisResource.CE_ID_AdminResource = 0 Then
+                        thisAdmin.ID_AdminResource = 0
+                    Else
                         thisAdmin.ID_AdminResource = thisResource.CE_ID_AdminResource
                         thisAdmin.read()
                     End If
 
-                    If thisResource.CE_ID_Project <> 0 Then
+                    If thisResource.CE_ID_Project = 0 Then
+                        thisProject.ID_Project = 0
+                    Else
                         thisProject.ID_Project = thisResource.CE_ID_Project
                         thisProject.Read()
                     End If
 
 
-                    If thisResource.HalfDay = 1 Then
-                        If thisResource.CE_ID_AdminResource <> 0 Then
-                            Line = Format(thisResource.PlanDate, "D") & " (matin) / " & thisMember.FullName & " / " & thisAdmin.AdminResource
-                        End If
-                        If thisResource.CE_ID_Project <> 0 Then
-                            Line = Format(thisResource.PlanDate, "D") & " (matin) / " & thisMember.FullName & " / " & thisProject.Title
-                        End If
-                    End If
 
-                    If thisResource.HalfDay = 2 Then
-                        If thisResource.CE_ID_AdminResource <> 0 Then
-                            Line = Format(thisResource.PlanDate, "D") & " (après-midi) / " & thisMember.FullName & " / " & thisAdmin.AdminResource
-                        End If
-                        If thisResource.CE_ID_Project <> 0 Then
-                            Line = Format(thisResource.PlanDate, "D") & " (après-midi) / " & thisMember.FullName & " / " & thisProject.Title
-                        End If
-                    End If
-
+                    Line = Format(thisResource.PlanDate, "D") & " " & Format(thisResource.Hour, "00") & ":00 " & " / " & thisMember.FullName & " / " & thisAdmin.AdminResource & " / " & thisProject.Title
 
                     Try
                         ID_Category = thisResource.ID_Resource
                     Catch ex As Exception
                     End Try
 
-                    lstPlanResources.Items.Add(Line)
+                    'lstPlanResources.Items.Add(Line)
 
                 Catch ex As Exception
+                    If DebugFlag = True Then MessageBox.Show(ex.ToString)
                 End Try
 
             End While
@@ -320,16 +339,7 @@ Public Class frmResourcesValidation
         End Try
     End Sub
 
-    Private Sub lstPlanResources_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstPlanResources.SelectedIndexChanged
-        Try
-            'On lit le membre de projet sélectionné
-            Dim ID_Resource As String = DirectCast(lstPlanResources.SelectedItem, KeyValuePair(Of String, String)).Key
 
-        Catch ex As Exception
-
-        End Try
-
-    End Sub
 
     Private Sub btcValidate_Click(sender As Object, e As EventArgs) Handles btcValidate.Click
 
@@ -403,4 +413,5 @@ Public Class frmResourcesValidation
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
+
 End Class

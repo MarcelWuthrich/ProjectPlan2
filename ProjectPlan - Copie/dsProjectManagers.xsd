@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsProjectManagers" targetNamespace="http://tempuri.org/dsProjectManagers.xsd" xmlns:mstns="http://tempuri.org/dsProjectManagers.xsd" xmlns="http://tempuri.org/dsProjectManagers.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="cnProjectplan_mySQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="cnProjectplan_mySQL (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ProjectPlan.My.MySettings.GlobalReference.Default.cnProjectplan_mySQL" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vprojectmanagersTableAdapter" GeneratorDataComponentClassName="vprojectmanagersTableAdapter" Name="vprojectmanagers" UserDataComponentName="vprojectmanagersTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vprojectmanagers" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `ID_ProjectManager`, `FirstName`, `LastName`, `Enable` FROM `projectplan`.`vprojectmanagers`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ID_ProjectManager" DataSetColumn="ID_ProjectManager" />
+              <Mapping SourceColumn="FirstName" DataSetColumn="FirstName" />
+              <Mapping SourceColumn="LastName" DataSetColumn="LastName" />
+              <Mapping SourceColumn="Enable" DataSetColumn="Enable" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsProjectManagers" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="dsProjectManagers" msprop:Generator_UserDSName="dsProjectManagers">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vprojectmanagers" msprop:Generator_TableClassName="vprojectmanagersDataTable" msprop:Generator_TableVarName="tablevprojectmanagers" msprop:Generator_TablePropName="vprojectmanagers" msprop:Generator_RowDeletingName="vprojectmanagersRowDeleting" msprop:Generator_RowChangingName="vprojectmanagersRowChanging" msprop:Generator_RowEvHandlerName="vprojectmanagersRowChangeEventHandler" msprop:Generator_RowDeletedName="vprojectmanagersRowDeleted" msprop:Generator_UserTableName="vprojectmanagers" msprop:Generator_RowChangedName="vprojectmanagersRowChanged" msprop:Generator_RowEvArgName="vprojectmanagersRowChangeEvent" msprop:Generator_RowClassName="vprojectmanagersRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID_ProjectManager" msprop:Generator_ColumnVarNameInTable="columnID_ProjectManager" msprop:Generator_ColumnPropNameInRow="ID_ProjectManager" msprop:Generator_ColumnPropNameInTable="ID_ProjectManagerColumn" msprop:Generator_UserColumnName="ID_ProjectManager" type="xs:int" />
+              <xs:element name="FirstName" msprop:Generator_ColumnVarNameInTable="columnFirstName" msprop:Generator_ColumnPropNameInRow="FirstName" msprop:Generator_ColumnPropNameInTable="FirstNameColumn" msprop:Generator_UserColumnName="FirstName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LastName" msprop:Generator_ColumnVarNameInTable="columnLastName" msprop:Generator_ColumnPropNameInRow="LastName" msprop:Generator_ColumnPropNameInTable="LastNameColumn" msprop:Generator_UserColumnName="LastName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="65535" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Enable" msprop:Generator_ColumnVarNameInTable="columnEnable" msprop:Generator_ColumnPropNameInRow="Enable" msprop:Generator_ColumnPropNameInTable="EnableColumn" msprop:Generator_UserColumnName="Enable" type="xs:unsignedLong" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vprojectmanagers" />
+      <xs:field xpath="mstns:ID_ProjectManager" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
