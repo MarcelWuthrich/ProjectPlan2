@@ -12,8 +12,8 @@ Public Class frmResourcesTable
         'LOAD : avant que la fenêtre soit visible
         Try
 
-            Dim myDateFrom As Date = New Date(2021, 1, 1)
-            Dim myDateTo As Date = DateAdd(DateInterval.Day, 30, myDateFrom)
+            Dim myDateFrom As Date = New Date(2021, 1, 5)
+            Dim myDateTo As Date = DateAdd(DateInterval.Day, 10, myDateFrom)
 
             'myDateFrom = Today
 
@@ -45,13 +45,17 @@ Public Class frmResourcesTable
             Dim myDBDataReader As MySqlDataReader
             Dim SQL As String = ""
 
+            'On affiche uniquement les membres de projets qui ont des ressources planifiées pour la période données
+            'SQL &= "SELECT DISTINCT ID_ProjectMember FROM planresources "
+            'SQL &= "LEFT JOIN projectsmembers ON CE_ID_ProjectMember = ID_ProjectMember "
+            'SQL &= "WHERE (PlanDate >='" & fConvertDateOnlyMySQL(FromDate) & "' "
+            'SQL &= "AND PlanDate <='" & fConvertDateOnlyMySQL(ToDate) & "' "
+            'SQL &= "AND CE_ID_ProjectMember <> 0) "
+            'SQL &= "ORDER BY ID_ProjectMember ASC; "
 
-            SQL &= "SELECT DISTINCT ID_ProjectMember FROM planresources "
-            SQL &= "LEFT JOIN projectsmembers ON CE_ID_ProjectMember = ID_ProjectMember "
-            SQL &= "WHERE (PlanDate >='" & fConvertDateOnlyMySQL(FromDate) & "' "
-            SQL &= "AND PlanDate <='" & fConvertDateOnlyMySQL(ToDate) & "' "
-            SQL &= "AND CE_ID_ProjectMember <> 0) "
-            SQL &= "ORDER BY ID_ProjectMember ASC; "
+
+            'On affiche tous les membres de projets, qu'ils aient des ressources planifiées ou non 
+            SQL = "SELECT ID_ProjectMember, FirstName, LastName FROM ProjectsMembers WHERE Enable = 1 ORDER BY ID_ProjectMember ASC ;"
 
 
             MyDBConnection.ConnectionString = cnProjectPlan
@@ -105,14 +109,18 @@ Public Class frmResourcesTable
 
             Me.dgvPlanning.Columns.Clear()
 
+            'On affiche uniquement les membres de projets qui ont des ressources planifiées pour la période données
+            'SQL &= "SELECT DISTINCT ID_ProjectMember, FirstName, LastName FROM planresources "
+            'SQL &= "LEFT JOIN projectsmembers ON CE_ID_ProjectMember = ID_ProjectMember "
+            'SQL &= "WHERE (PlanDate >='" & fConvertDateOnlyMySQL(myDateFrom) & "' "
+            'SQL &= "AND PlanDate <='" & fConvertDateOnlyMySQL(myDateTo) & "' "
+            'SQL &= "AND CE_ID_ProjectMember <> 0) "
+            'SQL &= "ORDER BY ID_ProjectMember ASC; "
 
-            SQL &= "SELECT DISTINCT ID_ProjectMember, FirstName, LastName FROM planresources "
-            SQL &= "LEFT JOIN projectsmembers ON CE_ID_ProjectMember = ID_ProjectMember "
-            SQL &= "WHERE (PlanDate >='" & fConvertDateOnlyMySQL(myDateFrom) & "' "
-            SQL &= "AND PlanDate <='" & fConvertDateOnlyMySQL(myDateTo) & "' "
-            SQL &= "AND CE_ID_ProjectMember <> 0) "
-            SQL &= "ORDER BY ID_ProjectMember ASC; "
 
+
+            'On affiche tous les membres de projets, qu'ils aient des ressources planifiées ou non 
+            SQL = "SELECT ID_ProjectMember, FirstName, LastName FROM ProjectsMembers WHERE Enable = 1 ORDER BY ID_ProjectMember ASC ;"
 
             MyDBConnection.ConnectionString = cnProjectPlan
             MyDBConnection.Open()
@@ -142,12 +150,13 @@ Public Class frmResourcesTable
                 End Try
 
 
-                thisDGV.Columns.Add(ThisIDMember, FirstName & " " & LastName & " (" & ThisIDMember & ")")
-                thisDGV.Columns(0).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                'thisDGV.Columns.Add(ThisIDMember, FirstName & " " & LastName & " (" & ThisIDMember & ")")
+                thisDGV.Columns.Add(ThisIDMember, FirstName & " " & LastName)
 
             End While
 
             For I = 0 To dgvPlanning.ColumnCount - 1
+                thisDGV.Columns(I).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
                 thisDGV.Columns(I).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             Next
 

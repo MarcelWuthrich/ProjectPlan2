@@ -12,14 +12,14 @@
 
             pClearFieldsDaily()
 
-            Me.dtpDate.Value = New Date(2020, 12, 21)
+            Me.dtpDate.Value = New Date(2021, 1, 5)
             Me.texNumberOfDays.Text = "2"
 
 
-            Me.radWeekly.Checked = True
-            Me.texNumberOfWeeks.Text = "2"
-            Me.texWeekFrom.Text = "11"
-            Me.texWeekTo.Text = "14"
+            Me.radDaily.Checked = True
+            Me.texNumberOfDays.Text = "2"
+            Me.texDayFrom.Text = "8"
+            Me.texDayTo.Text = "17"
             Me.chkMonday.Checked = True
             Me.chkTuesday.Checked = True
             Me.chkWednesday.Checked = False

@@ -72,15 +72,6 @@ Partial Class frmResourcesPlanSeries
         Me.radWeekly = New System.Windows.Forms.RadioButton()
         Me.radDaily = New System.Windows.Forms.RadioButton()
         Me.dtpDate = New System.Windows.Forms.DateTimePicker()
-        Me.grpDaily = New System.Windows.Forms.GroupBox()
-        Me.labDayTo = New System.Windows.Forms.Label()
-        Me.labDayFrom = New System.Windows.Forms.Label()
-        Me.texDayTo = New System.Windows.Forms.TextBox()
-        Me.texDayFrom = New System.Windows.Forms.TextBox()
-        Me.radDays = New System.Windows.Forms.RadioButton()
-        Me.radWeekDays = New System.Windows.Forms.RadioButton()
-        Me.texNumberOfDays = New System.Windows.Forms.TextBox()
-        Me.labNumberOfDays = New System.Windows.Forms.Label()
         Me.grpWeekly = New System.Windows.Forms.GroupBox()
         Me.chkMonday = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -95,7 +86,18 @@ Partial Class frmResourcesPlanSeries
         Me.chkThursday = New System.Windows.Forms.CheckBox()
         Me.chkSaturday = New System.Windows.Forms.CheckBox()
         Me.chkFriday = New System.Windows.Forms.CheckBox()
+        Me.grpDaily = New System.Windows.Forms.GroupBox()
+        Me.labDayTo = New System.Windows.Forms.Label()
+        Me.labDayFrom = New System.Windows.Forms.Label()
+        Me.texDayTo = New System.Windows.Forms.TextBox()
+        Me.texDayFrom = New System.Windows.Forms.TextBox()
+        Me.radDays = New System.Windows.Forms.RadioButton()
+        Me.radWeekDays = New System.Windows.Forms.RadioButton()
+        Me.texNumberOfDays = New System.Windows.Forms.TextBox()
+        Me.labNumberOfDays = New System.Windows.Forms.Label()
         Me.labProjectMember = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         CType(Me.VprojectmembersBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dsProjectPlan, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvResourcesAdmin, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -109,8 +111,8 @@ Partial Class frmResourcesPlanSeries
         Me.tabPageProjects.SuspendLayout()
         CType(Me.dgvProjectMembers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpSchedule.SuspendLayout()
-        Me.grpDaily.SuspendLayout()
         Me.grpWeekly.SuspendLayout()
+        Me.grpDaily.SuspendLayout()
         Me.SuspendLayout()
         '
         'btcPlanFree
@@ -480,8 +482,8 @@ Partial Class frmResourcesPlanSeries
         Me.grpSchedule.Controls.Add(Me.radWeekly)
         Me.grpSchedule.Controls.Add(Me.radDaily)
         Me.grpSchedule.Controls.Add(Me.dtpDate)
-        Me.grpSchedule.Controls.Add(Me.grpWeekly)
         Me.grpSchedule.Controls.Add(Me.grpDaily)
+        Me.grpSchedule.Controls.Add(Me.grpWeekly)
         Me.grpSchedule.Location = New System.Drawing.Point(603, 52)
         Me.grpSchedule.Name = "grpSchedule"
         Me.grpSchedule.Size = New System.Drawing.Size(374, 236)
@@ -517,98 +519,6 @@ Partial Class frmResourcesPlanSeries
         Me.dtpDate.Name = "dtpDate"
         Me.dtpDate.Size = New System.Drawing.Size(344, 20)
         Me.dtpDate.TabIndex = 1
-        '
-        'grpDaily
-        '
-        Me.grpDaily.Controls.Add(Me.labDayTo)
-        Me.grpDaily.Controls.Add(Me.labDayFrom)
-        Me.grpDaily.Controls.Add(Me.texDayTo)
-        Me.grpDaily.Controls.Add(Me.texDayFrom)
-        Me.grpDaily.Controls.Add(Me.radDays)
-        Me.grpDaily.Controls.Add(Me.radWeekDays)
-        Me.grpDaily.Controls.Add(Me.texNumberOfDays)
-        Me.grpDaily.Controls.Add(Me.labNumberOfDays)
-        Me.grpDaily.Location = New System.Drawing.Point(6, 83)
-        Me.grpDaily.Name = "grpDaily"
-        Me.grpDaily.Size = New System.Drawing.Size(344, 143)
-        Me.grpDaily.TabIndex = 18
-        Me.grpDaily.TabStop = False
-        '
-        'labDayTo
-        '
-        Me.labDayTo.AutoSize = True
-        Me.labDayTo.Location = New System.Drawing.Point(168, 86)
-        Me.labDayTo.Name = "labDayTo"
-        Me.labDayTo.Size = New System.Drawing.Size(14, 13)
-        Me.labDayTo.TabIndex = 22
-        Me.labDayTo.Text = "A"
-        '
-        'labDayFrom
-        '
-        Me.labDayFrom.AutoSize = True
-        Me.labDayFrom.Location = New System.Drawing.Point(80, 86)
-        Me.labDayFrom.Name = "labDayFrom"
-        Me.labDayFrom.Size = New System.Drawing.Size(21, 13)
-        Me.labDayFrom.TabIndex = 20
-        Me.labDayFrom.Text = "De"
-        '
-        'texDayTo
-        '
-        Me.texDayTo.Location = New System.Drawing.Point(188, 83)
-        Me.texDayTo.Name = "texDayTo"
-        Me.texDayTo.Size = New System.Drawing.Size(38, 20)
-        Me.texDayTo.TabIndex = 21
-        Me.texDayTo.Text = "10"
-        Me.texDayTo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'texDayFrom
-        '
-        Me.texDayFrom.Location = New System.Drawing.Point(107, 83)
-        Me.texDayFrom.Name = "texDayFrom"
-        Me.texDayFrom.Size = New System.Drawing.Size(38, 20)
-        Me.texDayFrom.TabIndex = 20
-        Me.texDayFrom.Text = "8"
-        Me.texDayFrom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'radDays
-        '
-        Me.radDays.AutoSize = True
-        Me.radDays.Location = New System.Drawing.Point(167, 49)
-        Me.radDays.Name = "radDays"
-        Me.radDays.Size = New System.Drawing.Size(128, 17)
-        Me.radDays.TabIndex = 10
-        Me.radDays.Text = "Semaine et week-end"
-        Me.radDays.UseVisualStyleBackColor = True
-        '
-        'radWeekDays
-        '
-        Me.radWeekDays.AutoSize = True
-        Me.radWeekDays.Checked = True
-        Me.radWeekDays.Location = New System.Drawing.Point(167, 22)
-        Me.radWeekDays.Name = "radWeekDays"
-        Me.radWeekDays.Size = New System.Drawing.Size(124, 17)
-        Me.radWeekDays.TabIndex = 9
-        Me.radWeekDays.TabStop = True
-        Me.radWeekDays.Text = "Uniquement semaine"
-        Me.radWeekDays.UseVisualStyleBackColor = True
-        '
-        'texNumberOfDays
-        '
-        Me.texNumberOfDays.Location = New System.Drawing.Point(105, 46)
-        Me.texNumberOfDays.Name = "texNumberOfDays"
-        Me.texNumberOfDays.Size = New System.Drawing.Size(38, 20)
-        Me.texNumberOfDays.TabIndex = 7
-        Me.texNumberOfDays.Text = "1"
-        Me.texNumberOfDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'labNumberOfDays
-        '
-        Me.labNumberOfDays.AutoSize = True
-        Me.labNumberOfDays.Location = New System.Drawing.Point(15, 49)
-        Me.labNumberOfDays.Name = "labNumberOfDays"
-        Me.labNumberOfDays.Size = New System.Drawing.Size(84, 13)
-        Me.labNumberOfDays.TabIndex = 8
-        Me.labNumberOfDays.Text = "Nombre de jours"
         '
         'grpWeekly
         '
@@ -752,6 +662,100 @@ Partial Class frmResourcesPlanSeries
         Me.chkFriday.Text = "vendredi"
         Me.chkFriday.UseVisualStyleBackColor = True
         '
+        'grpDaily
+        '
+        Me.grpDaily.Controls.Add(Me.ComboBox2)
+        Me.grpDaily.Controls.Add(Me.ComboBox1)
+        Me.grpDaily.Controls.Add(Me.labDayTo)
+        Me.grpDaily.Controls.Add(Me.labDayFrom)
+        Me.grpDaily.Controls.Add(Me.texDayTo)
+        Me.grpDaily.Controls.Add(Me.texDayFrom)
+        Me.grpDaily.Controls.Add(Me.radDays)
+        Me.grpDaily.Controls.Add(Me.radWeekDays)
+        Me.grpDaily.Controls.Add(Me.texNumberOfDays)
+        Me.grpDaily.Controls.Add(Me.labNumberOfDays)
+        Me.grpDaily.Location = New System.Drawing.Point(6, 83)
+        Me.grpDaily.Name = "grpDaily"
+        Me.grpDaily.Size = New System.Drawing.Size(344, 143)
+        Me.grpDaily.TabIndex = 18
+        Me.grpDaily.TabStop = False
+        '
+        'labDayTo
+        '
+        Me.labDayTo.AutoSize = True
+        Me.labDayTo.Location = New System.Drawing.Point(168, 86)
+        Me.labDayTo.Name = "labDayTo"
+        Me.labDayTo.Size = New System.Drawing.Size(14, 13)
+        Me.labDayTo.TabIndex = 22
+        Me.labDayTo.Text = "A"
+        '
+        'labDayFrom
+        '
+        Me.labDayFrom.AutoSize = True
+        Me.labDayFrom.Location = New System.Drawing.Point(80, 86)
+        Me.labDayFrom.Name = "labDayFrom"
+        Me.labDayFrom.Size = New System.Drawing.Size(21, 13)
+        Me.labDayFrom.TabIndex = 20
+        Me.labDayFrom.Text = "De"
+        '
+        'texDayTo
+        '
+        Me.texDayTo.Location = New System.Drawing.Point(188, 83)
+        Me.texDayTo.Name = "texDayTo"
+        Me.texDayTo.Size = New System.Drawing.Size(38, 20)
+        Me.texDayTo.TabIndex = 21
+        Me.texDayTo.Text = "10"
+        Me.texDayTo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'texDayFrom
+        '
+        Me.texDayFrom.Location = New System.Drawing.Point(107, 83)
+        Me.texDayFrom.Name = "texDayFrom"
+        Me.texDayFrom.Size = New System.Drawing.Size(38, 20)
+        Me.texDayFrom.TabIndex = 20
+        Me.texDayFrom.Text = "8"
+        Me.texDayFrom.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'radDays
+        '
+        Me.radDays.AutoSize = True
+        Me.radDays.Location = New System.Drawing.Point(167, 49)
+        Me.radDays.Name = "radDays"
+        Me.radDays.Size = New System.Drawing.Size(128, 17)
+        Me.radDays.TabIndex = 10
+        Me.radDays.Text = "Semaine et week-end"
+        Me.radDays.UseVisualStyleBackColor = True
+        '
+        'radWeekDays
+        '
+        Me.radWeekDays.AutoSize = True
+        Me.radWeekDays.Checked = True
+        Me.radWeekDays.Location = New System.Drawing.Point(167, 22)
+        Me.radWeekDays.Name = "radWeekDays"
+        Me.radWeekDays.Size = New System.Drawing.Size(124, 17)
+        Me.radWeekDays.TabIndex = 9
+        Me.radWeekDays.TabStop = True
+        Me.radWeekDays.Text = "Uniquement semaine"
+        Me.radWeekDays.UseVisualStyleBackColor = True
+        '
+        'texNumberOfDays
+        '
+        Me.texNumberOfDays.Location = New System.Drawing.Point(105, 46)
+        Me.texNumberOfDays.Name = "texNumberOfDays"
+        Me.texNumberOfDays.Size = New System.Drawing.Size(38, 20)
+        Me.texNumberOfDays.TabIndex = 7
+        Me.texNumberOfDays.Text = "1"
+        Me.texNumberOfDays.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'labNumberOfDays
+        '
+        Me.labNumberOfDays.AutoSize = True
+        Me.labNumberOfDays.Location = New System.Drawing.Point(15, 49)
+        Me.labNumberOfDays.Name = "labNumberOfDays"
+        Me.labNumberOfDays.Size = New System.Drawing.Size(84, 13)
+        Me.labNumberOfDays.TabIndex = 8
+        Me.labNumberOfDays.Text = "Nombre de jours"
+        '
         'labProjectMember
         '
         Me.labProjectMember.AutoSize = True
@@ -761,7 +765,26 @@ Partial Class frmResourcesPlanSeries
         Me.labProjectMember.TabIndex = 40
         Me.labProjectMember.Text = "Membres de projet"
         '
-        'frmPlanResources
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"8", "9", "10", "11", "13", "14", "15", "16"})
+        Me.ComboBox1.Location = New System.Drawing.Point(105, 105)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(39, 21)
+        Me.ComboBox1.TabIndex = 23
+        '
+        'ComboBox2
+        '
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Items.AddRange(New Object() {"9", "10", "11", "13", "14", "15", "16", "17"})
+        Me.ComboBox2.Location = New System.Drawing.Point(188, 106)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(39, 21)
+        Me.ComboBox2.TabIndex = 24
+        '
+        'frmResourcesPlanSeries
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -775,7 +798,7 @@ Partial Class frmResourcesPlanSeries
         Me.Controls.Add(Me.btcPlan)
         Me.Controls.Add(Me.btcFermer)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "frmPlanResources"
+        Me.Name = "frmResourcesPlanSeries"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Planification de ressources administratives"
         CType(Me.VprojectmembersBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -792,10 +815,10 @@ Partial Class frmResourcesPlanSeries
         CType(Me.dgvProjectMembers, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpSchedule.ResumeLayout(False)
         Me.grpSchedule.PerformLayout()
-        Me.grpDaily.ResumeLayout(False)
-        Me.grpDaily.PerformLayout()
         Me.grpWeekly.ResumeLayout(False)
         Me.grpWeekly.PerformLayout()
+        Me.grpDaily.ResumeLayout(False)
+        Me.grpDaily.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -873,4 +896,6 @@ Partial Class frmResourcesPlanSeries
     Friend WithEvents EstimatedResourcesDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents ImplementationRateDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents EffectiveResourcesDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents ComboBox1 As ComboBox
 End Class
