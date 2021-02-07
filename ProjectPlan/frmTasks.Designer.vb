@@ -91,6 +91,7 @@ Partial Class frmTasks
         Me.dgvTasks.DataSource = Me.VtasksBindingSource
         Me.dgvTasks.Location = New System.Drawing.Point(12, 25)
         Me.dgvTasks.Name = "dgvTasks"
+        Me.dgvTasks.ReadOnly = True
         Me.dgvTasks.RowHeadersVisible = False
         Me.dgvTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvTasks.Size = New System.Drawing.Size(463, 266)
@@ -101,24 +102,29 @@ Partial Class frmTasks
         Me.IDTaskDataGridViewTextBoxColumn.DataPropertyName = "ID_Task"
         Me.IDTaskDataGridViewTextBoxColumn.HeaderText = "ID_Task"
         Me.IDTaskDataGridViewTextBoxColumn.Name = "IDTaskDataGridViewTextBoxColumn"
+        Me.IDTaskDataGridViewTextBoxColumn.ReadOnly = True
+        Me.IDTaskDataGridViewTextBoxColumn.Visible = False
         '
         'TaskDataGridViewTextBoxColumn
         '
         Me.TaskDataGridViewTextBoxColumn.DataPropertyName = "Task"
         Me.TaskDataGridViewTextBoxColumn.HeaderText = "Task"
         Me.TaskDataGridViewTextBoxColumn.Name = "TaskDataGridViewTextBoxColumn"
+        Me.TaskDataGridViewTextBoxColumn.ReadOnly = True
         '
         'EnableDataGridViewTextBoxColumn
         '
         Me.EnableDataGridViewTextBoxColumn.DataPropertyName = "Enable"
         Me.EnableDataGridViewTextBoxColumn.HeaderText = "Enable"
         Me.EnableDataGridViewTextBoxColumn.Name = "EnableDataGridViewTextBoxColumn"
+        Me.EnableDataGridViewTextBoxColumn.ReadOnly = True
         '
         'DisplayOrderDataGridViewTextBoxColumn
         '
         Me.DisplayOrderDataGridViewTextBoxColumn.DataPropertyName = "DisplayOrder"
         Me.DisplayOrderDataGridViewTextBoxColumn.HeaderText = "DisplayOrder"
         Me.DisplayOrderDataGridViewTextBoxColumn.Name = "DisplayOrderDataGridViewTextBoxColumn"
+        Me.DisplayOrderDataGridViewTextBoxColumn.ReadOnly = True
         '
         'VtasksBindingSource
         '
@@ -144,7 +150,10 @@ Partial Class frmTasks
         Me.Controls.Add(Me.btcEdit)
         Me.Controls.Add(Me.btcAdd)
         Me.Controls.Add(Me.dgvTasks)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmTasks"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Domaines d'activités"

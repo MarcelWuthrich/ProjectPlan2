@@ -31,7 +31,12 @@ Public Class frmTasks
     End Sub
 
     Private Sub dgvTasks_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTasks.CellContentClick
+        Try
 
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
     End Sub
 
     Private Sub dgvTasks_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTasks.CellClick
@@ -74,11 +79,24 @@ Public Class frmTasks
     Private Sub btcEdit_Click(sender As Object, e As EventArgs) Handles btcEdit.Click
 
         Try
+
             Dim myForm As Form = frmTaskDetails
             myForm.ShowDialog()
             myForm.Dispose()
 
             pRefreshDisplay()
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub dgvTasks_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTasks.CellDoubleClick
+        Try
+
+            Call dgvTasks_CellClick(sender, e)
+            Call btcEdit_Click(sender, e)
+
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try

@@ -9,6 +9,7 @@ Public Class myTask
     Private _Task As String
     Private _Enable As Boolean
     Private _DisplayOrder As Integer
+    Private _BackColor As Integer
 
 
 
@@ -18,6 +19,15 @@ Public Class myTask
         End Get
         Set(value As Boolean)
             _Enable = value
+        End Set
+    End Property
+
+    Public Property BackColor As Integer
+        Get
+            Return _BackColor
+        End Get
+        Set(ByVal value As Integer)
+            _BackColor = value
         End Set
     End Property
 
@@ -59,7 +69,7 @@ Public Class myTask
             Dim MyDBConnection As New MySqlConnection
 
             Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT ID_Task, Task, Enable, DisplayOrder from Tasks where ID_Task =" & Me.ID_Task
+            Dim Sql As String = "SELECT ID_Task, Task, Enable, DisplayOrder, BackColor from Tasks where ID_Task =" & Me.ID_Task
 
             MyDBConnection.ConnectionString = cnProjectPlan
 
@@ -93,6 +103,12 @@ Public Class myTask
                 'Lecture du 4e paramètre
                 Try
                     Me.DisplayOrder = myDBDataReader.GetValue(3)
+                Catch ex As Exception
+                End Try
+
+                'Lecture du 5e paramètre
+                Try
+                    Me.BackColor = myDBDataReader.GetValue(4)
                 Catch ex As Exception
                 End Try
 
@@ -173,7 +189,8 @@ Public Class myTask
                 Else
                     SQL &= "Enable = 0, "
                 End If
-                SQL &= "DisplayOrder =" & Me.DisplayOrder & " "
+                SQL &= "DisplayOrder =" & Me.DisplayOrder & ", "
+                SQL &= "BackColor =" & Me.BackColor & " "
                 SQL &= "WHERE ID_Task = " & Me.ID_Task & ";"
 
             Else
@@ -183,7 +200,7 @@ Public Class myTask
 
                 'L'enregistrement n'existe pas encore, il faut faire un insert
                 SQL = "INSERT INTO Tasks "
-                SQL &= "(ID_Task, Task, Enable, DisplayOrder) VALUES ("
+                SQL &= "(ID_Task, Task, Enable, DisplayOrder, BackColor) VALUES ("
                 SQL &= Me.ID_Task & ","
                 SQL &= "'" & Replace(Me.Task, "'", "''") & "',"
                 If Me.Enable = True Then
@@ -191,7 +208,8 @@ Public Class myTask
                 Else
                     SQL &= "0,"
                 End If
-                SQL &= Me.DisplayOrder & ");"
+                SQL &= Me.DisplayOrder & ", "
+                SQL &= Me.BackColor & ");"
 
             End If
 

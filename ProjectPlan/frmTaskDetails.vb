@@ -28,6 +28,7 @@ Public Class frmTaskDetails
             Else
                 thisTask.Enable = False
             End If
+            thisTask.BackColor = Me.texColor.BackColor.ToArgb
             thisTask.Save()
 
             Me.Close()
@@ -62,6 +63,7 @@ Public Class frmTaskDetails
                 Else
                     Me.chkActive.Checked = False
                 End If
+                If thisTask.BackColor <> 0 Then Me.texColor.BackColor = Color.FromArgb(thisTask.BackColor)
             End If
 
         Catch ex As Exception
@@ -79,7 +81,10 @@ Public Class frmTaskDetails
             MyDialog.ShowDialog()
             Me.texColor.BackColor = MyDialog.Color
 
-            MessageBox.Show(Me.texColor.BackColor.ToString)
+            'Dim myARGBValue As Integer = Me.texColor.BackColor.ToArgb
+            'Me.texDisplayOrder.BackColor = Color.FromArgb(myARGBValue)
+
+            'MessageBox.Show(myARGBValue)
 
 
         Catch ex As Exception
