@@ -27,6 +27,7 @@ Partial Class frmResourcesValidation
         Me.btcValidate = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.grpResources = New System.Windows.Forms.GroupBox()
+        Me.chkSelection = New System.Windows.Forms.CheckBox()
         Me.dptDateTo = New System.Windows.Forms.DateTimePicker()
         Me.chkDateTo = New System.Windows.Forms.CheckBox()
         Me.dgvPlanResources = New System.Windows.Forms.DataGridView()
@@ -49,7 +50,7 @@ Partial Class frmResourcesValidation
         '
         'btcValidate
         '
-        Me.btcValidate.Location = New System.Drawing.Point(522, 23)
+        Me.btcValidate.Location = New System.Drawing.Point(707, 28)
         Me.btcValidate.Name = "btcValidate"
         Me.btcValidate.Size = New System.Drawing.Size(75, 23)
         Me.btcValidate.TabIndex = 6
@@ -70,6 +71,7 @@ Partial Class frmResourcesValidation
         Me.grpResources.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grpResources.Controls.Add(Me.chkSelection)
         Me.grpResources.Controls.Add(Me.dptDateTo)
         Me.grpResources.Controls.Add(Me.chkDateTo)
         Me.grpResources.Controls.Add(Me.btcValidate)
@@ -82,10 +84,22 @@ Partial Class frmResourcesValidation
         Me.grpResources.TabStop = False
         Me.grpResources.Text = "Ressources"
         '
+        'chkSelection
+        '
+        Me.chkSelection.AutoSize = True
+        Me.chkSelection.Checked = True
+        Me.chkSelection.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkSelection.Location = New System.Drawing.Point(508, 27)
+        Me.chkSelection.Name = "chkSelection"
+        Me.chkSelection.Size = New System.Drawing.Size(139, 17)
+        Me.chkSelection.TabIndex = 19
+        Me.chkSelection.Text = "Uniquement la sélection"
+        Me.chkSelection.UseVisualStyleBackColor = True
+        '
         'dptDateTo
         '
         Me.dptDateTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dptDateTo.Location = New System.Drawing.Point(323, 22)
+        Me.dptDateTo.Location = New System.Drawing.Point(315, 25)
         Me.dptDateTo.Name = "dptDateTo"
         Me.dptDateTo.Size = New System.Drawing.Size(143, 20)
         Me.dptDateTo.TabIndex = 10
@@ -95,7 +109,7 @@ Partial Class frmResourcesValidation
         Me.chkDateTo.AutoSize = True
         Me.chkDateTo.Checked = True
         Me.chkDateTo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkDateTo.Location = New System.Drawing.Point(183, 27)
+        Me.chkDateTo.Location = New System.Drawing.Point(181, 27)
         Me.chkDateTo.Name = "chkDateTo"
         Me.chkDateTo.Size = New System.Drawing.Size(125, 17)
         Me.chkDateTo.TabIndex = 9
@@ -116,6 +130,7 @@ Partial Class frmResourcesValidation
         Me.dgvPlanResources.Name = "dgvPlanResources"
         Me.dgvPlanResources.ReadOnly = True
         Me.dgvPlanResources.RowHeadersVisible = False
+        Me.dgvPlanResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvPlanResources.Size = New System.Drawing.Size(893, 273)
         Me.dgvPlanResources.TabIndex = 17
         '
@@ -238,4 +253,5 @@ Partial Class frmResourcesValidation
     Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
+    Friend WithEvents chkSelection As CheckBox
 End Class

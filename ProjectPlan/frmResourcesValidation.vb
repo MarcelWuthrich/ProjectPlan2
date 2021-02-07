@@ -4,6 +4,12 @@
 Public Class frmResourcesValidation
 
 
+
+    Dim thisRow As String = ""
+    Dim thisColumn As String = ""
+
+
+
     Private Sub frmResourcesValidation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
@@ -85,64 +91,86 @@ Public Class frmResourcesValidation
 
     End Sub
 
-    Private Sub btcFermer_Click(sender As Object, e As EventArgs)
-        Try
-            Me.Close()
-        Catch ex As Exception
-        End Try
-    End Sub
-
 
 
     Private Sub btcValidate_Click(sender As Object, e As EventArgs) Handles btcValidate.Click
 
         Try
 
-            Dim thisResource As New myPlanResource
-            Dim myDBDataReader As MySqlDataReader
-            Dim MyDBConnection As New MySqlConnection
-            Dim Sql As String = ""
             Dim Count As Integer = 0
 
-            If Me.chkDateTo.Checked = True Then
-                Sql = "SELECT ID_Resource FROM PlanResources WHERE PlanDate <= '" & fConvertDateOnlyMySQL(Me.dptDateTo.Value) & "' ORDER BY PlanDate, Hour ASC;"
-            Else
-                Sql = "SELECT ID_Resource FROM PlanResources WHERE PlanDate < '" & fConvertDateOnlyMySQL(Today) & "' ORDER BY PlanDate, Hour ASC;"
-            End If
 
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
+            'Si on a checké la sélection, on valide uniquement les ressources sélectionnées
+            If chkSelection.Checked = True Then
+                Dim ID_Resource As Integer = 0
 
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
-            myDBDataReader = myDBCommand.ExecuteReader()
+                Dim thisResource As New myPlanResource
 
-            While myDBDataReader.Read
+                For Each SelectedItem In dgvPlanResources.SelectedRows
+                    'Lecture de tous les ID des rows sélectionnés
+                    ID_Resource = dgvPlanResources.Item(0, SelectedItem.index).Value
 
-                Try
-                    thisResource.ID_Resource = myDBDataReader.GetValue(0)
+                    thisResource.ID_Resource = ID_Resource
                     thisResource.Read()
                     SetPlanToExecutedSQLTransaction(cnProjectPlan, thisResource)
+                    Count += 1
 
-                    'On ne compte que les ressources attribuées à une personne, pas les ressources comprises dans l'horizon
-                    If thisResource.CE_ID_ProjectMember <> 0 Then
-                        Count += 1
-                    End If
+                Next
 
-                    If thisResource.CE_ID_Project <> 0 Then
-                        Dim myProject As New myProject
-                        myProject.ID_Project = thisResource.CE_ID_Project
-                        myProject.Read()
-                        myProject.GetEffectiveResources()
-                        myProject.ImplementationRate = myProject.EffectiveResources / myProject.EstimatedResources * 100
-                        myProject.Save()
-                    End If
+            End If
 
-                Catch ex As Exception
-                End Try
-            End While
 
-            myDBDataReader.Close()
-            MyDBConnection.Close()
+            'Si on n'a pas checké la sélection, on valide les ressources en fonction de la date.
+            'On prend la date du jour si on pas checké la date, on prend la date indiquée si on a checké la date
+            If chkSelection.Checked = False Then
+
+
+                Dim thisResource As New myPlanResource
+                Dim myDBDataReader As MySqlDataReader
+                Dim MyDBConnection As New MySqlConnection
+                Dim Sql As String = ""
+
+                If Me.chkDateTo.Checked = True Then
+                    Sql = "SELECT ID_Resource FROM PlanResources WHERE PlanDate <= '" & fConvertDateOnlyMySQL(Me.dptDateTo.Value) & "' ORDER BY PlanDate, Hour ASC;"
+                Else
+                    Sql = "SELECT ID_Resource FROM PlanResources WHERE PlanDate < '" & fConvertDateOnlyMySQL(Today) & "' ORDER BY PlanDate, Hour ASC;"
+                End If
+
+                MyDBConnection.ConnectionString = cnProjectPlan
+                MyDBConnection.Open()
+
+                Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+                myDBDataReader = myDBCommand.ExecuteReader()
+
+                While myDBDataReader.Read
+
+                    Try
+                        thisResource.ID_Resource = myDBDataReader.GetValue(0)
+                        thisResource.Read()
+                        SetPlanToExecutedSQLTransaction(cnProjectPlan, thisResource)
+
+                        'On ne compte que les ressources attribuées à une personne, pas les ressources comprises dans l'horizon
+                        If thisResource.CE_ID_ProjectMember <> 0 Then
+                            Count += 1
+                        End If
+
+                        'If thisResource.CE_ID_Project <> 0 Then
+                        '    Dim myProject As New myProject
+                        '    myProject.ID_Project = thisResource.CE_ID_Project
+                        '    myProject.Read()
+                        '    myProject.GetEffectiveResources()
+                        '    myProject.ImplementationRate = myProject.EffectiveResources / myProject.EstimatedResources * 100
+                        '    myProject.Save()
+                        'End If
+
+                    Catch ex As Exception
+                    End Try
+                End While
+
+                myDBDataReader.Close()
+                MyDBConnection.Close()
+
+            End If
 
 
             pLoadPlanResources()
@@ -163,13 +191,36 @@ Public Class frmResourcesValidation
 
     End Sub
 
-    Private Sub btcFermer_Click_1(sender As Object, e As EventArgs) Handles btcFermer.Click
+    Private Sub btcFermer_Click(sender As Object, e As EventArgs) Handles btcFermer.Click
+
         Try
             Me.Close()
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
+
     End Sub
 
+
+
+    Private Sub chkSelection_CheckedChanged(sender As Object, e As EventArgs) Handles chkSelection.CheckedChanged
+        Try
+            If chkSelection.Checked = True And chkDateTo.Checked = True Then
+                Me.chkDateTo.Checked = False
+            End If
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub chkDateTo_CheckedChanged(sender As Object, e As EventArgs) Handles chkDateTo.CheckedChanged
+        Try
+            If chkDateTo.Checked = True And chkSelection.Checked = True Then
+                Me.chkSelection.Checked = False
+            End If
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 
 End Class
