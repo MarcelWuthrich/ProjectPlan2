@@ -139,6 +139,12 @@
     <Compile Include="frmCustomers.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmDashboard.Designer.vb">
+      <DependentUpon>frmDashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmMain.designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
@@ -263,6 +269,7 @@
     <Compile Include="myProjectHistory.vb" />
     <Compile Include="myProjectManager.vb" />
     <Compile Include="myProjectMember.vb" />
+    <Compile Include="myStatistics.vb" />
     <Compile Include="myStatus.vb" />
     <Compile Include="myTask.vb" />
     <Compile Include="myUrgency.vb" />
@@ -283,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCustomers.resx">
       <DependentUpon>frmCustomers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDashboard.resx">
+      <DependentUpon>frmDashboard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>

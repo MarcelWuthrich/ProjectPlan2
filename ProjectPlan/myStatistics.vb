@@ -232,7 +232,7 @@ Public Class myStatistics
                 Dim mySQLDataReader As SqlDataReader
                 MySQLConnection.ConnectionString = cnProjectPlan
 
-                Dim Sql As String = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn1Month) & "';"
+                Dim Sql As String = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn1Month) & "';"
 
                 MySQLConnection.Open()
                 Dim mySQLCommand As SqlCommand = New SqlCommand(Sql, MySQLConnection)
@@ -246,7 +246,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn3Month) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn3Month) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -260,7 +260,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn6Month) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn6Month) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -274,7 +274,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn12Month) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn12Month) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -288,7 +288,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateEndYear) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_Project <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateEndYear) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -346,7 +346,7 @@ Public Class myStatistics
                 Dim mySQLDataReader As SqlDataReader
                 MySQLConnection.ConnectionString = cnProjectPlan
 
-                Dim Sql As String = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn1Month) & "';"
+                Dim Sql As String = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn1Month) & "';"
 
                 MySQLConnection.Open()
                 Dim mySQLCommand As SqlCommand = New SqlCommand(Sql, MySQLConnection)
@@ -360,7 +360,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn3Month) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn3Month) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -374,7 +374,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn6Month) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn6Month) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -388,7 +388,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateIn12Month) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateIn12Month) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -402,7 +402,7 @@ Public Class myStatistics
                 End While
                 mySQLDataReader.Close()
 
-                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlySQL(DateEndYear) & "';"
+                Sql = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE CE_ID_ProjectMember = " & Me.ID_ProjectMember & " AND CE_ID_AdminResource <> 0 AND PlanDate <= '" & fConvertDateOnlyMySQL(DateEndYear) & "';"
 
                 'MySQLConnection.Open()
                 mySQLCommand = New SqlCommand(Sql, MySQLConnection)
@@ -477,7 +477,7 @@ Public Class myStatistics
                         Dim thisPlanResource As New myPlanResource
                         thisPlanResource.CE_ID_ProjectMember = Me.ID_ProjectMember
                         thisPlanResource.PlanDate = thisDate
-                        thisPlanResource.HalfDay = 1
+                        'thisPlanResource.HalfDay = 1
                         thisPlanResource.CheckIfPlaned()
                         If thisPlanResource.IsPlaned = False Then
 
@@ -503,7 +503,7 @@ Public Class myStatistics
 
                         End If
 
-                        thisPlanResource.HalfDay = 2
+                        'thisPlanResource.HalfDay = 2
                         thisPlanResource.CheckIfPlaned()
                         If thisPlanResource.IsPlaned = False Then
 

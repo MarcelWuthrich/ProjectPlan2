@@ -217,7 +217,13 @@ Public Class frmMain
     End Sub
 
     Private Sub mniReportingDashboard_Click(sender As Object, e As EventArgs) Handles mniReportingDashboard.Click
-
+        Try
+            Dim myForm As Form = frmDashboard
+            myForm.MdiParent = Me
+            myForm.Show()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
     End Sub
 
     Private Sub mniResourceValidate_Click(sender As Object, e As EventArgs) Handles mniResourceValidate.Click
