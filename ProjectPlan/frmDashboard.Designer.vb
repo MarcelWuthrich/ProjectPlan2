@@ -24,10 +24,6 @@ Partial Class frmDashboard
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDashboard))
         Me.dgvProjects = New System.Windows.Forms.DataGridView()
-        Me.dgvInfrastructure = New System.Windows.Forms.DataGridView()
-        Me.dgvSAP = New System.Windows.Forms.DataGridView()
-        Me.dgvHelpdesk = New System.Windows.Forms.DataGridView()
-        Me.dgvPlaning = New System.Windows.Forms.DataGridView()
         Me.texColorInfra = New System.Windows.Forms.TextBox()
         Me.texColorSAP = New System.Windows.Forms.TextBox()
         Me.texColorHelpdesk = New System.Windows.Forms.TextBox()
@@ -35,10 +31,6 @@ Partial Class frmDashboard
         Me.texColorTotal = New System.Windows.Forms.TextBox()
         Me.btcFermer = New System.Windows.Forms.Button()
         Me.tabTaskType = New System.Windows.Forms.TabControl()
-        Me.tabInfrastructure = New System.Windows.Forms.TabPage()
-        Me.tabSAP = New System.Windows.Forms.TabPage()
-        Me.tabHelpdesk = New System.Windows.Forms.TabPage()
-        Me.tabPlaning = New System.Windows.Forms.TabPage()
         Me.texFreeDateInfra = New System.Windows.Forms.TextBox()
         Me.labFreeDateInfra = New System.Windows.Forms.Label()
         Me.labFreeDateSAP = New System.Windows.Forms.Label()
@@ -51,15 +43,6 @@ Partial Class frmDashboard
         Me.btcChart = New System.Windows.Forms.Button()
         Me.btcExportToExcel = New System.Windows.Forms.Button()
         CType(Me.dgvProjects, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvInfrastructure, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvSAP, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvHelpdesk, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvPlaning, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabTaskType.SuspendLayout()
-        Me.tabInfrastructure.SuspendLayout()
-        Me.tabSAP.SuspendLayout()
-        Me.tabHelpdesk.SuspendLayout()
-        Me.tabPlaning.SuspendLayout()
         Me.grpNextFreeDate.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -69,48 +52,12 @@ Partial Class frmDashboard
         Me.dgvProjects.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvProjects.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvProjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvProjects.Location = New System.Drawing.Point(23, 73)
         Me.dgvProjects.Name = "dgvProjects"
         Me.dgvProjects.Size = New System.Drawing.Size(1550, 495)
         Me.dgvProjects.TabIndex = 0
-        '
-        'dgvInfrastructure
-        '
-        Me.dgvInfrastructure.AllowUserToResizeColumns = False
-        Me.dgvInfrastructure.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.dgvInfrastructure.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvInfrastructure.Location = New System.Drawing.Point(6, 6)
-        Me.dgvInfrastructure.Name = "dgvInfrastructure"
-        Me.dgvInfrastructure.Size = New System.Drawing.Size(545, 260)
-        Me.dgvInfrastructure.TabIndex = 0
-        '
-        'dgvSAP
-        '
-        Me.dgvSAP.AllowUserToResizeColumns = False
-        Me.dgvSAP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvSAP.Location = New System.Drawing.Point(6, 6)
-        Me.dgvSAP.Name = "dgvSAP"
-        Me.dgvSAP.Size = New System.Drawing.Size(545, 260)
-        Me.dgvSAP.TabIndex = 0
-        '
-        'dgvHelpdesk
-        '
-        Me.dgvHelpdesk.AllowUserToResizeColumns = False
-        Me.dgvHelpdesk.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvHelpdesk.Location = New System.Drawing.Point(6, 6)
-        Me.dgvHelpdesk.Name = "dgvHelpdesk"
-        Me.dgvHelpdesk.Size = New System.Drawing.Size(545, 260)
-        Me.dgvHelpdesk.TabIndex = 0
-        '
-        'dgvPlaning
-        '
-        Me.dgvPlaning.AllowUserToResizeColumns = False
-        Me.dgvPlaning.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvPlaning.Location = New System.Drawing.Point(6, 6)
-        Me.dgvPlaning.Name = "dgvPlaning"
-        Me.dgvPlaning.Size = New System.Drawing.Size(545, 260)
-        Me.dgvPlaning.TabIndex = 0
         '
         'texColorInfra
         '
@@ -174,57 +121,11 @@ Partial Class frmDashboard
         'tabTaskType
         '
         Me.tabTaskType.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.tabTaskType.Controls.Add(Me.tabInfrastructure)
-        Me.tabTaskType.Controls.Add(Me.tabSAP)
-        Me.tabTaskType.Controls.Add(Me.tabHelpdesk)
-        Me.tabTaskType.Controls.Add(Me.tabPlaning)
         Me.tabTaskType.Location = New System.Drawing.Point(23, 581)
         Me.tabTaskType.Name = "tabTaskType"
         Me.tabTaskType.SelectedIndex = 0
         Me.tabTaskType.Size = New System.Drawing.Size(565, 298)
         Me.tabTaskType.TabIndex = 11
-        '
-        'tabInfrastructure
-        '
-        Me.tabInfrastructure.Controls.Add(Me.dgvInfrastructure)
-        Me.tabInfrastructure.Location = New System.Drawing.Point(4, 22)
-        Me.tabInfrastructure.Name = "tabInfrastructure"
-        Me.tabInfrastructure.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabInfrastructure.Size = New System.Drawing.Size(557, 272)
-        Me.tabInfrastructure.TabIndex = 0
-        Me.tabInfrastructure.Text = "Infrastructure"
-        Me.tabInfrastructure.UseVisualStyleBackColor = True
-        '
-        'tabSAP
-        '
-        Me.tabSAP.Controls.Add(Me.dgvSAP)
-        Me.tabSAP.Location = New System.Drawing.Point(4, 22)
-        Me.tabSAP.Name = "tabSAP"
-        Me.tabSAP.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabSAP.Size = New System.Drawing.Size(557, 272)
-        Me.tabSAP.TabIndex = 1
-        Me.tabSAP.Text = "SAP"
-        Me.tabSAP.UseVisualStyleBackColor = True
-        '
-        'tabHelpdesk
-        '
-        Me.tabHelpdesk.Controls.Add(Me.dgvHelpdesk)
-        Me.tabHelpdesk.Location = New System.Drawing.Point(4, 22)
-        Me.tabHelpdesk.Name = "tabHelpdesk"
-        Me.tabHelpdesk.Size = New System.Drawing.Size(557, 272)
-        Me.tabHelpdesk.TabIndex = 2
-        Me.tabHelpdesk.Text = "Helpdesk"
-        Me.tabHelpdesk.UseVisualStyleBackColor = True
-        '
-        'tabPlaning
-        '
-        Me.tabPlaning.Controls.Add(Me.dgvPlaning)
-        Me.tabPlaning.Location = New System.Drawing.Point(4, 22)
-        Me.tabPlaning.Name = "tabPlaning"
-        Me.tabPlaning.Size = New System.Drawing.Size(557, 272)
-        Me.tabPlaning.TabIndex = 3
-        Me.tabPlaning.Text = "Planification"
-        Me.tabPlaning.UseVisualStyleBackColor = True
         '
         'texFreeDateInfra
         '
@@ -351,17 +252,7 @@ Partial Class frmDashboard
         Me.Name = "frmDashboard"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Dashboard"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.dgvProjects, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvInfrastructure, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvSAP, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvHelpdesk, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvPlaning, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabTaskType.ResumeLayout(False)
-        Me.tabInfrastructure.ResumeLayout(False)
-        Me.tabSAP.ResumeLayout(False)
-        Me.tabHelpdesk.ResumeLayout(False)
-        Me.tabPlaning.ResumeLayout(False)
         Me.grpNextFreeDate.ResumeLayout(False)
         Me.grpNextFreeDate.PerformLayout()
         Me.ResumeLayout(False)
@@ -370,10 +261,6 @@ Partial Class frmDashboard
     End Sub
 
     Friend WithEvents dgvProjects As DataGridView
-    Friend WithEvents dgvInfrastructure As DataGridView
-    Friend WithEvents dgvSAP As DataGridView
-    Friend WithEvents dgvHelpdesk As DataGridView
-    Friend WithEvents dgvPlaning As DataGridView
     Friend WithEvents texColorInfra As TextBox
     Friend WithEvents texColorSAP As TextBox
     Friend WithEvents texColorHelpdesk As TextBox
@@ -381,10 +268,6 @@ Partial Class frmDashboard
     Friend WithEvents texColorTotal As TextBox
     Friend WithEvents btcFermer As Button
     Friend WithEvents tabTaskType As TabControl
-    Friend WithEvents tabInfrastructure As TabPage
-    Friend WithEvents tabSAP As TabPage
-    Friend WithEvents tabHelpdesk As TabPage
-    Friend WithEvents tabPlaning As TabPage
     Friend WithEvents texFreeDateInfra As TextBox
     Friend WithEvents labFreeDateInfra As Label
     Friend WithEvents labFreeDateSAP As Label

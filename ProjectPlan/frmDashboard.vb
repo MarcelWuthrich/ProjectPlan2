@@ -144,6 +144,12 @@ Public Class frmDashboard
 
     Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        pDisplayTasks()
+
+        pDisplayProjects()
+
+
+
         'cnProjectPlan = cnProjectPlanWUM
 
         Exit Sub
@@ -154,20 +160,20 @@ Public Class frmDashboard
 
 
             'Hauteur des colonnes en automatique --> bug ???
-            tabTaskType.SelectedTab = tabPlaning
-            tabTaskType.SelectedTab = tabHelpdesk
-            tabTaskType.SelectedTab = tabSAP
-            tabTaskType.SelectedTab = tabInfrastructure
+            'tabTaskType.SelectedTab = tabPlaning
+            'tabTaskType.SelectedTab = tabHelpdesk
+            'tabTaskType.SelectedTab = tab2
+            'tabTaskType.SelectedTab = tab1
 
 
             'Affiche les projets
             pDisplayProjects()
 
             'Affiche les tâches : 1 = infrastructure
-            pDisplayResouces(Me.dgvInfrastructure, 1)
-            pDisplayResouces(Me.dgvSAP, 2)
-            pDisplayResouces(Me.dgvHelpdesk, 3)
-            pDisplayResouces(Me.dgvPlaning, 4)
+            ''pDisplayResouces(Me.dgvInfrastructure, 1)
+            ''pDisplayResouces(Me.dgvSAP, 2)
+            'pDisplayResouces(Me.dgvHelpdesk, 3)
+            'pDisplayResouces(Me.dgvPlaning, 4)
 
 
             'Affiche les dates de libres
@@ -186,499 +192,6 @@ Public Class frmDashboard
 
         Me.Cursor = Cursors.Default
 
-    End Sub
-
-    Private Sub pDisplayProjects()
-
-        Try
-
-
-            Dim TotalEstimated As Single = 0
-            Dim TotalExecuted As Single = 0
-            Dim TotalPlan As Single = 0
-            Dim TotalToPlan As Single = 0
-
-            Dim TotalInfraEstimated As Single = 0
-            Dim TotalInfraExecuted As Single = 0
-            Dim TotalInfraPlan As Single = 0
-            Dim TotalInfraToPlan As Single = 0
-
-            Dim TotalSAPEstimated As Single = 0
-            Dim TotalSAPExecuted As Single = 0
-            Dim TotalSAPPlan As Single = 0
-            Dim TotalSAPToPlan As Single = 0
-
-            Dim TotalHelpdeskEstimated As Single = 0
-            Dim TotalHelpdeskExecuted As Single = 0
-            Dim TotalHelpdeskPlan As Single = 0
-            Dim TotalHelpdeskToPlan As Single = 0
-
-            Dim TotalPlaningEstimated As Single = 0
-            Dim TotalPlaningExecuted As Single = 0
-            Dim TotalPlaningPlan As Single = 0
-            Dim TotalPlaningToPlan As Single = 0
-
-            Dim ActiveRow As Integer = 0
-            Dim MyDBConnection As New mysqlConnection
-
-            Dim myDBDataReader As mySqlDataReader
-            Dim Sql As String = ""
-            Sql = "SELECT ID_Project FROM Projects WHERE CE_ID_Status IN (6,7,8,9);"
-
-            Me.Cursor = Cursors.WaitCursor
-
-            'On vide le DataGridView
-            dgvProjects.Rows.Clear()
-            dgvProjects.Columns.Clear()
-
-            'On rend certains éléments invisible durant le chargement des données
-            dgvProjects.Visible = False
-
-
-
-            'Définition du DataGridView
-            dgvProjects.ReadOnly = True
-            dgvProjects.AllowUserToAddRows = False
-            dgvProjects.AllowUserToDeleteRows = False
-            dgvProjects.MultiSelect = False
-
-
-            'Définition des colonnes
-            dgvProjects.Columns.Add("ID", "ID")                         '0  ID_Project 
-            dgvProjects.Columns.Add("Projet", "Projet")                 '1  Nom du projet
-            dgvProjects.Columns.Add("Deadline", "Deadline")             '2  Deadline
-            dgvProjects.Columns.Add("Estimées", "Estimées")             '3  Ressources estimées pour tout le projet
-            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '4  Ressources effectuées pour tout le projet
-            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '5  Ressources planifiées pour tout le projet
-            dgvProjects.Columns.Add("A planifier", "A planifier")       '6  Ressources à encore à planifier pour tout le projet
-
-            dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour l'infra
-            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour l'infra
-            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour l'infra
-            dgvProjects.Columns.Add("A planifier", "A planifier")       '10 Ressources à encore à planifier pour l'infra
-
-            dgvProjects.Columns.Add("Estimées", "Estimées")             '11  Ressources estimées pour SAP
-            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '12  Ressources effectuées pour SAP
-            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '13  Ressources planifiées pour SAP
-            dgvProjects.Columns.Add("A planifier", "A planifier")       '14 Ressources à encore à planifier pour SAP
-
-            dgvProjects.Columns.Add("Estimées", "Estimées")             '15  Ressources estimées pour Helpdesk
-            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '16  Ressources effectuées pour Helpdesk
-            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '17  Ressources planifiées pour Helpdesk
-            dgvProjects.Columns.Add("A planifier", "A planifier")       '18 Ressources à encore à planifier pour Helpdesk
-
-            dgvProjects.Columns.Add("Estimées", "Estimées")             '19  Ressources estimées pour la planification
-            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '20  Ressources effectuées pour la planification
-            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '21  Ressources planifiées pour la planification
-            dgvProjects.Columns.Add("A planifier", "A planifier")       '22 Ressources à encore à planifier pour la planification
-
-
-            'La colonne 0 (ID_Project) n'est pas visible
-            'dgvProjects.Columns(0).Visible = False
-            For i = 0 To 21
-                dgvProjects.Columns(i).Visible = True
-            Next i
-
-            'On empêche de trier les colonnes de manière alphabétiques
-            For i = 0 To 21
-                dgvProjects.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-            Next i
-
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
-
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
-
-            myDBDataReader = myDBCommand.ExecuteReader()
-
-            While myDBDataReader.Read
-
-                Dim thisProject As New myProject
-                Dim thisCategory As New myProjectCategory
-                Dim thisPlan As New myPlanResource
-                Dim thisExec As New myExecuteResource
-
-                Try
-                    'Lecture du projet
-                    thisProject.ID_Project = myDBDataReader.GetValue(0)
-                    thisProject.Read()
-
-
-                    'On ajoute le projet dans le DataGridView
-                    dgvProjects.Rows.Add()
-                    dgvProjects.Item(0, ActiveRow).Value = thisProject.ID_Project           'ID du projet
-                    dgvProjects.Item(1, ActiveRow).Value = thisProject.Title                'Titre du projet
-                    dgvProjects.Item(2, ActiveRow).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")             'Deadline du projet
-                    dgvProjects.Item(3, ActiveRow).Value = thisProject.EstimatedResources   'Ressources estimées totales
-                    dgvProjects.Item(4, ActiveRow).Value = thisProject.EffectiveResources   'Ressources effectives totales
-                    thisProject.GetPlanResources()
-                    dgvProjects.Item(5, ActiveRow).Value = thisProject.PlanRessources       'Ressources planifiées totales
-
-                    Dim RessourcesToPlan As Single = thisProject.EstimatedResources - thisProject.EffectiveResources - thisProject.PlanRessources
-                    If RessourcesToPlan < 0 Then RessourcesToPlan = 0
-                    dgvProjects.Item(6, ActiveRow).Value = RessourcesToPlan
-
-                    TotalEstimated = TotalEstimated + thisProject.EstimatedResources
-                    TotalExecuted = TotalExecuted + thisProject.EffectiveResources
-                    TotalPlan = TotalPlan + thisProject.PlanRessources
-                    TotalToPlan = TotalToPlan + RessourcesToPlan
-
-                    '=================================================
-                    'Début Définition des couleurs de fond
-                    '=================================================
-
-                    'Couleur de fond pour le total
-                    Me.texColorTotal.BackColor = ColorForTotal
-                    dgvProjects.Columns(3).DefaultCellStyle.BackColor = ColorForTotal
-                    dgvProjects.Columns(4).DefaultCellStyle.BackColor = ColorForTotal
-                    dgvProjects.Columns(5).DefaultCellStyle.BackColor = ColorForTotal
-                    dgvProjects.Columns(6).DefaultCellStyle.BackColor = ColorForTotal
-
-
-                    'Couleur de fond pour l'infra
-                    Me.texColorInfra.BackColor = ColorForInfra
-                    dgvProjects.Columns(7).DefaultCellStyle.BackColor = ColorForInfra
-                    dgvProjects.Columns(8).DefaultCellStyle.BackColor = ColorForInfra
-                    dgvProjects.Columns(9).DefaultCellStyle.BackColor = ColorForInfra
-                    dgvProjects.Columns(10).DefaultCellStyle.BackColor = ColorForInfra
-
-
-                    'Couleur de fond pour SAP
-                    Me.texColorSAP.BackColor = ColorForSAP
-                    dgvProjects.Columns(11).DefaultCellStyle.BackColor = ColorForSAP
-                    dgvProjects.Columns(12).DefaultCellStyle.BackColor = ColorForSAP
-                    dgvProjects.Columns(13).DefaultCellStyle.BackColor = ColorForSAP
-                    dgvProjects.Columns(14).DefaultCellStyle.BackColor = ColorForSAP
-
-
-                    'Couleur de fond pour Helpdesk
-                    Me.texColorHelpdesk.BackColor = ColorForHelpdesk
-                    dgvProjects.Columns(15).DefaultCellStyle.BackColor = ColorForHelpdesk
-                    dgvProjects.Columns(16).DefaultCellStyle.BackColor = ColorForHelpdesk
-                    dgvProjects.Columns(17).DefaultCellStyle.BackColor = ColorForHelpdesk
-                    dgvProjects.Columns(18).DefaultCellStyle.BackColor = ColorForHelpdesk
-
-                    'Couleur de fond pour la planification
-                    Me.texColorPlaning.BackColor = ColorForPlaning
-                    dgvProjects.Columns(19).DefaultCellStyle.BackColor = ColorForPlaning
-                    dgvProjects.Columns(20).DefaultCellStyle.BackColor = ColorForPlaning
-                    dgvProjects.Columns(21).DefaultCellStyle.BackColor = ColorForPlaning
-                    dgvProjects.Columns(22).DefaultCellStyle.BackColor = ColorForPlaning
-
-                    '=================================================
-                    'Fin Définition des couleurs de fond
-                    '=================================================
-
-                    '=================================================
-                    'Début Ressources pour l'infra
-                    '=================================================
-                    thisPlan.CE_ID_Project = thisProject.ID_Project
-                    'dgvProjects.Item(7, ActiveRow).Value = thisProject.EstimatedResourcesInfra
-                    'TotalInfraEstimated = TotalInfraEstimated + thisProject.EstimatedResourcesInfra
-
-                    thisExec.CE_ID_Project = thisProject.ID_Project
-                    thisExec.CE_ID_Task = 1   '1 = Infrastructure
-                    thisExec.GetExecutedProjectResourcesPerTaskAndProject()
-                    dgvProjects.Item(8, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
-                    TotalInfraExecuted = TotalInfraExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
-
-                    thisPlan.CE_ID_Project = thisProject.ID_Project
-                    thisPlan.CE_ID_Task = 1   '1 = Infrastructure
-                    thisPlan.GetPlanProjectResourcesPerTaskAndProject()
-                    dgvProjects.Item(9, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
-                    TotalInfraPlan = TotalInfraPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
-
-                    'Dim PlanForInfra As Single = thisProject.EstimatedResourcesInfra - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
-                    'If PlanForInfra < 0 Then
-                    '    PlanForInfra = 0
-                    '    dgvProjects.Item(10, ActiveRow).Value = PlanForInfra & " (<--)"
-                    '    dgvProjects.Item(10, ActiveRow).Style.ForeColor = Color.Red
-                    'Else
-                    '    dgvProjects.Item(10, ActiveRow).Value = PlanForInfra
-                    'End If
-                    'TotalInfraToPlan = TotalInfraToPlan + PlanForInfra
-                    '=================================================
-                    'Fin Ressources pour l'infra
-                    '=================================================
-
-
-
-                    '=================================================
-                    'Début Ressources pour SAP
-                    '=================================================
-                    thisPlan.CE_ID_Project = thisProject.ID_Project
-                    'dgvProjects.Item(11, ActiveRow).Value = thisProject.EstimatedResourcesSAP
-                    'TotalSAPEstimated = TotalSAPEstimated + thisProject.EstimatedResourcesSAP
-
-                    thisExec.CE_ID_Project = thisProject.ID_Project
-                    thisExec.CE_ID_Task = 2   '2 = SAP
-                    thisExec.GetExecutedProjectResourcesPerTaskAndProject()
-                    dgvProjects.Item(12, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
-                    TotalSAPExecuted = TotalSAPExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
-
-                    thisPlan.CE_ID_Project = thisProject.ID_Project
-                    thisPlan.CE_ID_Task = 2   '2 = SAP
-                    thisPlan.GetPlanProjectResourcesPerTaskAndProject()
-                    dgvProjects.Item(13, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
-                    TotalSAPPlan = TotalSAPPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
-
-
-                    'Dim PlanForSAP As Single = thisProject.EstimatedResourcesSAP - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
-                    'If PlanForSAP < 0 Then
-                    '    PlanForSAP = 0
-                    '    dgvProjects.Item(14, ActiveRow).Value = PlanForSAP & " (<--)"
-                    '    dgvProjects.Item(14, ActiveRow).Style.ForeColor = Color.Red
-                    'Else
-                    '    dgvProjects.Item(14, ActiveRow).Value = PlanForSAP
-                    'End If
-                    'TotalSAPToPlan = TotalSAPToPlan + PlanForSAP
-                    '=================================================
-                    'Fin Ressources pour SAP
-                    '=================================================
-
-
-
-                    '=================================================
-                    'Début Ressources pour Helpdesk
-                    '=================================================
-                    'thisPlan.CE_ID_Project = thisProject.ID_Project
-                    'dgvProjects.Item(15, ActiveRow).Value = thisProject.EstimatedResourcesHelpdesk
-                    'TotalHelpdeskEstimated = TotalHelpdeskEstimated + thisProject.EstimatedResourcesHelpdesk
-
-                    'thisExec.CE_ID_Project = thisProject.ID_Project
-                    'thisExec.CE_ID_Task = 3   '3 = Helpdesk
-                    'thisExec.GetExecutedProjectResourcesPerTaskAndProject()
-                    'dgvProjects.Item(16, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
-                    'TotalHelpdeskExecuted = TotalHelpdeskExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
-
-                    'thisPlan.CE_ID_Project = thisProject.ID_Project
-                    'thisPlan.CE_ID_Task = 3   '3 = Helpdesk
-                    'thisPlan.GetPlanProjectResourcesPerTaskAndProject()
-                    'dgvProjects.Item(17, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
-                    'TotalHelpdeskPlan = TotalHelpdeskPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
-
-                    'Dim PlanForHelpdesk As Single = thisProject.EstimatedResourcesHelpdesk - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
-                    'If PlanForHelpdesk < 0 Then
-                    '    PlanForHelpdesk = 0
-                    '    dgvProjects.Item(18, ActiveRow).Value = PlanForHelpdesk & " (<--)"
-                    '    dgvProjects.Item(18, ActiveRow).Style.ForeColor = Color.Red
-                    'Else
-                    '    dgvProjects.Item(18, ActiveRow).Value = PlanForHelpdesk
-                    'End If
-                    'TotalHelpdeskToPlan = TotalHelpdeskToPlan + PlanForHelpdesk
-
-                    '=================================================
-                    'Fin Ressources pour Helpdesk
-                    '=================================================
-
-
-
-
-                    '=================================================
-                    'Début Ressources pour la planification
-                    '=================================================
-                    'thisPlan.CE_ID_Project = thisProject.ID_Project
-                    'dgvProjects.Item(19, ActiveRow).Value = thisProject.EstimatedResourcesPlaning
-                    'TotalPlaningEstimated = TotalPlaningEstimated + thisProject.EstimatedResourcesPlaning
-
-                    'thisExec.CE_ID_Project = thisProject.ID_Project
-                    'thisExec.CE_ID_Task = 4   '4 = Planing
-                    'thisExec.GetExecutedProjectResourcesPerTaskAndProject()
-                    'dgvProjects.Item(20, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
-                    'TotalPlaningExecuted = TotalPlaningExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
-
-                    'thisPlan.CE_ID_Project = thisProject.ID_Project
-                    'thisPlan.CE_ID_Task = 4   '4 = Planing
-                    'thisPlan.GetPlanProjectResourcesPerTaskAndProject()
-                    'dgvProjects.Item(21, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
-                    'TotalPlaningPlan = TotalPlaningPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
-
-                    'Dim PlanForPlaning As Single = thisProject.EstimatedResourcesPlaning - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
-                    'If PlanForPlaning < 0 Then
-                    '    PlanForPlaning = 0
-                    '    dgvProjects.Item(22, ActiveRow).Value = PlanForPlaning & " (<--)"
-                    '    dgvProjects.Item(22, ActiveRow).Style.ForeColor = Color.Red
-                    'Else
-                    '    dgvProjects.Item(22, ActiveRow).Value = PlanForPlaning
-                    'End If
-                    'TotalPlaningToPlan = TotalPlaningToPlan + PlanForPlaning
-
-                    '=================================================
-                    'Fin Ressources pour la planification
-                    '=================================================
-
-
-
-                    'On ajuste automatiquement la taille des coloness titre et catégorie
-                    Dim myCol0 As DataGridViewColumn = dgvProjects.Columns(0)
-                    myCol0.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                    dgvProjects.AutoResizeColumn(1)
-                    dgvProjects.AutoResizeColumn(2)
-                    dgvProjects.AutoResizeColumn(3)
-                    dgvProjects.AutoResizeColumn(4)
-                    dgvProjects.AutoResizeColumn(5)
-
-
-
-
-                    Dim myCol6 As DataGridViewColumn = dgvProjects.Columns(6)
-                    Dim myCol7 As DataGridViewColumn = dgvProjects.Columns(7)
-                    Dim myCol8 As DataGridViewColumn = dgvProjects.Columns(8)
-                    Dim myCol9 As DataGridViewColumn = dgvProjects.Columns(9)
-                    Dim myCol10 As DataGridViewColumn = dgvProjects.Columns(10)
-                    Dim myCol11 As DataGridViewColumn = dgvProjects.Columns(11)
-                    Dim myCol12 As DataGridViewColumn = dgvProjects.Columns(12)
-                    Dim myCol13 As DataGridViewColumn = dgvProjects.Columns(13)
-                    Dim myCol14 As DataGridViewColumn = dgvProjects.Columns(14)
-                    Dim myCol15 As DataGridViewColumn = dgvProjects.Columns(15)
-                    Dim myCol16 As DataGridViewColumn = dgvProjects.Columns(16)
-                    Dim myCol17 As DataGridViewColumn = dgvProjects.Columns(17)
-                    Dim myCol18 As DataGridViewColumn = dgvProjects.Columns(18)
-                    Dim myCol19 As DataGridViewColumn = dgvProjects.Columns(19)
-                    Dim myCol20 As DataGridViewColumn = dgvProjects.Columns(20)
-                    Dim myCol21 As DataGridViewColumn = dgvProjects.Columns(21)
-                    Dim myCol22 As DataGridViewColumn = dgvProjects.Columns(22)
-
-                    myCol6.Width = myColWidth
-                    myCol7.Width = myColWidth
-                    myCol8.Width = myColWidth
-                    myCol9.Width = myColWidth
-                    myCol10.Width = myColWidth
-                    myCol11.Width = myColWidth
-                    myCol12.Width = myColWidth
-                    myCol13.Width = myColWidth
-                    myCol14.Width = myColWidth
-                    myCol15.Width = myColWidth
-                    myCol16.Width = myColWidth
-                    myCol17.Width = myColWidth
-                    myCol18.Width = myColWidth
-                    myCol19.Width = myColWidth
-                    myCol20.Width = myColWidth
-                    myCol21.Width = myColWidth
-                    myCol22.Width = myColWidth
-
-                    'Alignement des cellules
-                    dgvProjects.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-
-                    dgvProjects.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-
-                    dgvProjects.Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(12).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(13).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(14).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-
-                    dgvProjects.Columns(15).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(16).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(17).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(18).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-
-                    dgvProjects.Columns(19).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(20).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(21).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    dgvProjects.Columns(22).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-
-
-
-
-
-                    ActiveRow = ActiveRow + 1
-                Catch ex As Exception
-                End Try
-
-            End While
-
-            myDBDataReader.Close()
-            MyDBConnection.Close()
-
-
-
-            'Récupération des totaux
-            myTotalInfra = TotalInfraToPlan
-            myTotalSAP = TotalSAPToPlan
-            myTotalHelpdesk = TotalHelpdeskToPlan
-            myTotalPlaning = TotalPlaningToPlan
-
-
-            'Affichage des totaux
-            dgvProjects.Rows.Add()
-            dgvProjects.Item(1, ActiveRow).Value = "TOTAUX"
-            dgvProjects.Item(3, ActiveRow).Value = TotalEstimated
-            dgvProjects.Item(4, ActiveRow).Value = TotalExecuted
-            dgvProjects.Item(5, ActiveRow).Value = TotalPlan
-            dgvProjects.Item(6, ActiveRow).Value = TotalToPlan
-
-            dgvProjects.Item(7, ActiveRow).Value = TotalInfraEstimated
-            dgvProjects.Item(8, ActiveRow).Value = TotalInfraExecuted
-            dgvProjects.Item(9, ActiveRow).Value = TotalInfraPlan
-            dgvProjects.Item(10, ActiveRow).Value = TotalInfraToPlan
-
-            dgvProjects.Item(11, ActiveRow).Value = TotalSAPEstimated
-            dgvProjects.Item(12, ActiveRow).Value = TotalSAPExecuted
-            dgvProjects.Item(13, ActiveRow).Value = TotalSAPPlan
-            dgvProjects.Item(14, ActiveRow).Value = TotalSAPToPlan
-
-            dgvProjects.Item(15, ActiveRow).Value = TotalHelpdeskEstimated
-            dgvProjects.Item(16, ActiveRow).Value = TotalHelpdeskExecuted
-            dgvProjects.Item(17, ActiveRow).Value = TotalHelpdeskPlan
-            dgvProjects.Item(18, ActiveRow).Value = TotalHelpdeskToPlan
-
-            dgvProjects.Item(19, ActiveRow).Value = TotalPlaningEstimated
-            dgvProjects.Item(20, ActiveRow).Value = TotalPlaningExecuted
-            dgvProjects.Item(21, ActiveRow).Value = TotalPlaningPlan
-            dgvProjects.Item(22, ActiveRow).Value = TotalPlaningToPlan
-
-            dgvProjects.Item(1, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-
-            dgvProjects.Item(3, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(4, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(5, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(6, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-
-            dgvProjects.Item(7, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(8, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(9, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(10, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-
-            dgvProjects.Item(11, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(12, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(13, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(14, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-
-            dgvProjects.Item(15, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(16, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(17, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(18, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-
-            dgvProjects.Item(19, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(20, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(21, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-            dgvProjects.Item(22, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
-
-
-
-
-            'dgvProjects.Rows(0).Selected = True
-            'ID_Project = dgvProjects.Item(0, dgvProjects.CurrentCell.RowIndex).Value
-
-            'On rend certains éléments visible après le chargement des données
-            dgvProjects.Visible = True
-
-
-            Me.Cursor = Cursors.Default
-
-        Catch ex As Exception
-
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-
-        End Try
     End Sub
 
     Private Sub pDisplayResouces(thisDGV As DataGridView, ID_Task As Integer)
@@ -1012,16 +525,16 @@ Public Class frmDashboard
 
             Select Case ID_Task
                 Case 1
-                    dgvInfrastructure.DefaultCellStyle.BackColor = ColorForInfra
+                    'dgvInfrastructure.DefaultCellStyle.BackColor = ColorForInfra
 
                 Case 2
-                    dgvSAP.DefaultCellStyle.BackColor = ColorForSAP
+                    'dgvSAP.DefaultCellStyle.BackColor = ColorForSAP
 
                 Case 3
-                    dgvHelpdesk.DefaultCellStyle.BackColor = ColorForHelpdesk
+                    'dgvHelpdesk.DefaultCellStyle.BackColor = ColorForHelpdesk
 
                 Case 4
-                    dgvPlaning.DefaultCellStyle.BackColor = ColorForPlaning
+                    'dgvPlaning.DefaultCellStyle.BackColor = ColorForPlaning
 
             End Select
 
@@ -1343,5 +856,621 @@ Public Class frmDashboard
             GC.Collect()
         End Try
     End Sub
+
+
+    Private Sub pDisplayTasks()
+        Try
+
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+            Dim Sql As String = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
+
+            Dim myTask As New myTask
+
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read
+
+                'Lecture du premier paramètre 
+                Try
+                    'Lecture du nombre d'enregistrement (en demi-jour)
+                    myTask.ID_Task = myDBDataReader.GetValue(0)
+                Catch ex As Exception
+                End Try
+
+                myTask.Read()
+
+                Dim myPage As New TabPage
+
+                myPage.BackColor = Color.FromArgb(myTask.BackColor)
+                myPage.Text = myTask.Task
+
+                Me.tabTaskType.TabPages.Add(myPage)
+
+            End While
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+
+
+    Private Sub pDisplayProjects()
+
+        Try
+
+
+            'Dim TotalEstimated As Single = 0
+            'Dim TotalExecuted As Single = 0
+            'Dim TotalPlan As Single = 0
+            'Dim TotalToPlan As Single = 0
+
+            'Dim TotalInfraEstimated As Single = 0
+            'Dim TotalInfraExecuted As Single = 0
+            'Dim TotalInfraPlan As Single = 0
+            'Dim TotalInfraToPlan As Single = 0
+
+            'Dim TotalSAPEstimated As Single = 0
+            'Dim TotalSAPExecuted As Single = 0
+            'Dim TotalSAPPlan As Single = 0
+            'Dim TotalSAPToPlan As Single = 0
+
+            'Dim TotalHelpdeskEstimated As Single = 0
+            'Dim TotalHelpdeskExecuted As Single = 0
+            'Dim TotalHelpdeskPlan As Single = 0
+            'Dim TotalHelpdeskToPlan As Single = 0
+
+            'Dim TotalPlaningEstimated As Single = 0
+            'Dim TotalPlaningExecuted As Single = 0
+            'Dim TotalPlaningPlan As Single = 0
+            'Dim TotalPlaningToPlan As Single = 0
+
+            Dim thisProject As New myProject
+            Dim thisTask As New myTask
+
+            Dim ActiveRow As Integer = 0
+            Dim TaskCount As Integer = 0
+            Dim ProjectCount As Integer = 0
+
+            Dim MyDBConnection As New MySqlConnection
+
+            Dim myDBDataReaderTask As MySqlDataReader
+            Dim myDBDataReaderProject As MySqlDataReader
+
+            Dim SQL As String = ""
+            'SQL = "SELECT ID_Project FROM Projects WHERE CE_ID_Status IN (6,7,8,9);"
+            'SQL = "SELECT ID_Project FROM Projects ;"
+            SQL = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
+
+            'Me.Cursor = Cursors.WaitCursor
+
+            'On vide le DataGridView
+            dgvProjects.Rows.Clear()
+            dgvProjects.Columns.Clear()
+
+            'On rend certains éléments invisible durant le chargement des données
+            'dgvProjects.Visible = False
+
+            'Définition du DataGridView
+            dgvProjects.ReadOnly = True
+            dgvProjects.AllowUserToAddRows = False
+            dgvProjects.AllowUserToDeleteRows = False
+            dgvProjects.MultiSelect = False
+
+
+
+            'Définition des colonnes 0 - 6
+            dgvProjects.Columns.Add("ID", "ID")                         '0  ID_Project 
+            dgvProjects.Columns.Add("Projet", "Projet")                 '1  Nom du projet
+            dgvProjects.Columns.Add("Deadline", "Deadline")             '2  Deadline
+            dgvProjects.Columns.Add("Estimées", "Estimées")             '3  Ressources estimées pour tout le projet
+            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '4  Ressources effectuées pour tout le projet
+            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '5  Ressources planifiées pour tout le projet
+            dgvProjects.Columns.Add("A planifier", "A planifier")       '6  Ressources à encore à planifier pour tout le projet
+
+
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommandTask As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+
+            myDBDataReaderTask = myDBCommandTask.ExecuteReader()
+
+            While myDBDataReaderTask.Read
+
+                'Lecture du projet
+                thisTask.ID_Task = myDBDataReaderTask.GetValue(0)
+                thisTask.Read()
+
+                dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour l'infra
+                dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour l'infra
+                dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour l'infra
+                dgvProjects.Columns.Add("A planifier", "A planifier")       '10 Ressources à encore à planifier pour l'infra
+
+                dgvProjects.Columns(TaskCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                dgvProjects.Columns(TaskCount * 4 + 8).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                dgvProjects.Columns(TaskCount * 4 + 9).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                dgvProjects.Columns(TaskCount * 4 + 10).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+
+                TaskCount += 1
+
+            End While
+
+
+            myDBDataReaderTask.Close()
+            MyDBConnection.Close()
+
+
+
+            'La colonne 0 (ID_Project) n'est pas visible
+            dgvProjects.Columns(0).Visible = True
+            For i = 1 To dgvProjects.ColumnCount - 1
+                'Les autres colonnes sont visibles
+                dgvProjects.Columns(i).Visible = True
+                'On empêche de trier les colonnes de manière alphabétiques
+                dgvProjects.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            Next i
+
+
+            SQL = "SELECT ID_Project FROM Projects;"
+
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+
+            Dim myDBCommandProject As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+
+            myDBDataReaderProject = myDBCommandProject.ExecuteReader()
+            While myDBDataReaderProject.Read
+
+                'Lecture du projet
+                thisProject.ID_Project = myDBDataReaderProject.GetValue(0)
+                thisProject.Read()
+
+
+                'On ajoute le projet dans le DataGridView
+                dgvProjects.Rows.Add()
+                dgvProjects.Item(0, ProjectCount).Value = thisProject.ID_Project           'ID du projet
+                dgvProjects.Item(1, ProjectCount).Value = thisProject.Title                'Titre du projet
+                dgvProjects.Item(2, ProjectCount).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")             'Deadline du projet
+                dgvProjects.Item(3, ProjectCount).Value = thisProject.EstimatedResources   'Ressources estimées totales
+                dgvProjects.Item(4, ProjectCount).Value = thisProject.EffectiveResources   'Ressources effectives totales
+                thisProject.GetPlanResources()
+                dgvProjects.Item(5, ProjectCount).Value = thisProject.PlanRessources       'Ressources planifiées totales
+
+                'dgvProjects.Columns(ProjectCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+
+                ProjectCount += 1
+
+
+
+            End While
+
+
+            myDBDataReaderProject.Close()
+
+
+            Exit Sub
+
+
+            If ProjectCount = 1 Then
+                'dgvProjects.Columns(11).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                'dgvProjects.Columns(12).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                'dgvProjects.Columns(13).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                'dgvProjects.Columns(13).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+
+            End If
+
+
+
+
+
+            'MyDBConnection.ConnectionString = cnProjectPlan
+            'MyDBConnection.Open()
+
+            'Dim myDBCommand2 As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+
+            'myDBDataReader = myDBCommand.ExecuteReader()
+
+            'While myDBDataReader.Read
+
+            '    Dim thisProject As New myProject
+            '    Dim thisCategory As New myProjectCategory
+            '    Dim thisPlan As New myPlanResource
+            '    Dim thisExec As New myExecuteResource
+
+            'Try
+            '        'Lecture du projet
+            '        thisProject.ID_Project = myDBDataReader.GetValue(0)
+            '        thisProject.Read()
+
+
+            '        'On ajoute le projet dans le DataGridView
+            '        dgvProjects.Rows.Add()
+            '        dgvProjects.Item(0, ActiveRow).Value = thisProject.ID_Project           'ID du projet
+            '        dgvProjects.Item(1, ActiveRow).Value = thisProject.Title                'Titre du projet
+            '        dgvProjects.Item(2, ActiveRow).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")             'Deadline du projet
+            '        dgvProjects.Item(3, ActiveRow).Value = thisProject.EstimatedResources   'Ressources estimées totales
+            '        dgvProjects.Item(4, ActiveRow).Value = thisProject.EffectiveResources   'Ressources effectives totales
+            '        thisProject.GetPlanResources()
+            '        dgvProjects.Item(5, ActiveRow).Value = thisProject.PlanRessources       'Ressources planifiées totales
+
+            '        Dim RessourcesToPlan As Single = thisProject.EstimatedResources - thisProject.EffectiveResources - thisProject.PlanRessources
+            '        If RessourcesToPlan < 0 Then RessourcesToPlan = 0
+            '        dgvProjects.Item(6, ActiveRow).Value = RessourcesToPlan
+
+            '        TotalEstimated = TotalEstimated + thisProject.EstimatedResources
+            '        TotalExecuted = TotalExecuted + thisProject.EffectiveResources
+            '        TotalPlan = TotalPlan + thisProject.PlanRessources
+            '        TotalToPlan = TotalToPlan + RessourcesToPlan
+
+            '        '=================================================
+            '        'Début Définition des couleurs de fond
+            '        '=================================================
+
+            '        'Couleur de fond pour le total
+            '        Me.texColorTotal.BackColor = ColorForTotal
+            '        dgvProjects.Columns(3).DefaultCellStyle.BackColor = ColorForTotal
+            '        dgvProjects.Columns(4).DefaultCellStyle.BackColor = ColorForTotal
+            '        dgvProjects.Columns(5).DefaultCellStyle.BackColor = ColorForTotal
+            '        dgvProjects.Columns(6).DefaultCellStyle.BackColor = ColorForTotal
+
+
+            '        'Couleur de fond pour l'infra
+            '        Me.texColorInfra.BackColor = ColorForInfra
+            '        dgvProjects.Columns(7).DefaultCellStyle.BackColor = ColorForInfra
+            '        dgvProjects.Columns(8).DefaultCellStyle.BackColor = ColorForInfra
+            '        dgvProjects.Columns(9).DefaultCellStyle.BackColor = ColorForInfra
+            '        dgvProjects.Columns(10).DefaultCellStyle.BackColor = ColorForInfra
+
+
+            '        'Couleur de fond pour SAP
+            '        Me.texColorSAP.BackColor = ColorForSAP
+            '        dgvProjects.Columns(11).DefaultCellStyle.BackColor = ColorForSAP
+            '        dgvProjects.Columns(12).DefaultCellStyle.BackColor = ColorForSAP
+            '        dgvProjects.Columns(13).DefaultCellStyle.BackColor = ColorForSAP
+            '        dgvProjects.Columns(14).DefaultCellStyle.BackColor = ColorForSAP
+
+
+            '        'Couleur de fond pour Helpdesk
+            '        Me.texColorHelpdesk.BackColor = ColorForHelpdesk
+            '        dgvProjects.Columns(15).DefaultCellStyle.BackColor = ColorForHelpdesk
+            '        dgvProjects.Columns(16).DefaultCellStyle.BackColor = ColorForHelpdesk
+            '        dgvProjects.Columns(17).DefaultCellStyle.BackColor = ColorForHelpdesk
+            '        dgvProjects.Columns(18).DefaultCellStyle.BackColor = ColorForHelpdesk
+
+            '        'Couleur de fond pour la planification
+            '        Me.texColorPlaning.BackColor = ColorForPlaning
+            '        dgvProjects.Columns(19).DefaultCellStyle.BackColor = ColorForPlaning
+            '        dgvProjects.Columns(20).DefaultCellStyle.BackColor = ColorForPlaning
+            '        dgvProjects.Columns(21).DefaultCellStyle.BackColor = ColorForPlaning
+            '        dgvProjects.Columns(22).DefaultCellStyle.BackColor = ColorForPlaning
+
+            '        '=================================================
+            '        'Fin Définition des couleurs de fond
+            '        '=================================================
+
+            '        '=================================================
+            '        'Début Ressources pour l'infra
+            '        '=================================================
+            '        thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        'dgvProjects.Item(7, ActiveRow).Value = thisProject.EstimatedResourcesInfra
+            '        'TotalInfraEstimated = TotalInfraEstimated + thisProject.EstimatedResourcesInfra
+
+            '        thisExec.CE_ID_Project = thisProject.ID_Project
+            '        thisExec.CE_ID_Task = 1   '1 = Infrastructure
+            '        thisExec.GetExecutedProjectResourcesPerTaskAndProject()
+            '        dgvProjects.Item(8, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
+            '        TotalInfraExecuted = TotalInfraExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
+
+            '        thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        thisPlan.CE_ID_Task = 1   '1 = Infrastructure
+            '        thisPlan.GetPlanProjectResourcesPerTaskAndProject()
+            '        dgvProjects.Item(9, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        TotalInfraPlan = TotalInfraPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
+
+            '        'Dim PlanForInfra As Single = thisProject.EstimatedResourcesInfra - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        'If PlanForInfra < 0 Then
+            '        '    PlanForInfra = 0
+            '        '    dgvProjects.Item(10, ActiveRow).Value = PlanForInfra & " (<--)"
+            '        '    dgvProjects.Item(10, ActiveRow).Style.ForeColor = Color.Red
+            '        'Else
+            '        '    dgvProjects.Item(10, ActiveRow).Value = PlanForInfra
+            '        'End If
+            '        'TotalInfraToPlan = TotalInfraToPlan + PlanForInfra
+            '        '=================================================
+            '        'Fin Ressources pour l'infra
+            '        '=================================================
+
+
+
+            '        '=================================================
+            '        'Début Ressources pour SAP
+            '        '=================================================
+            '        thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        'dgvProjects.Item(11, ActiveRow).Value = thisProject.EstimatedResourcesSAP
+            '        'TotalSAPEstimated = TotalSAPEstimated + thisProject.EstimatedResourcesSAP
+
+            '        thisExec.CE_ID_Project = thisProject.ID_Project
+            '        thisExec.CE_ID_Task = 2   '2 = SAP
+            '        thisExec.GetExecutedProjectResourcesPerTaskAndProject()
+            '        dgvProjects.Item(12, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
+            '        TotalSAPExecuted = TotalSAPExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
+
+            '        thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        thisPlan.CE_ID_Task = 2   '2 = SAP
+            '        thisPlan.GetPlanProjectResourcesPerTaskAndProject()
+            '        dgvProjects.Item(13, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        TotalSAPPlan = TotalSAPPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
+
+
+            '        'Dim PlanForSAP As Single = thisProject.EstimatedResourcesSAP - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        'If PlanForSAP < 0 Then
+            '        '    PlanForSAP = 0
+            '        '    dgvProjects.Item(14, ActiveRow).Value = PlanForSAP & " (<--)"
+            '        '    dgvProjects.Item(14, ActiveRow).Style.ForeColor = Color.Red
+            '        'Else
+            '        '    dgvProjects.Item(14, ActiveRow).Value = PlanForSAP
+            '        'End If
+            '        'TotalSAPToPlan = TotalSAPToPlan + PlanForSAP
+            '        '=================================================
+            '        'Fin Ressources pour SAP
+            '        '=================================================
+
+
+
+            '        '=================================================
+            '        'Début Ressources pour Helpdesk
+            '        '=================================================
+            '        'thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        'dgvProjects.Item(15, ActiveRow).Value = thisProject.EstimatedResourcesHelpdesk
+            '        'TotalHelpdeskEstimated = TotalHelpdeskEstimated + thisProject.EstimatedResourcesHelpdesk
+
+            '        'thisExec.CE_ID_Project = thisProject.ID_Project
+            '        'thisExec.CE_ID_Task = 3   '3 = Helpdesk
+            '        'thisExec.GetExecutedProjectResourcesPerTaskAndProject()
+            '        'dgvProjects.Item(16, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
+            '        'TotalHelpdeskExecuted = TotalHelpdeskExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
+
+            '        'thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        'thisPlan.CE_ID_Task = 3   '3 = Helpdesk
+            '        'thisPlan.GetPlanProjectResourcesPerTaskAndProject()
+            '        'dgvProjects.Item(17, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        'TotalHelpdeskPlan = TotalHelpdeskPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
+
+            '        'Dim PlanForHelpdesk As Single = thisProject.EstimatedResourcesHelpdesk - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        'If PlanForHelpdesk < 0 Then
+            '        '    PlanForHelpdesk = 0
+            '        '    dgvProjects.Item(18, ActiveRow).Value = PlanForHelpdesk & " (<--)"
+            '        '    dgvProjects.Item(18, ActiveRow).Style.ForeColor = Color.Red
+            '        'Else
+            '        '    dgvProjects.Item(18, ActiveRow).Value = PlanForHelpdesk
+            '        'End If
+            '        'TotalHelpdeskToPlan = TotalHelpdeskToPlan + PlanForHelpdesk
+
+            '        '=================================================
+            '        'Fin Ressources pour Helpdesk
+            '        '=================================================
+
+
+
+
+            '        '=================================================
+            '        'Début Ressources pour la planification
+            '        '=================================================
+            '        'thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        'dgvProjects.Item(19, ActiveRow).Value = thisProject.EstimatedResourcesPlaning
+            '        'TotalPlaningEstimated = TotalPlaningEstimated + thisProject.EstimatedResourcesPlaning
+
+            '        'thisExec.CE_ID_Project = thisProject.ID_Project
+            '        'thisExec.CE_ID_Task = 4   '4 = Planing
+            '        'thisExec.GetExecutedProjectResourcesPerTaskAndProject()
+            '        'dgvProjects.Item(20, ActiveRow).Value = thisExec.ExecutedProjectResourcesPerTaskAndProject
+            '        'TotalPlaningExecuted = TotalPlaningExecuted + thisExec.ExecutedProjectResourcesPerTaskAndProject
+
+            '        'thisPlan.CE_ID_Project = thisProject.ID_Project
+            '        'thisPlan.CE_ID_Task = 4   '4 = Planing
+            '        'thisPlan.GetPlanProjectResourcesPerTaskAndProject()
+            '        'dgvProjects.Item(21, ActiveRow).Value = thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        'TotalPlaningPlan = TotalPlaningPlan + thisPlan.PlanProjectResourcesPerTaskAndProject
+
+            '        'Dim PlanForPlaning As Single = thisProject.EstimatedResourcesPlaning - thisExec.ExecutedProjectResourcesPerTaskAndProject - thisPlan.PlanProjectResourcesPerTaskAndProject
+            '        'If PlanForPlaning < 0 Then
+            '        '    PlanForPlaning = 0
+            '        '    dgvProjects.Item(22, ActiveRow).Value = PlanForPlaning & " (<--)"
+            '        '    dgvProjects.Item(22, ActiveRow).Style.ForeColor = Color.Red
+            '        'Else
+            '        '    dgvProjects.Item(22, ActiveRow).Value = PlanForPlaning
+            '        'End If
+            '        'TotalPlaningToPlan = TotalPlaningToPlan + PlanForPlaning
+
+            '        '=================================================
+            '        'Fin Ressources pour la planification
+            '        '=================================================
+
+
+
+            '        'On ajuste automatiquement la taille des coloness titre et catégorie
+            '        Dim myCol0 As DataGridViewColumn = dgvProjects.Columns(0)
+            '        myCol0.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            '        dgvProjects.AutoResizeColumn(1)
+            '        dgvProjects.AutoResizeColumn(2)
+            '        dgvProjects.AutoResizeColumn(3)
+            '        dgvProjects.AutoResizeColumn(4)
+            '        dgvProjects.AutoResizeColumn(5)
+
+
+
+
+            '        Dim myCol6 As DataGridViewColumn = dgvProjects.Columns(6)
+            '        Dim myCol7 As DataGridViewColumn = dgvProjects.Columns(7)
+            '        Dim myCol8 As DataGridViewColumn = dgvProjects.Columns(8)
+            '        Dim myCol9 As DataGridViewColumn = dgvProjects.Columns(9)
+            '        Dim myCol10 As DataGridViewColumn = dgvProjects.Columns(10)
+            '        Dim myCol11 As DataGridViewColumn = dgvProjects.Columns(11)
+            '        Dim myCol12 As DataGridViewColumn = dgvProjects.Columns(12)
+            '        Dim myCol13 As DataGridViewColumn = dgvProjects.Columns(13)
+            '        Dim myCol14 As DataGridViewColumn = dgvProjects.Columns(14)
+            '        Dim myCol15 As DataGridViewColumn = dgvProjects.Columns(15)
+            '        Dim myCol16 As DataGridViewColumn = dgvProjects.Columns(16)
+            '        Dim myCol17 As DataGridViewColumn = dgvProjects.Columns(17)
+            '        Dim myCol18 As DataGridViewColumn = dgvProjects.Columns(18)
+            '        Dim myCol19 As DataGridViewColumn = dgvProjects.Columns(19)
+            '        Dim myCol20 As DataGridViewColumn = dgvProjects.Columns(20)
+            '        Dim myCol21 As DataGridViewColumn = dgvProjects.Columns(21)
+            '        Dim myCol22 As DataGridViewColumn = dgvProjects.Columns(22)
+
+            '        myCol6.Width = myColWidth
+            '        myCol7.Width = myColWidth
+            '        myCol8.Width = myColWidth
+            '        myCol9.Width = myColWidth
+            '        myCol10.Width = myColWidth
+            '        myCol11.Width = myColWidth
+            '        myCol12.Width = myColWidth
+            '        myCol13.Width = myColWidth
+            '        myCol14.Width = myColWidth
+            '        myCol15.Width = myColWidth
+            '        myCol16.Width = myColWidth
+            '        myCol17.Width = myColWidth
+            '        myCol18.Width = myColWidth
+            '        myCol19.Width = myColWidth
+            '        myCol20.Width = myColWidth
+            '        myCol21.Width = myColWidth
+            '        myCol22.Width = myColWidth
+
+            '        'Alignement des cellules
+            '        dgvProjects.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+            '        dgvProjects.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+            '        dgvProjects.Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(12).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(13).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(14).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+            '        dgvProjects.Columns(15).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(16).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(17).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(18).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+            '        dgvProjects.Columns(19).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(20).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(21).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '        dgvProjects.Columns(22).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+
+
+
+
+            '        ActiveRow = ActiveRow + 1
+            '    Catch ex As Exception
+            '    End Try
+
+            'End While
+
+            'myDBDataReader.Close()
+            'MyDBConnection.Close()
+
+
+
+            ''Récupération des totaux
+            'myTotalInfra = TotalInfraToPlan
+            'myTotalSAP = TotalSAPToPlan
+            'myTotalHelpdesk = TotalHelpdeskToPlan
+            'myTotalPlaning = TotalPlaningToPlan
+
+
+            ''Affichage des totaux
+            'dgvProjects.Rows.Add()
+            'dgvProjects.Item(1, ActiveRow).Value = "TOTAUX"
+            'dgvProjects.Item(3, ActiveRow).Value = TotalEstimated
+            'dgvProjects.Item(4, ActiveRow).Value = TotalExecuted
+            'dgvProjects.Item(5, ActiveRow).Value = TotalPlan
+            'dgvProjects.Item(6, ActiveRow).Value = TotalToPlan
+
+            'dgvProjects.Item(7, ActiveRow).Value = TotalInfraEstimated
+            'dgvProjects.Item(8, ActiveRow).Value = TotalInfraExecuted
+            'dgvProjects.Item(9, ActiveRow).Value = TotalInfraPlan
+            'dgvProjects.Item(10, ActiveRow).Value = TotalInfraToPlan
+
+            'dgvProjects.Item(11, ActiveRow).Value = TotalSAPEstimated
+            'dgvProjects.Item(12, ActiveRow).Value = TotalSAPExecuted
+            'dgvProjects.Item(13, ActiveRow).Value = TotalSAPPlan
+            'dgvProjects.Item(14, ActiveRow).Value = TotalSAPToPlan
+
+            'dgvProjects.Item(15, ActiveRow).Value = TotalHelpdeskEstimated
+            'dgvProjects.Item(16, ActiveRow).Value = TotalHelpdeskExecuted
+            'dgvProjects.Item(17, ActiveRow).Value = TotalHelpdeskPlan
+            'dgvProjects.Item(18, ActiveRow).Value = TotalHelpdeskToPlan
+
+            'dgvProjects.Item(19, ActiveRow).Value = TotalPlaningEstimated
+            'dgvProjects.Item(20, ActiveRow).Value = TotalPlaningExecuted
+            'dgvProjects.Item(21, ActiveRow).Value = TotalPlaningPlan
+            'dgvProjects.Item(22, ActiveRow).Value = TotalPlaningToPlan
+
+            dgvProjects.Item(1, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+
+            dgvProjects.Item(3, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(4, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(5, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(6, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+
+            dgvProjects.Item(7, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(8, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(9, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(10, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+
+            dgvProjects.Item(11, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(12, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(13, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(14, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+
+            dgvProjects.Item(15, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(16, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(17, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(18, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+
+            dgvProjects.Item(19, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(20, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(21, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+            dgvProjects.Item(22, ActiveRow).Style.Font = New Font("Arial", 10, FontStyle.Bold)
+
+
+
+
+            'dgvProjects.Rows(0).Selected = True
+            'ID_Project = dgvProjects.Item(0, dgvProjects.CurrentCell.RowIndex).Value
+
+            'On rend certains éléments visible après le chargement des données
+            dgvProjects.Visible = True
+
+
+            Me.Cursor = Cursors.Default
+
+        Catch ex As Exception
+
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+
+        End Try
+    End Sub
+
 
 End Class

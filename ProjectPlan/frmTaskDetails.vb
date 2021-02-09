@@ -91,4 +91,5 @@ Public Class frmTaskDetails
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
+
 End Class
