@@ -1091,25 +1091,26 @@ Public Class myPlanResource
             'INPUT : ID_ProjectMember
             'INPUT : PlanDate
             'INPUT : Hour
+            'si une de ces 3 valeurs n'est pas définies, on n'efface rien
 
+            If Me.CE_ID_ProjectMember <> 0 And Not IsNothing(Me.PlanDate) And Hour <> 0 Then
+                Dim MyDBConnection As New MySqlConnection
+                Dim myDBDataReader As MySqlDataReader
 
-            Dim MyDBConnection As New MySqlConnection
+                Dim SQL As String = ""
+                SQL &= "DELETE FROM PlanResources WHERE "
+                SQL &= "CE_ID_ProjectMember = " & Me.CE_ID_ProjectMember & " "
+                SQL &= "AND PlanDate = '" & fConvertDateOnlyMySQL(Me.PlanDate) & "' "
+                SQL &= "AND Hour = " & Me.Hour & "; "
 
-            Dim myDBDataReader As MySqlDataReader
-            Dim SQL As String = ""
+                MyDBConnection.ConnectionString = cnProjectPlan
 
-            SQL &= "DELETE FROM PlanResources WHERE "
-            SQL &= "CE_ID_ProjectMember = " & Me.CE_ID_ProjectMember & " "
-            SQL &= "AND PlanDate = '" & fConvertDateOnlyMySQL(Me.PlanDate) & "' "
-            SQL &= "AND Hour = " & Me.Hour & "; "
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-
-            MyDBConnection.Open()
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
-            myDBDataReader = myDBCommand.ExecuteReader()
-            myDBDataReader.Close()
-            MyDBConnection.Close()
+                MyDBConnection.Open()
+                Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+                myDBDataReader = myDBCommand.ExecuteReader()
+                myDBDataReader.Close()
+                MyDBConnection.Close()
+            End If
 
 
         Catch ex As Exception

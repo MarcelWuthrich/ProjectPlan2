@@ -112,6 +112,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsResoucesAdmin.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dsResourceProjectsList.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsResourceProjectsList.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsResourcesAdmin.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsResourcesAdmin.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dsStatus.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,6 +183,18 @@
       <DependentUpon>frmProjectMemberDetails.vb</DependentUpon>
     </Compile>
     <Compile Include="frmProjectMemberDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmResourceAdminList.Designer.vb">
+      <DependentUpon>frmResourceAdminList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResourceAdminList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmResourceProjectsList.Designer.vb">
+      <DependentUpon>frmResourceProjectsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResourceProjectsList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmResourcesPlanSeries.Designer.vb">
@@ -309,6 +331,12 @@
     <EmbeddedResource Include="frmProjectMemberDetails.resx">
       <DependentUpon>frmProjectMemberDetails.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmResourceAdminList.resx">
+      <DependentUpon>frmResourceAdminList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResourceProjectsList.resx">
+      <DependentUpon>frmResourceProjectsList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmResourcesPlanSeries.resx">
       <DependentUpon>frmResourcesPlanSeries.vb</DependentUpon>
     </EmbeddedResource>
@@ -426,6 +454,28 @@
     </None>
     <None Include="dsResoucesAdmin.xss">
       <DependentUpon>dsResoucesAdmin.xsd</DependentUpon>
+    </None>
+    <None Include="dsResourceProjectsList.xsc">
+      <DependentUpon>dsResourceProjectsList.xsd</DependentUpon>
+    </None>
+    <None Include="dsResourceProjectsList.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsResourceProjectsList.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsResourceProjectsList.xss">
+      <DependentUpon>dsResourceProjectsList.xsd</DependentUpon>
+    </None>
+    <None Include="dsResourcesAdmin.xsc">
+      <DependentUpon>dsResourcesAdmin.xsd</DependentUpon>
+    </None>
+    <None Include="dsResourcesAdmin.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsResourcesAdmin.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsResourcesAdmin.xss">
+      <DependentUpon>dsResourcesAdmin.xsd</DependentUpon>
     </None>
     <None Include="dsStatus.xsc">
       <DependentUpon>dsStatus.xsd</DependentUpon>

@@ -377,11 +377,11 @@ Public Class frmResourcesTable
             item4.Tag = 4
             AddHandler item4.Click, AddressOf menuChoice
 
-            Dim item5 = cms.Items.Add("Bloquer une/des date/s")
+            Dim item5 = cms.Items.Add("Bloquer une/des date/s --> pas encore implémenté")
             item5.Tag = 5
             AddHandler item5.Click, AddressOf menuChoice
 
-            Dim item6 = cms.Items.Add("Débloquer une/des date/s")
+            Dim item6 = cms.Items.Add("Débloquer une/des date/s --> pas encore implémenté")
             item6.Tag = 6
             AddHandler item6.Click, AddressOf menuChoice
 
@@ -389,11 +389,11 @@ Public Class frmResourcesTable
             item7.Tag = 7
             AddHandler item7.Click, AddressOf menuChoice
 
-            Dim item8 = cms.Items.Add("Ajouter une/des remarque/s")
+            Dim item8 = cms.Items.Add("Ajouter une/des remarque/s --> pas encore implémenté")
             item8.Tag = 8
             AddHandler item8.Click, AddressOf menuChoice
 
-            Dim item9 = cms.Items.Add("Effacer une/des remarque/s")
+            Dim item9 = cms.Items.Add("Effacer une/des remarque/s --> pas encore implémenté")
             item9.Tag = 9
             AddHandler item9.Click, AddressOf menuChoice
 
@@ -418,14 +418,22 @@ Public Class frmResourcesTable
             Dim selection = CInt(item.Tag)
 
             If selection = 1 Then
-
+                'Effacer les cellules sélectionnées
                 pDeleteSelectedCells()
-
-                'On déclenche le sablier
-                'Cursor.Current = Cursors.Default
-
             End If
 
+            If selection = 2 Then
+                'Insérer une tâche administrative
+                pAddAdministrativeTask()
+            End If
+
+            If selection = 3 Then
+                'Insérer un projet
+                pAddProject()
+            End If
+
+
+            pCreateDGVColumns()
             pDisplayDGVContent()
 
 
@@ -492,9 +500,6 @@ Public Class frmResourcesTable
 
             Next myCell
 
-            pCreateDGVColumns()
-            pDisplayDGVContent()
-
 
 
         Catch ex As Exception
@@ -502,5 +507,106 @@ Public Class frmResourcesTable
         End Try
     End Sub
 
+    Private Sub pAddAdministrativeTask()
+        Try
+
+
+            Dim myDGV As DataGridView = Me.dgvPlanning
+            Dim mySelectedCells As DataGridViewSelectedCellCollection
+            Dim myCell As DataGridViewCell
+            Dim mySelectedColumns As DataGridViewTextBoxColumn
+
+            Dim thisID_ProjectMember As Integer = 0
+            Dim thisDate As DateTime
+
+            Dim thisResource As myPlanResource = Nothing
+
+
+            mySelectedCells = myDGV.SelectedCells
+
+            'On reset la variable globale
+            G_ID_ResourceAdmin = 0
+
+            'On affiche la fenêtre des ressouces administratives
+            Dim myForm As Form = frmResourceAdminList
+            myForm.ShowDialog()
+            myForm.Dispose()
+
+
+            For Each myCell In mySelectedCells
+                Dim myRow As Integer = myCell.RowIndex
+                Dim myCol As Integer = myCell.ColumnIndex
+
+                mySelectedColumns = myDGV.Columns(myCol)
+                thisID_ProjectMember = CInt(mySelectedColumns.Name)
+
+                thisDate = myDGV.Rows(myRow).HeaderCell.Value
+
+                thisResource = New myPlanResource
+                thisResource.CE_ID_ProjectMember = thisID_ProjectMember
+                thisResource.Hour = CInt(Hour(thisDate))
+                thisResource.PlanDate = thisDate
+                thisResource.CE_ID_AdminResource = G_ID_ResourceAdmin
+                thisResource.Save()
+
+
+            Next myCell
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+
+    Private Sub pAddProject()
+
+        Try
+            Dim myDGV As DataGridView = Me.dgvPlanning
+            Dim mySelectedCells As DataGridViewSelectedCellCollection
+            Dim myCell As DataGridViewCell
+            Dim mySelectedColumns As DataGridViewTextBoxColumn
+
+            Dim thisID_ProjectMember As Integer = 0
+            Dim thisDate As DateTime
+
+            Dim thisResource As myPlanResource = Nothing
+
+
+            mySelectedCells = myDGV.SelectedCells
+
+            'On reset la variable globale
+            G_ID_ResourceProject = 0
+
+            'On affiche la fenêtre des ressouces administratives
+            Dim myForm As Form = frmResourceProjectsList
+            myForm.ShowDialog()
+            myForm.Dispose()
+
+
+            For Each myCell In mySelectedCells
+                Dim myRow As Integer = myCell.RowIndex
+                Dim myCol As Integer = myCell.ColumnIndex
+
+                mySelectedColumns = myDGV.Columns(myCol)
+                thisID_ProjectMember = CInt(mySelectedColumns.Name)
+
+                thisDate = myDGV.Rows(myRow).HeaderCell.Value
+
+                thisResource = New myPlanResource
+                thisResource.CE_ID_ProjectMember = thisID_ProjectMember
+                thisResource.Hour = CInt(Hour(thisDate))
+                thisResource.PlanDate = thisDate
+                thisResource.CE_ID_Project = G_ID_ResourceProject
+                thisResource.Save()
+
+
+            Next myCell
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 
 End Class
