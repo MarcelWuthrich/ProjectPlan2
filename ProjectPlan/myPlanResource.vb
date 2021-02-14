@@ -1084,4 +1084,41 @@ Public Class myPlanResource
 
     End Function
 
+    Public Function Delete_From_ID_ProjectMember_And_DateTime() As myPlanResource
+
+        Try
+            'On efface la ressource en fonction de son ID_ProjectMember et de sa date et heure
+            'INPUT : ID_ProjectMember
+            'INPUT : PlanDate
+            'INPUT : Hour
+
+
+            Dim MyDBConnection As New MySqlConnection
+
+            Dim myDBDataReader As MySqlDataReader
+            Dim SQL As String = ""
+
+            SQL &= "DELETE FROM PlanResources WHERE "
+            SQL &= "CE_ID_ProjectMember = " & Me.CE_ID_ProjectMember & " "
+            SQL &= "AND PlanDate = '" & fConvertDateOnlyMySQL(Me.PlanDate) & "' "
+            SQL &= "AND Hour = " & Me.Hour & "; "
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+
+            MyDBConnection.Open()
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Return Me
+
+    End Function
+
+
 End Class

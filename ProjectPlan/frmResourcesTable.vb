@@ -12,10 +12,10 @@ Public Class frmResourcesTable
         'LOAD : avant que la fenêtre soit visible
         Try
 
-            Dim myDateFrom As Date = New Date(2021, 1, 5)
-            Dim myDateTo As Date = DateAdd(DateInterval.Day, 10, myDateFrom)
+            'Dim myDateFrom As Date = New Date(2021, 1, 5)
+            Dim myDateFrom As Date = Today
 
-            'myDateFrom = Today
+            Dim myDateTo As Date = DateAdd(DateInterval.Day, 10, myDateFrom)
 
             Me.dtpDateFrom.Value = myDateFrom
             Me.dtpDateTo.Value = myDateTo
@@ -165,7 +165,6 @@ Public Class frmResourcesTable
             MyDBConnection.Close()
 
 
-
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
@@ -186,6 +185,7 @@ Public Class frmResourcesTable
 
             Dim myRow As Integer = 0
             Dim myCol As Integer = 0
+            Dim ThisDateTime As DateTime = Nothing
 
 
             'Me.dtpDateFrom.Value = DateSerial(Year(Today), Month(Today), 1)
@@ -231,8 +231,11 @@ Public Class frmResourcesTable
             While thisCurrentDate <= FilterEndDate
                 For Each thisHour In StartHours
 
+                    ThisDateTime = New DateTime(Year(thisCurrentDate), Month(thisCurrentDate), Microsoft.VisualBasic.Day(thisCurrentDate), thisHour, 0, 0)
                     dgvPlanning.Rows.Add()
-                    dgvPlanning.Rows(myRow).HeaderCell.Value = Format(thisCurrentDate, "D") & " " & Format(thisHour, "00") & ":00"
+                    'dgvPlanning.Rows(myRow).HeaderCell.Value = Format(thisCurrentDate, "D") & " " & Format(thisHour, "00") & ":00"
+                    dgvPlanning.Rows(myRow).HeaderCell.Value = ThisDateTime.ToString
+
                     If Weekday(thisCurrentDate) = vbSaturday Or Weekday(thisCurrentDate) = vbSunday Then
                         dgvPlanning.Rows(myRow).DefaultCellStyle.BackColor = Color.LightGray
                     End If
@@ -407,6 +410,8 @@ Public Class frmResourcesTable
 
 
 
+
+
     Private Sub menuChoice(ByVal sender As Object, ByVal e As EventArgs)
         Try
             Dim item = CType(sender, ToolStripMenuItem)
@@ -414,61 +419,20 @@ Public Class frmResourcesTable
 
             If selection = 1 Then
 
-                'effacer des ressources avec sélection multiple
-
-                'On enclenche le sablier
-                Cursor.Current = Cursors.WaitCursor
-
-                'Dim mySelectedCell As DataGridViewTextBoxCell
-                'For Each mySelectedCell In dgvResources.SelectedCells
-                '    Dim myCol As Integer = mySelectedCell.ColumnIndex
-                '    Dim myRow As Integer = mySelectedCell.RowIndex
-
-                '    Dim myText As String = dgvResources.Item(0, myRow).Value
-                '    Dim myDate As Date = dgvResources.Item(0, myRow).Value
-                '    Dim myHalfDay As Integer = 0
-                '    Dim myMember As String = ""
-
-                '    Select Case UCase(Strings.Right(myText, 2))
-                '        Case "AM"
-                '            myHalfDay = 1
-                '        Case "PM"
-                '            myHalfDay = 2
-                '    End Select
-
-                '    'Recherche de l'ID_ProjectMember
-                '    Dim myFindMember As New myProjectMember
-                '    myMember = dgvResources.Columns(myCol).HeaderText
-                '    myFindMember.FullName = myMember
-                '    myFindMember.GetIDMemberFromFullName()
-
-                '    'On determe l'ID de la resource et on efface l'enregistrement
-                '    Dim myPlanRes As New myPlanResource
-                '    myPlanRes.CE_ID_ProjectMember = myFindMember.ID_ProjectMember
-                '    myPlanRes.PlanDate = myDate
-                '    myPlanRes.HalfDay = myHalfDay
-                '    myPlanRes.GetResourceFromDateAndMember()
-                '    myPlanRes.Delete()
-
-                '    'MsgBox("Row : " & myRow & ", Column : " & myCol & vbCrLf & "Text : " & myText & vbCrLf & "Date : " & myDate & vbCrLf & "Member : " & myFindMember.FullName)
-
-                'Next mySelectedCell
-
-                'On actualise la table
-                pDisplayDGVContent()
+                pDeleteSelectedCells()
 
                 'On déclenche le sablier
-                Cursor.Current = Cursors.Default
+                'Cursor.Current = Cursors.Default
 
             End If
+
+            pDisplayDGVContent()
 
 
 
 
         Catch ex As Exception
-
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
-
         End Try
     End Sub
 
@@ -481,6 +445,7 @@ Public Class frmResourcesTable
             Me.Cursor = Cursors.WaitCursor
 
             pCreateDGVColumns()
+
             pDisplayDGVContent()
 
             Me.Cursor = Cursors.Default
@@ -490,4 +455,52 @@ Public Class frmResourcesTable
         End Try
 
     End Sub
+
+
+    Private Sub pDeleteSelectedCells()
+        Try
+
+            Dim myDGV As DataGridView = Me.dgvPlanning
+            Dim mySelectedCells As DataGridViewSelectedCellCollection
+            Dim myCell As DataGridViewCell
+            Dim mySelectedColumns As DataGridViewTextBoxColumn
+
+            Dim thisID_ProjectMember As Integer = 0
+            Dim thisDate As DateTime
+
+            Dim thisResource As myPlanResource = Nothing
+
+
+            mySelectedCells = myDGV.SelectedCells
+
+
+            For Each myCell In mySelectedCells
+                Dim myRow As Integer = myCell.RowIndex
+                Dim myCol As Integer = myCell.ColumnIndex
+
+                mySelectedColumns = myDGV.Columns(myCol)
+                thisID_ProjectMember = CInt(mySelectedColumns.Name)
+
+                thisDate = myDGV.Rows(myRow).HeaderCell.Value
+
+                thisResource = New myPlanResource
+                thisResource.CE_ID_ProjectMember = thisID_ProjectMember
+                thisResource.Hour = CInt(Hour(thisDate))
+                thisResource.PlanDate = thisDate
+                thisResource.Delete_From_ID_ProjectMember_And_DateTime()
+
+
+            Next myCell
+
+            pCreateDGVColumns()
+            pDisplayDGVContent()
+
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+
 End Class

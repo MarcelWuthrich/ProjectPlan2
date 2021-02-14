@@ -10,21 +10,21 @@
 Public Class frmDashboard
 
     'Définition des couleurs pour les tâches
-    Dim ColorForTotal As Color = Color.LightBlue
-    Dim ColorForInfra As Color = Color.LightGreen
-    Dim ColorForSAP As Color = Color.Yellow
-    Dim ColorForHelpdesk As Color = Color.Pink
-    Dim ColorForPlaning As Color = Color.Orange
+    'Dim ColorForTotal As Color = Color.LightBlue
+    'Dim ColorForInfra As Color = Color.LightGreen
+    'Dim ColorForSAP As Color = Color.Yellow
+    'Dim ColorForHelpdesk As Color = Color.Pink
+    'Dim ColorForPlaning As Color = Color.Orange
 
     'Définition de diverses variables
     Dim myColWidth As Integer = 60
     Dim i As Integer = 0
 
     'Définition des variables pour les totaux
-    Dim myTotalInfra As Single = 0
-    Dim myTotalSAP As Single = 0
-    Dim myTotalHelpdesk As Single = 0
-    Dim myTotalPlaning As Single = 0
+    'Dim myTotalInfra As Single = 0
+    'Dim myTotalSAP As Single = 0
+    'Dim myTotalHelpdesk As Single = 0
+    'Dim myTotalPlaning As Single = 0
 
 
     Private Sub pExportToExcel()
@@ -154,7 +154,7 @@ Public Class frmDashboard
 
         Exit Sub
 
-        Me.Cursor = Cursors.WaitCursor
+        'Me.Cursor = Cursors.WaitCursor
 
         Try
 
@@ -167,7 +167,7 @@ Public Class frmDashboard
 
 
             'Affiche les projets
-            pDisplayProjects()
+            'pDisplayProjects()
 
             'Affiche les tâches : 1 = infrastructure
             ''pDisplayResouces(Me.dgvInfrastructure, 1)
@@ -179,12 +179,12 @@ Public Class frmDashboard
             'Affiche les dates de libres
             pDisplayFreeDates()
 
-            Me.Cursor = Cursors.Default
+            'Me.Cursor = Cursors.Default
 
-            myTotalInfra = 0
-            myTotalSAP = 0
-            myTotalHelpdesk = 0
-            myTotalPlaning = 0
+            'myTotalInfra = 0
+            'myTotalSAP = 0
+            'myTotalHelpdesk = 0
+            'myTotalPlaning = 0
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
@@ -571,52 +571,52 @@ Public Class frmDashboard
         Try
 
             'Affichage des couleurs de fond
-            Me.texFreeDateInfra.BackColor = ColorForInfra
-            Me.texFreeDateSAP.BackColor = ColorForSAP
-            Me.texFreeDateHelpdesk.BackColor = ColorForHelpdesk
-            Me.texFreeDatePlaning.BackColor = ColorForPlaning
+            'Me.texFreeDateInfra.BackColor = ColorForInfra
+            'Me.texFreeDateSAP.BackColor = ColorForSAP
+            'Me.texFreeDateHelpdesk.BackColor = ColorForHelpdesk
+            'Me.texFreeDatePlaning.BackColor = ColorForPlaning
 
             'On compte le nombre de membres actifs pour chaque tâche
-            Dim myCountMembersInfra = fGetProjectMembersForTask(1)
-            Dim myCountMembersSAP = fGetProjectMembersForTask(2)
-            Dim myCountMembersHelpdesk = fGetProjectMembersForTask(3)
-            Dim myCountMembersPlaning = fGetProjectMembersForTask(4)
+            'Dim myCountMembersInfra = fGetProjectMembersForTask(1)
+            'Dim myCountMembersSAP = fGetProjectMembersForTask(2)
+            'Dim myCountMembersHelpdesk = fGetProjectMembersForTask(3)
+            'Dim myCountMembersPlaning = fGetProjectMembersForTask(4)
 
 
-            Dim thisDate As Date = Today
-            Dim FreeNow As Boolean = False
+            'Dim thisDate As Date = Today
+            'Dim FreeNow As Boolean = False
 
-            Dim StillToPlanInfra As Single = myTotalInfra
-            Dim StillToPlanSAP As Single = myTotalSAP
-            Dim StillToPlanHelpdesk As Single = myTotalHelpdesk
-            Dim StillToPlanPlaning As Single = myTotalPlaning
+            'Dim StillToPlanInfra As Single = myTotalInfra
+            'Dim StillToPlanSAP As Single = myTotalSAP
+            'Dim StillToPlanHelpdesk As Single = myTotalHelpdesk
+            'Dim StillToPlanPlaning As Single = myTotalPlaning
 
-            Dim FreeDateInfra As Date = Nothing
-            Dim FreeDateSAP As Date = Nothing
-            Dim FreeDateHelpdesk As Date = Nothing
-            Dim FreeDatePlaning As Date = Nothing
+            'Dim FreeDateInfra As Date = Nothing
+            'Dim FreeDateSAP As Date = Nothing
+            'Dim FreeDateHelpdesk As Date = Nothing
+            'Dim FreeDatePlaning As Date = Nothing
 
             '================================================================
             'On calcule la première date de libre pour le team infrastructure
             '================================================================
-            FreeNow = False
-            thisDate = Today
+            'FreeNow = False
+            'thisDate = Today
 
-            While FreeNow = False
+            'While FreeNow = False
 
-                'On décompte uniquement les jours de libre durant les jours de semaine
-                Select Case thisDate.DayOfWeek
-                    Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
 
-                        'On soustrait le nombre de membres de l'infa diminué du nombre de personnes déjà planifiées
-                        StillToPlanInfra = StillToPlanInfra - (myCountMembersInfra - fGetPlanResourcesForTask(1, thisDate))
-                        If StillToPlanInfra < 0 Then
-                            FreeNow = True
-                            FreeDateInfra = thisDate
-                        End If
-                End Select
-                thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            End While
+            '            'On soustrait le nombre de membres de l'infa diminué du nombre de personnes déjà planifiées
+            '            StillToPlanInfra = StillToPlanInfra - (myCountMembersInfra - fGetPlanResourcesForTask(1, thisDate))
+            '            If StillToPlanInfra < 0 Then
+            '                FreeNow = True
+            '                FreeDateInfra = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
             '================================================================
             'On calcule la première date de libre pour le team infrastructure
             '================================================================
@@ -625,24 +625,24 @@ Public Class frmDashboard
             '================================================================
             'On calcule la première date de libre pour le team SAP
             '================================================================
-            FreeNow = False
-            thisDate = Today
+            'FreeNow = False
+            'thisDate = Today
 
-            While FreeNow = False
+            'While FreeNow = False
 
-                'On décompte uniquement les jours de libre durant les jours de semaine
-                Select Case thisDate.DayOfWeek
-                    Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
 
-                        'On soustrait le nombre de membres de SAP diminué du nombre de personnes déjà planifiées
-                        StillToPlanSAP = StillToPlanSAP - (myCountMembersSAP - fGetPlanResourcesForTask(2, thisDate))
-                        If StillToPlanSAP < 0 Then
-                            FreeNow = True
-                            FreeDateSAP = thisDate
-                        End If
-                End Select
-                thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            End While
+            '            'On soustrait le nombre de membres de SAP diminué du nombre de personnes déjà planifiées
+            '            StillToPlanSAP = StillToPlanSAP - (myCountMembersSAP - fGetPlanResourcesForTask(2, thisDate))
+            '            If StillToPlanSAP < 0 Then
+            '                FreeNow = True
+            '                FreeDateSAP = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
             '================================================================
             'On calcule la première date de libre pour le team SAP
             '================================================================
@@ -651,24 +651,24 @@ Public Class frmDashboard
             '================================================================
             'On calcule la première date de libre pour le team Helpdesk
             '================================================================
-            FreeNow = False
-            thisDate = Today
+            'FreeNow = False
+            'thisDate = Today
 
-            While FreeNow = False
+            'While FreeNow = False
 
-                'On décompte uniquement les jours de libre durant les jours de semaine
-                Select Case thisDate.DayOfWeek
-                    Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
 
-                        'On soustrait le nombre de membres du helpdesk diminué du nombre de personnes déjà planifiées
-                        StillToPlanHelpdesk = StillToPlanHelpdesk - (myCountMembersHelpdesk - fGetPlanResourcesForTask(3, thisDate))
-                        If StillToPlanHelpdesk < 0 Then
-                            FreeNow = True
-                            FreeDateHelpdesk = thisDate
-                        End If
-                End Select
-                thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            End While
+            '            'On soustrait le nombre de membres du helpdesk diminué du nombre de personnes déjà planifiées
+            '            StillToPlanHelpdesk = StillToPlanHelpdesk - (myCountMembersHelpdesk - fGetPlanResourcesForTask(3, thisDate))
+            '            If StillToPlanHelpdesk < 0 Then
+            '                FreeNow = True
+            '                FreeDateHelpdesk = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
             '================================================================
             'On calcule la première date de libre pour le team Helpdesk
             '================================================================
@@ -677,33 +677,33 @@ Public Class frmDashboard
             '================================================================
             'On calcule la première date de libre pour le team Planification
             '================================================================
-            FreeNow = False
-            thisDate = Today
+            'FreeNow = False
+            'thisDate = Today
 
-            While FreeNow = False
+            'While FreeNow = False
 
-                'On décompte uniquement les jours de libre durant les jours de semaine
-                Select Case thisDate.DayOfWeek
-                    Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
 
-                        'On soustrait le nombre de membres de la planification diminué du nombre de personnes déjà planifiées
-                        StillToPlanPlaning = StillToPlanPlaning - (myCountMembersPlaning - fGetPlanResourcesForTask(4, thisDate))
-                        If StillToPlanPlaning < 0 Then
-                            FreeNow = True
-                            FreeDatePlaning = thisDate
-                        End If
-                End Select
-                thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            End While
+            '            'On soustrait le nombre de membres de la planification diminué du nombre de personnes déjà planifiées
+            '            StillToPlanPlaning = StillToPlanPlaning - (myCountMembersPlaning - fGetPlanResourcesForTask(4, thisDate))
+            '            If StillToPlanPlaning < 0 Then
+            '                FreeNow = True
+            '                FreeDatePlaning = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
             '================================================================
             'On calcule la première date de libre pour le team Planification
             '================================================================
 
             'Affichage des soldes
-            Me.texFreeDateInfra.Text = Format(FreeDateInfra, "D")
-            Me.texFreeDateSAP.Text = Format(FreeDateSAP, "D")
-            Me.texFreeDateHelpdesk.Text = Format(FreeDateHelpdesk, "D")
-            Me.texFreeDatePlaning.Text = Format(FreeDatePlaning, "D")
+            'Me.texFreeDateInfra.Text = Format(FreeDateInfra, "D")
+            'Me.texFreeDateSAP.Text = Format(FreeDateSAP, "D")
+            'Me.texFreeDateHelpdesk.Text = Format(FreeDateHelpdesk, "D")
+            'Me.texFreeDatePlaning.Text = Format(FreeDatePlaning, "D")
 
 
 
@@ -865,9 +865,23 @@ Public Class frmDashboard
             Dim MyDBConnection As New MySqlConnection
             Dim myDBDataReader As MySqlDataReader
             Dim Sql As String = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
+            Dim CountTasks As Integer = 0
 
             Dim myTask As New myTask
 
+            Me.texTask1.Visible = False
+            Me.texTask2.Visible = False
+            Me.texTask3.Visible = False
+            Me.texTask4.Visible = False
+            Me.texTask5.Visible = False
+            Me.texTask6.Visible = False
+            Me.texTask7.Visible = False
+            Me.texTask8.Visible = False
+            Me.texTask9.Visible = False
+            Me.texTask10.Visible = False
+
+            Me.texTaskTotal.BackColor = Color.Black
+            Me.texTaskTotal.ForeColor = Color.White
 
             MyDBConnection.ConnectionString = cnProjectPlan
             MyDBConnection.Open()
@@ -892,6 +906,53 @@ Public Class frmDashboard
                 myPage.Text = myTask.Task
 
                 Me.tabTaskType.TabPages.Add(myPage)
+
+                Select Case CountTasks
+                    Case 0
+                        Me.texTask1.Text = myTask.Task
+                        Me.texTask1.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask1.Visible = True
+                    Case 1
+                        Me.texTask2.Text = myTask.Task
+                        Me.texTask2.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask2.Visible = True
+                    Case 2
+                        Me.texTask3.Text = myTask.Task
+                        Me.texTask3.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask3.Visible = True
+                    Case 3
+                        Me.texTask4.Text = myTask.Task
+                        Me.texTask4.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask4.Visible = True
+                    Case 4
+                        Me.texTask5.Text = myTask.Task
+                        Me.texTask5.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask5.Visible = True
+                    Case 5
+                        Me.texTask6.Text = myTask.Task
+                        Me.texTask6.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask6.Visible = True
+                    Case 6
+                        Me.texTask7.Text = myTask.Task
+                        Me.texTask7.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask7.Visible = True
+                    Case 7
+                        Me.texTask8.Text = myTask.Task
+                        Me.texTask8.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask8.Visible = True
+                    Case 8
+                        Me.texTask9.Text = myTask.Task
+                        Me.texTask9.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask9.Visible = True
+                    Case 9
+                        Me.texTask10.Text = myTask.Task
+                        Me.texTask10.BackColor = Color.FromArgb(myTask.BackColor)
+                        Me.texTask10.Visible = True
+                    Case Else
+
+                End Select
+
+                CountTasks += 1
 
             End While
 
@@ -977,7 +1038,14 @@ Public Class frmDashboard
             dgvProjects.Columns.Add("Planifiées", "Planifiées")         '5  Ressources planifiées pour tout le projet
             dgvProjects.Columns.Add("A planifier", "A planifier")       '6  Ressources à encore à planifier pour tout le projet
 
-
+            dgvProjects.Columns(3).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(3).DefaultCellStyle.ForeColor = Color.White
+            dgvProjects.Columns(4).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(4).DefaultCellStyle.ForeColor = Color.White
+            dgvProjects.Columns(5).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(5).DefaultCellStyle.ForeColor = Color.White
+            dgvProjects.Columns(6).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(6).DefaultCellStyle.ForeColor = Color.White
 
             MyDBConnection.ConnectionString = cnProjectPlan
             MyDBConnection.Open()
@@ -992,10 +1060,10 @@ Public Class frmDashboard
                 thisTask.ID_Task = myDBDataReaderTask.GetValue(0)
                 thisTask.Read()
 
-                dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour l'infra
-                dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour l'infra
-                dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour l'infra
-                dgvProjects.Columns.Add("A planifier", "A planifier")       '10 Ressources à encore à planifier pour l'infra
+                dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
+                dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
+                dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
+                dgvProjects.Columns.Add("A planifier", "A planifier")       '10 Ressources à encore à planifier la tâche 1 (11 pour 2, 15 pour 3, etc.)
 
                 dgvProjects.Columns(TaskCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
                 dgvProjects.Columns(TaskCount * 4 + 8).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
