@@ -29,13 +29,14 @@ Partial Class frmStatus
         Me.btcEdit = New System.Windows.Forms.Button()
         Me.btcAdd = New System.Windows.Forms.Button()
         Me.dgvStatus = New System.Windows.Forms.DataGridView()
-        Me.IDStatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.StatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.EnableDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DisplayOrderDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VstatusBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DsStatus = New ProjectPlan.dsStatus()
         Me.VstatusTableAdapter = New ProjectPlan.dsStatusTableAdapters.vstatusTableAdapter()
+        Me.IDStatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.StatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.EnableDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.StatusProjectInWork = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DisplayOrderDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgvStatus, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VstatusBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsStatus, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,7 +88,7 @@ Partial Class frmStatus
         Me.dgvStatus.AutoGenerateColumns = False
         Me.dgvStatus.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvStatus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvStatus.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDStatusDataGridViewTextBoxColumn, Me.StatusDataGridViewTextBoxColumn, Me.EnableDataGridViewTextBoxColumn, Me.DisplayOrderDataGridViewTextBoxColumn})
+        Me.dgvStatus.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDStatusDataGridViewTextBoxColumn, Me.StatusDataGridViewTextBoxColumn, Me.EnableDataGridViewTextBoxColumn, Me.StatusProjectInWork, Me.DisplayOrderDataGridViewTextBoxColumn})
         Me.dgvStatus.DataSource = Me.VstatusBindingSource
         Me.dgvStatus.Location = New System.Drawing.Point(23, 22)
         Me.dgvStatus.Name = "dgvStatus"
@@ -96,6 +97,20 @@ Partial Class frmStatus
         Me.dgvStatus.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvStatus.Size = New System.Drawing.Size(463, 266)
         Me.dgvStatus.TabIndex = 6
+        '
+        'VstatusBindingSource
+        '
+        Me.VstatusBindingSource.DataMember = "vstatus"
+        Me.VstatusBindingSource.DataSource = Me.DsStatus
+        '
+        'DsStatus
+        '
+        Me.DsStatus.DataSetName = "dsStatus"
+        Me.DsStatus.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'VstatusTableAdapter
+        '
+        Me.VstatusTableAdapter.ClearBeforeFill = True
         '
         'IDStatusDataGridViewTextBoxColumn
         '
@@ -118,26 +133,19 @@ Partial Class frmStatus
         Me.EnableDataGridViewTextBoxColumn.Name = "EnableDataGridViewTextBoxColumn"
         Me.EnableDataGridViewTextBoxColumn.ReadOnly = True
         '
+        'StatusProjectInWork
+        '
+        Me.StatusProjectInWork.DataPropertyName = "StatusProjectInWork"
+        Me.StatusProjectInWork.HeaderText = "StatusProjectInWork"
+        Me.StatusProjectInWork.Name = "StatusProjectInWork"
+        Me.StatusProjectInWork.ReadOnly = True
+        '
         'DisplayOrderDataGridViewTextBoxColumn
         '
         Me.DisplayOrderDataGridViewTextBoxColumn.DataPropertyName = "DisplayOrder"
         Me.DisplayOrderDataGridViewTextBoxColumn.HeaderText = "DisplayOrder"
         Me.DisplayOrderDataGridViewTextBoxColumn.Name = "DisplayOrderDataGridViewTextBoxColumn"
         Me.DisplayOrderDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'VstatusBindingSource
-        '
-        Me.VstatusBindingSource.DataMember = "vstatus"
-        Me.VstatusBindingSource.DataSource = Me.DsStatus
-        '
-        'DsStatus
-        '
-        Me.DsStatus.DataSetName = "dsStatus"
-        Me.DsStatus.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'VstatusTableAdapter
-        '
-        Me.VstatusTableAdapter.ClearBeforeFill = True
         '
         'frmStatus
         '
@@ -171,5 +179,6 @@ Partial Class frmStatus
     Friend WithEvents IDStatusDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents StatusDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents EnableDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents StatusProjectInWork As DataGridViewTextBoxColumn
     Friend WithEvents DisplayOrderDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
 End Class

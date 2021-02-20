@@ -15,11 +15,19 @@
             If IsNumeric(Me.texID_Status.Text) Then thisStatus.ID_Status = CInt(Me.texID_Status.Text)
             thisStatus.Status = Me.texStatus.Text
             thisStatus.DisplayOrder = Me.texDisplayOrder.Text
+
             If Me.chkActive.Checked = True Then
                 thisStatus.Enable = True
             Else
                 thisStatus.Enable = False
             End If
+
+            If Me.chkStatusProjectInWork.Checked = True Then
+                thisStatus.StatusProjectInWork = True
+            Else
+                thisStatus.StatusProjectInWork = False
+            End If
+
             thisStatus.Save()
 
             Me.Close()
@@ -46,6 +54,12 @@
                 Me.chkActive.Checked = True
             Else
                 Me.chkActive.Checked = False
+            End If
+
+            If thisStatus.StatusProjectInWork = True Then
+                Me.chkStatusProjectInWork.Checked = True
+            Else
+                Me.chkStatusProjectInWork.Checked = False
             End If
 
             If Me.texID_Status.Text = "0" Then Me.texID_Status.Text = ""

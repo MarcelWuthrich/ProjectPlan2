@@ -12,7 +12,8 @@
               <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vstatus" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT `ID_Status`, `Status`, `Enable`, `DisplayOrder` FROM `projectplan`.`vstatus`</CommandText>
+                    <CommandText>SELECT        ID_Status, Status, Enable, StatusProjectInWork, DisplayOrder
+FROM            vstatus</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -23,6 +24,7 @@
               <Mapping SourceColumn="Status" DataSetColumn="Status" />
               <Mapping SourceColumn="Enable" DataSetColumn="Enable" />
               <Mapping SourceColumn="DisplayOrder" DataSetColumn="DisplayOrder" />
+              <Mapping SourceColumn="StatusProjectInWork" DataSetColumn="StatusProjectInWork" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -47,6 +49,7 @@
               </xs:element>
               <xs:element name="Enable" msprop:Generator_ColumnVarNameInTable="columnEnable" msprop:Generator_ColumnPropNameInRow="Enable" msprop:Generator_ColumnPropNameInTable="EnableColumn" msprop:Generator_UserColumnName="Enable" type="xs:unsignedLong" minOccurs="0" />
               <xs:element name="DisplayOrder" msprop:Generator_ColumnVarNameInTable="columnDisplayOrder" msprop:Generator_ColumnPropNameInRow="DisplayOrder" msprop:Generator_ColumnPropNameInTable="DisplayOrderColumn" msprop:Generator_UserColumnName="DisplayOrder" type="xs:int" minOccurs="0" />
+              <xs:element name="StatusProjectInWork" msprop:Generator_ColumnVarNameInTable="columnStatusProjectInWork" msprop:Generator_ColumnPropNameInRow="StatusProjectInWork" msprop:Generator_ColumnPropNameInTable="StatusProjectInWorkColumn" msprop:Generator_UserColumnName="StatusProjectInWork" type="xs:unsignedLong" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

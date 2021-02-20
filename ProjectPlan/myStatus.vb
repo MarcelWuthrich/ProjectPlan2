@@ -9,6 +9,7 @@ Public Class myStatus
     Private _Status As String
     Private _Enable As Boolean
     Private _DisplayOrder As Integer
+    Private _StatusProjectInWork As Boolean
 
 
     Public Property DisplayOrder As Integer
@@ -20,6 +21,15 @@ Public Class myStatus
         End Set
     End Property
 
+
+    Public Property StatusProjectInWork As Boolean
+        Get
+            Return _StatusProjectInWork
+        End Get
+        Set(value As Boolean)
+            _StatusProjectInWork = value
+        End Set
+    End Property
 
     Public Property Enable As Boolean
         Get
@@ -60,7 +70,7 @@ Public Class myStatus
             Dim MyDBConnection As New MySqlConnection
 
             Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT ID_Status, Status, Enable, DisplayOrder from Status where ID_Status =" & Me.ID_Status
+            Dim Sql As String = "SELECT ID_Status, Status, Enable, DisplayOrder, StatusProjectInWork from Status where ID_Status =" & Me.ID_Status
 
             MyDBConnection.ConnectionString = cnProjectPlan
 
@@ -95,6 +105,12 @@ Public Class myStatus
                 'Lecture du 4e paramètre
                 Try
                     Me.DisplayOrder = myDBDataReader.GetValue(3)
+                Catch ex As Exception
+                End Try
+
+                'Lecture du 5e paramètre
+                Try
+                    Me.StatusProjectInWork = myDBDataReader.GetValue(4)
                 Catch ex As Exception
                 End Try
 
@@ -262,7 +278,13 @@ Public Class myStatus
                 Else
                     SQL &= "Enable = 0, "
                 End If
-                SQL &= "DisplayOrder =" & Me.DisplayOrder & " "
+                SQL &= "DisplayOrder =" & Me.DisplayOrder & ","
+                If Me.StatusProjectInWork = True Then
+                    SQL &= "StatusProjectInWork = 1 "
+                Else
+                    SQL &= "StatusProjectInWork = 0 "
+                End If
+
                 SQL &= "WHERE ID_Status = " & Me.ID_Status & ";"
 
             Else
@@ -272,7 +294,7 @@ Public Class myStatus
 
                 'L'enregistrement n'existe pas encore, il faut faire un insert
                 SQL = "INSERT INTO Status "
-                SQL &= "(ID_Status, Status, Enable, DisplayOrder) VALUES ("
+                SQL &= "(ID_Status, Status, Enable, DisplayOrder, StatusProjectInWork) VALUES ("
                 SQL &= Me.ID_Status & ","
                 SQL &= "'" & Replace(Me.Status, "'", "''") & "',"
                 If Me.Enable = True Then
@@ -280,7 +302,12 @@ Public Class myStatus
                 Else
                     SQL &= "0,"
                 End If
-                SQL &= Me.DisplayOrder & ");"
+                SQL &= Me.DisplayOrder & ","
+                If Me.StatusProjectInWork = True Then
+                    SQL &= "1);"
+                Else
+                    SQL &= "0);"
+                End If
 
             End If
 

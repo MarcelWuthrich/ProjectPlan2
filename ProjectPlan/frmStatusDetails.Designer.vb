@@ -32,6 +32,7 @@ Partial Class frmStatusDetails
         Me.texStatus = New System.Windows.Forms.TextBox()
         Me.btcAnnuler = New System.Windows.Forms.Button()
         Me.btcOK = New System.Windows.Forms.Button()
+        Me.chkStatusProjectInWork = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'labID_Status
@@ -111,11 +112,22 @@ Partial Class frmStatusDetails
         Me.btcOK.Text = "OK"
         Me.btcOK.UseVisualStyleBackColor = True
         '
+        'chkStatusProjectInWork
+        '
+        Me.chkStatusProjectInWork.AutoSize = True
+        Me.chkStatusProjectInWork.Location = New System.Drawing.Point(194, 104)
+        Me.chkStatusProjectInWork.Name = "chkStatusProjectInWork"
+        Me.chkStatusProjectInWork.Size = New System.Drawing.Size(152, 17)
+        Me.chkStatusProjectInWork.TabIndex = 65
+        Me.chkStatusProjectInWork.Text = "Status d'un projet en cours"
+        Me.chkStatusProjectInWork.UseVisualStyleBackColor = True
+        '
         'frmStatusDetails
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(408, 205)
+        Me.Controls.Add(Me.chkStatusProjectInWork)
         Me.Controls.Add(Me.labID_Status)
         Me.Controls.Add(Me.texID_Status)
         Me.Controls.Add(Me.chkActive)
@@ -142,4 +154,5 @@ Partial Class frmStatusDetails
     Friend WithEvents texStatus As TextBox
     Friend WithEvents btcAnnuler As Button
     Friend WithEvents btcOK As Button
+    Friend WithEvents chkStatusProjectInWork As CheckBox
 End Class

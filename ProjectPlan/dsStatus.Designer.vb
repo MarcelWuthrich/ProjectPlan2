@@ -291,6 +291,8 @@ Partial Public Class dsStatus
         
         Private columnDisplayOrder As Global.System.Data.DataColumn
         
+        Private columnStatusProjectInWork As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
@@ -359,6 +361,14 @@ Partial Public Class dsStatus
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property StatusProjectInWorkColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnStatusProjectInWork
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -395,9 +405,9 @@ Partial Public Class dsStatus
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddvstatusRow(ByVal ID_Status As Integer, ByVal Status As String, ByVal Enable As ULong, ByVal DisplayOrder As Integer) As vstatusRow
+        Public Overloads Function AddvstatusRow(ByVal ID_Status As Integer, ByVal Status As String, ByVal Enable As ULong, ByVal DisplayOrder As Integer, ByVal StatusProjectInWork As ULong) As vstatusRow
             Dim rowvstatusRow As vstatusRow = CType(Me.NewRow,vstatusRow)
-            Dim columnValuesArray() As Object = New Object() {ID_Status, Status, Enable, DisplayOrder}
+            Dim columnValuesArray() As Object = New Object() {ID_Status, Status, Enable, DisplayOrder, StatusProjectInWork}
             rowvstatusRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowvstatusRow)
             Return rowvstatusRow
@@ -430,6 +440,7 @@ Partial Public Class dsStatus
             Me.columnStatus = MyBase.Columns("Status")
             Me.columnEnable = MyBase.Columns("Enable")
             Me.columnDisplayOrder = MyBase.Columns("DisplayOrder")
+            Me.columnStatusProjectInWork = MyBase.Columns("StatusProjectInWork")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -443,6 +454,8 @@ Partial Public Class dsStatus
             MyBase.Columns.Add(Me.columnEnable)
             Me.columnDisplayOrder = New Global.System.Data.DataColumn("DisplayOrder", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDisplayOrder)
+            Me.columnStatusProjectInWork = New Global.System.Data.DataColumn("StatusProjectInWork", GetType(ULong), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnStatusProjectInWork)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnID_Status}, true))
             Me.columnID_Status.AllowDBNull = false
             Me.columnID_Status.Unique = true
@@ -649,6 +662,21 @@ Partial Public Class dsStatus
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property StatusProjectInWork() As ULong
+            Get
+                Try 
+                    Return CType(Me(Me.tablevstatus.StatusProjectInWorkColumn),ULong)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'StatusProjectInWork' in table 'vstatus' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablevstatus.StatusProjectInWorkColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsStatusNull() As Boolean
             Return Me.IsNull(Me.tablevstatus.StatusColumn)
         End Function
@@ -681,6 +709,18 @@ Partial Public Class dsStatus
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetDisplayOrderNull()
             Me(Me.tablevstatus.DisplayOrderColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsStatusProjectInWorkNull() As Boolean
+            Return Me.IsNull(Me.tablevstatus.StatusProjectInWorkColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetStatusProjectInWorkNull()
+            Me(Me.tablevstatus.StatusProjectInWorkColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -854,6 +894,7 @@ Namespace dsStatusTableAdapters
             tableMapping.ColumnMappings.Add("Status", "Status")
             tableMapping.ColumnMappings.Add("Enable", "Enable")
             tableMapping.ColumnMappings.Add("DisplayOrder", "DisplayOrder")
+            tableMapping.ColumnMappings.Add("StatusProjectInWork", "StatusProjectInWork")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -870,8 +911,8 @@ Namespace dsStatusTableAdapters
             Me._commandCollection = New Global.MySql.Data.MySqlClient.MySqlCommand(0) {}
             Me._commandCollection(0) = New Global.MySql.Data.MySqlClient.MySqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT `ID_Status`, `Status`, `Enable`, `DisplayOrder` FROM `projectplan`.`vstatu"& _ 
-                "s`"
+            Me._commandCollection(0).CommandText = "SELECT        ID_Status, Status, Enable, StatusProjectInWork, DisplayOrder"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM "& _ 
+                "           vstatus"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         
