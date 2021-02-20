@@ -215,6 +215,12 @@
     <Compile Include="frmResourcesTable.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmResourcesTableAddAdminResource.Designer.vb">
+      <DependentUpon>frmResourcesTableAddAdminResource.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResourcesTableAddAdminResource.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmResourcesValidation.Designer.vb">
       <DependentUpon>frmResourcesValidation.vb</DependentUpon>
     </Compile>
@@ -351,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmResourcesTable.resx">
       <DependentUpon>frmResourcesTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResourcesTableAddAdminResource.resx">
+      <DependentUpon>frmResourcesTableAddAdminResource.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmResourcesValidation.resx">
       <DependentUpon>frmResourcesValidation.vb</DependentUpon>

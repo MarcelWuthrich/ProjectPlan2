@@ -528,7 +528,7 @@ Public Class frmResourcesTable
             G_ID_ResourceAdmin = 0
 
             'On affiche la fenêtre des ressouces administratives
-            Dim myForm As Form = frmResourceAdminList
+            Dim myForm As Form = frmResourcesTableAddAdminResource
             myForm.ShowDialog()
             myForm.Dispose()
 
