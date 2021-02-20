@@ -117,7 +117,7 @@ Partial Class frmTaskDetails
         'labColor
         '
         Me.labColor.AutoSize = True
-        Me.labColor.Location = New System.Drawing.Point(19, 84)
+        Me.labColor.Location = New System.Drawing.Point(70, 84)
         Me.labColor.Name = "labColor"
         Me.labColor.Size = New System.Drawing.Size(43, 13)
         Me.labColor.TabIndex = 57

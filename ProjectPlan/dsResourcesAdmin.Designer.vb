@@ -912,8 +912,8 @@ Namespace dsResourcesAdminTableAdapters
             Me._commandCollection = New Global.MySql.Data.MySqlClient.MySqlCommand(0) {}
             Me._commandCollection(0) = New Global.MySql.Data.MySqlClient.MySqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT `ID_AdminResource`, `AdminResource`, `Symbol`, `Enable`, `DisplayOrder` FR"& _ 
-                "OM `projectplan`.`vresourcesadmin` WHERE ENABLE=1 "
+            Me._commandCollection(0).CommandText = "SELECT        ID_AdminResource, AdminResource, Symbol, Enable, DisplayOrder"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM"& _ 
+                "            vresourcesadmin"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         

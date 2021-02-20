@@ -23,6 +23,7 @@ Partial Class frmResourceAdminList
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmResourceAdminList))
         Me.dgvAdminResources = New System.Windows.Forms.DataGridView()
         Me.IDAdminResourceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AdminResourceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -32,6 +33,10 @@ Partial Class frmResourceAdminList
         Me.VresourcesadminBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DsResourcesAdmin = New ProjectPlan.dsResourcesAdmin()
         Me.VresourcesadminTableAdapter = New ProjectPlan.dsResourcesAdminTableAdapters.vresourcesadminTableAdapter()
+        Me.btcDelete = New System.Windows.Forms.Button()
+        Me.btcClose = New System.Windows.Forms.Button()
+        Me.btcEdit = New System.Windows.Forms.Button()
+        Me.btcAdd = New System.Windows.Forms.Button()
         CType(Me.dgvAdminResources, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.VresourcesadminBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DsResourcesAdmin, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -61,7 +66,6 @@ Partial Class frmResourceAdminList
         Me.IDAdminResourceDataGridViewTextBoxColumn.HeaderText = "ID_AdminResource"
         Me.IDAdminResourceDataGridViewTextBoxColumn.Name = "IDAdminResourceDataGridViewTextBoxColumn"
         Me.IDAdminResourceDataGridViewTextBoxColumn.ReadOnly = True
-        Me.IDAdminResourceDataGridViewTextBoxColumn.Visible = False
         '
         'AdminResourceDataGridViewTextBoxColumn
         '
@@ -83,7 +87,6 @@ Partial Class frmResourceAdminList
         Me.EnableDataGridViewTextBoxColumn.HeaderText = "Enable"
         Me.EnableDataGridViewTextBoxColumn.Name = "EnableDataGridViewTextBoxColumn"
         Me.EnableDataGridViewTextBoxColumn.ReadOnly = True
-        Me.EnableDataGridViewTextBoxColumn.Visible = False
         '
         'DisplayOrderDataGridViewTextBoxColumn
         '
@@ -91,7 +94,6 @@ Partial Class frmResourceAdminList
         Me.DisplayOrderDataGridViewTextBoxColumn.HeaderText = "DisplayOrder"
         Me.DisplayOrderDataGridViewTextBoxColumn.Name = "DisplayOrderDataGridViewTextBoxColumn"
         Me.DisplayOrderDataGridViewTextBoxColumn.ReadOnly = True
-        Me.DisplayOrderDataGridViewTextBoxColumn.Visible = False
         '
         'VresourcesadminBindingSource
         '
@@ -107,12 +109,56 @@ Partial Class frmResourceAdminList
         '
         Me.VresourcesadminTableAdapter.ClearBeforeFill = True
         '
+        'btcDelete
+        '
+        Me.btcDelete.BackColor = System.Drawing.SystemColors.Control
+        Me.btcDelete.Location = New System.Drawing.Point(495, 168)
+        Me.btcDelete.Name = "btcDelete"
+        Me.btcDelete.Size = New System.Drawing.Size(75, 23)
+        Me.btcDelete.TabIndex = 14
+        Me.btcDelete.Text = "Supprimer"
+        Me.btcDelete.UseVisualStyleBackColor = False
+        '
+        'btcClose
+        '
+        Me.btcClose.Location = New System.Drawing.Point(495, 280)
+        Me.btcClose.Name = "btcClose"
+        Me.btcClose.Size = New System.Drawing.Size(75, 23)
+        Me.btcClose.TabIndex = 13
+        Me.btcClose.Text = "Fermer"
+        Me.btcClose.UseVisualStyleBackColor = True
+        '
+        'btcEdit
+        '
+        Me.btcEdit.BackColor = System.Drawing.SystemColors.Control
+        Me.btcEdit.Location = New System.Drawing.Point(495, 139)
+        Me.btcEdit.Name = "btcEdit"
+        Me.btcEdit.Size = New System.Drawing.Size(75, 23)
+        Me.btcEdit.TabIndex = 12
+        Me.btcEdit.Text = "Modifier"
+        Me.btcEdit.UseVisualStyleBackColor = False
+        '
+        'btcAdd
+        '
+        Me.btcAdd.BackColor = System.Drawing.SystemColors.Control
+        Me.btcAdd.Location = New System.Drawing.Point(495, 110)
+        Me.btcAdd.Name = "btcAdd"
+        Me.btcAdd.Size = New System.Drawing.Size(75, 23)
+        Me.btcAdd.TabIndex = 11
+        Me.btcAdd.Text = "Ajouter"
+        Me.btcAdd.UseVisualStyleBackColor = False
+        '
         'frmResourceAdminList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(472, 328)
+        Me.ClientSize = New System.Drawing.Size(595, 328)
+        Me.Controls.Add(Me.btcDelete)
+        Me.Controls.Add(Me.btcClose)
+        Me.Controls.Add(Me.btcEdit)
+        Me.Controls.Add(Me.btcAdd)
         Me.Controls.Add(Me.dgvAdminResources)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmResourceAdminList"
@@ -134,4 +180,8 @@ Partial Class frmResourceAdminList
     Friend WithEvents SymbolDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents EnableDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DisplayOrderDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Protected Friend WithEvents btcDelete As Button
+    Friend WithEvents btcClose As Button
+    Friend WithEvents btcEdit As Button
+    Friend WithEvents btcAdd As Button
 End Class

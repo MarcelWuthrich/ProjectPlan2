@@ -235,4 +235,14 @@ Public Class frmMain
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
+
+    Private Sub RessourcesAdministrativesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RessourcesAdministrativesToolStripMenuItem.Click
+        Try
+            Dim myForm As Form = frmResourceAdminList
+            myForm.MdiParent = Me
+            myForm.Show()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 End Class

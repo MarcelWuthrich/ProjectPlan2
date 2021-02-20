@@ -131,4 +131,159 @@ Public Class myAdminResource
         Return Me
 
     End Function
+
+
+
+    Public Function Save() As myAdminResource
+        Try
+
+            Dim SQL As String = ""
+
+
+            If Me.Exists = True And Me.ID_AdminResource <> 0 Then
+
+                'L'enregistrement existe déjà, il faut faire un update
+                SQL = "UPDATE adminresources SET "
+                SQL &= "ID_AdminResource =" & Me.ID_AdminResource & ","
+                SQL &= "AdminResource ='" & Replace(Me.AdminResource, "'", "''") & "',"
+                If Me.Enable = True Then
+                    SQL &= "Enable = 1, "
+                Else
+                    SQL &= "Enable = 0, "
+                End If
+                SQL &= "Symbol ='" & Replace(Me.Symbol, "'", "''") & "',"
+                SQL &= "DisplayOrder =" & Me.DisplayOrder & " "
+                SQL &= "WHERE ID_AdminResource = " & Me.ID_AdminResource & ";"
+
+            Else
+
+
+                Me.NewID()
+
+                'L'enregistrement n'existe pas encore, il faut faire un insert
+                SQL = "INSERT INTO adminresources "
+                SQL &= "(ID_AdminResource, AdminResource, Enable, Symbol, DisplayOrder) VALUES ("
+                SQL &= Me.ID_AdminResource & ","
+                SQL &= "'" & Replace(Me.AdminResource, "'", "''") & "',"
+                If Me.Enable = True Then
+                    SQL &= "1,"
+                Else
+                    SQL &= "0,"
+                End If
+                SQL &= "'" & Replace(Me.Symbol, "'", "''") & "', "
+                SQL &= Me.DisplayOrder & ");"
+
+            End If
+
+            Dim MyDBConn As New MySqlConnection
+
+
+
+            If SQL <> "" Then
+
+                'On exécute la commande SQL uniquement si elle existe
+                MyDBConn.ConnectionString = cnProjectPlan
+                MyDBConn.Open()
+
+                Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConn)
+
+                myDBCommand.ExecuteNonQuery()
+                myDBCommand = Nothing
+                MyDBConn.Close()
+
+            End If
+
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Return Me
+
+    End Function
+
+
+    Public Function Exists() As Boolean
+
+        Dim _Exists As Boolean = False
+        Dim _Count As Integer = 0
+
+        Try
+
+            Dim MyDBConnection As New MySqlConnection
+
+            Dim myDBDataReader As MySqlDataReader
+            Dim SQL As String = "SELECT COUNT(ID_AdminResource) FROM adminresources WHERE ID_AdminResource = " & Me.ID_AdminResource
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+
+
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read
+
+                'Lecture du premier paramètre COUNT
+                Try
+                    _Count = myDBDataReader.GetValue(0)
+                Catch ex As Exception
+                End Try
+
+            End While
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+            If _Count >= 1 Then
+                _Exists = True
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+        Return _Exists
+
+    End Function
+
+
+    Public Function NewID() As myAdminResource
+
+        'Recherche le plus grand ID_AdminResource, ajoute 1 et définit la variable ID_AdminResource
+        Dim _NewID As Integer = 0
+
+        Try
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+            Dim Sql As String = "SELECT ID_AdminResource FROM adminresources ORDER BY ID_AdminResource DESC LIMIT 1;"
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            Try
+                If myDBDataReader.Read Then
+                    _NewID = myDBDataReader.GetValue(0)
+                End If
+            Catch ex As Exception
+            End Try
+            _NewID = _NewID + 1
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+        Catch ex As Exception
+
+        End Try
+
+        Me.ID_AdminResource = _NewID
+
+        Return Me
+
+    End Function
+
 End Class

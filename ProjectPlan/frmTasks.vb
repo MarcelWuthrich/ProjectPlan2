@@ -30,14 +30,7 @@ Public Class frmTasks
         End Try
     End Sub
 
-    Private Sub dgvTasks_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTasks.CellContentClick
-        Try
 
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
 
     Private Sub dgvTasks_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTasks.CellClick
         Try
@@ -101,4 +94,5 @@ Public Class frmTasks
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
-End Class
+
+   End Class

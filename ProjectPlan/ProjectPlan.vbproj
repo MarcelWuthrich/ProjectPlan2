@@ -185,6 +185,12 @@
     <Compile Include="frmProjectMemberDetails.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmResourceAdminDetails.Designer.vb">
+      <DependentUpon>frmResourceAdminDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResourceAdminDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmResourceAdminList.Designer.vb">
       <DependentUpon>frmResourceAdminList.vb</DependentUpon>
     </Compile>
@@ -330,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmProjectMemberDetails.resx">
       <DependentUpon>frmProjectMemberDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResourceAdminDetails.resx">
+      <DependentUpon>frmResourceAdminDetails.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmResourceAdminList.resx">
       <DependentUpon>frmResourceAdminList.vb</DependentUpon>
