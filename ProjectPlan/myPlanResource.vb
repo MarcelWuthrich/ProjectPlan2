@@ -1016,8 +1016,8 @@ Public Class myPlanResource
 
                 'Lecture du paramètre HalfDay
                 Try
-                    'On lit et on divise par 2 parce que les valeurs de la DB sont des demi-jours
-                    ProjectResources = myDBDataReader.GetValue(0) / 2
+                    'On lit 
+                    ProjectResources = myDBDataReader.GetValue(0)
                 Catch ex As Exception
                 End Try
 

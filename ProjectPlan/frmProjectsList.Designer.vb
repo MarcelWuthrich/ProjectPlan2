@@ -40,6 +40,7 @@ Partial Class frmProjectsList
         Me.btcClose = New System.Windows.Forms.Button()
         Me.dgvProjets = New System.Windows.Forms.DataGridView()
         Me.IDProjectDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TitleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CEIDStatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.StatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CEIDProjectManagerDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -54,7 +55,6 @@ Partial Class frmProjectsList
         Me.CustomerLastnameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CEIDUrgencyDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.UrgencyDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TitleDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DescriptionDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.BeginDateDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DeadlineDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -220,7 +220,7 @@ Partial Class frmProjectsList
         Me.dgvProjets.AutoGenerateColumns = False
         Me.dgvProjets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvProjets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvProjets.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDProjectDataGridViewTextBoxColumn, Me.CEIDStatusDataGridViewTextBoxColumn, Me.StatusDataGridViewTextBoxColumn, Me.CEIDProjectManagerDataGridViewTextBoxColumn, Me.ManagerFirstnameDataGridViewTextBoxColumn, Me.ManagerLastnameDataGridViewTextBoxColumn, Me.CEIDPriorityDataGridViewTextBoxColumn, Me.PriorityDataGridViewTextBoxColumn, Me.CEIDCategoryDataGridViewTextBoxColumn, Me.CategoryDataGridViewTextBoxColumn, Me.CEIDCustomerDataGridViewTextBoxColumn, Me.CustomerFirstnameDataGridViewTextBoxColumn, Me.CustomerLastnameDataGridViewTextBoxColumn, Me.CEIDUrgencyDataGridViewTextBoxColumn, Me.UrgencyDataGridViewTextBoxColumn, Me.TitleDataGridViewTextBoxColumn, Me.DescriptionDataGridViewTextBoxColumn, Me.BeginDateDataGridViewTextBoxColumn, Me.DeadlineDataGridViewTextBoxColumn, Me.EstimatedResourcesDataGridViewTextBoxColumn, Me.ImplementationRateDataGridViewTextBoxColumn, Me.EffectiveResourcesDataGridViewTextBoxColumn})
+        Me.dgvProjets.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDProjectDataGridViewTextBoxColumn, Me.TitleDataGridViewTextBoxColumn, Me.CEIDStatusDataGridViewTextBoxColumn, Me.StatusDataGridViewTextBoxColumn, Me.CEIDProjectManagerDataGridViewTextBoxColumn, Me.ManagerFirstnameDataGridViewTextBoxColumn, Me.ManagerLastnameDataGridViewTextBoxColumn, Me.CEIDPriorityDataGridViewTextBoxColumn, Me.PriorityDataGridViewTextBoxColumn, Me.CEIDCategoryDataGridViewTextBoxColumn, Me.CategoryDataGridViewTextBoxColumn, Me.CEIDCustomerDataGridViewTextBoxColumn, Me.CustomerFirstnameDataGridViewTextBoxColumn, Me.CustomerLastnameDataGridViewTextBoxColumn, Me.CEIDUrgencyDataGridViewTextBoxColumn, Me.UrgencyDataGridViewTextBoxColumn, Me.DescriptionDataGridViewTextBoxColumn, Me.BeginDateDataGridViewTextBoxColumn, Me.DeadlineDataGridViewTextBoxColumn, Me.EstimatedResourcesDataGridViewTextBoxColumn, Me.ImplementationRateDataGridViewTextBoxColumn, Me.EffectiveResourcesDataGridViewTextBoxColumn})
         Me.dgvProjets.DataSource = Me.VprojectlistBindingSource
         Me.dgvProjets.Location = New System.Drawing.Point(12, 120)
         Me.dgvProjets.Name = "dgvProjets"
@@ -236,6 +236,15 @@ Partial Class frmProjectsList
         Me.IDProjectDataGridViewTextBoxColumn.HeaderText = "ID_Project"
         Me.IDProjectDataGridViewTextBoxColumn.Name = "IDProjectDataGridViewTextBoxColumn"
         Me.IDProjectDataGridViewTextBoxColumn.ReadOnly = True
+        '
+        'TitleDataGridViewTextBoxColumn
+        '
+        Me.TitleDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.TitleDataGridViewTextBoxColumn.DataPropertyName = "Title"
+        Me.TitleDataGridViewTextBoxColumn.HeaderText = "Title"
+        Me.TitleDataGridViewTextBoxColumn.Name = "TitleDataGridViewTextBoxColumn"
+        Me.TitleDataGridViewTextBoxColumn.ReadOnly = True
+        Me.TitleDataGridViewTextBoxColumn.Width = 52
         '
         'CEIDStatusDataGridViewTextBoxColumn
         '
@@ -266,6 +275,7 @@ Partial Class frmProjectsList
         Me.ManagerFirstnameDataGridViewTextBoxColumn.HeaderText = "ManagerFirstname"
         Me.ManagerFirstnameDataGridViewTextBoxColumn.Name = "ManagerFirstnameDataGridViewTextBoxColumn"
         Me.ManagerFirstnameDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ManagerFirstnameDataGridViewTextBoxColumn.Visible = False
         '
         'ManagerLastnameDataGridViewTextBoxColumn
         '
@@ -273,6 +283,7 @@ Partial Class frmProjectsList
         Me.ManagerLastnameDataGridViewTextBoxColumn.HeaderText = "ManagerLastname"
         Me.ManagerLastnameDataGridViewTextBoxColumn.Name = "ManagerLastnameDataGridViewTextBoxColumn"
         Me.ManagerLastnameDataGridViewTextBoxColumn.ReadOnly = True
+        Me.ManagerLastnameDataGridViewTextBoxColumn.Visible = False
         '
         'CEIDPriorityDataGridViewTextBoxColumn
         '
@@ -318,6 +329,7 @@ Partial Class frmProjectsList
         Me.CustomerFirstnameDataGridViewTextBoxColumn.HeaderText = "CustomerFirstname"
         Me.CustomerFirstnameDataGridViewTextBoxColumn.Name = "CustomerFirstnameDataGridViewTextBoxColumn"
         Me.CustomerFirstnameDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CustomerFirstnameDataGridViewTextBoxColumn.Visible = False
         '
         'CustomerLastnameDataGridViewTextBoxColumn
         '
@@ -325,6 +337,7 @@ Partial Class frmProjectsList
         Me.CustomerLastnameDataGridViewTextBoxColumn.HeaderText = "CustomerLastname"
         Me.CustomerLastnameDataGridViewTextBoxColumn.Name = "CustomerLastnameDataGridViewTextBoxColumn"
         Me.CustomerLastnameDataGridViewTextBoxColumn.ReadOnly = True
+        Me.CustomerLastnameDataGridViewTextBoxColumn.Visible = False
         '
         'CEIDUrgencyDataGridViewTextBoxColumn
         '
@@ -341,19 +354,13 @@ Partial Class frmProjectsList
         Me.UrgencyDataGridViewTextBoxColumn.Name = "UrgencyDataGridViewTextBoxColumn"
         Me.UrgencyDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'TitleDataGridViewTextBoxColumn
-        '
-        Me.TitleDataGridViewTextBoxColumn.DataPropertyName = "Title"
-        Me.TitleDataGridViewTextBoxColumn.HeaderText = "Title"
-        Me.TitleDataGridViewTextBoxColumn.Name = "TitleDataGridViewTextBoxColumn"
-        Me.TitleDataGridViewTextBoxColumn.ReadOnly = True
-        '
         'DescriptionDataGridViewTextBoxColumn
         '
         Me.DescriptionDataGridViewTextBoxColumn.DataPropertyName = "Description"
         Me.DescriptionDataGridViewTextBoxColumn.HeaderText = "Description"
         Me.DescriptionDataGridViewTextBoxColumn.Name = "DescriptionDataGridViewTextBoxColumn"
         Me.DescriptionDataGridViewTextBoxColumn.ReadOnly = True
+        Me.DescriptionDataGridViewTextBoxColumn.Visible = False
         '
         'BeginDateDataGridViewTextBoxColumn
         '
@@ -450,6 +457,7 @@ Partial Class frmProjectsList
     Friend WithEvents VprojectlistBindingSource As BindingSource
     Friend WithEvents VprojectlistTableAdapter As dsProjectsListTableAdapters.vprojectlistTableAdapter
     Friend WithEvents IDProjectDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TitleDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CEIDStatusDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents StatusDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CEIDProjectManagerDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -464,7 +472,6 @@ Partial Class frmProjectsList
     Friend WithEvents CustomerLastnameDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents CEIDUrgencyDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents UrgencyDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
-    Friend WithEvents TitleDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DescriptionDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents BeginDateDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents DeadlineDataGridViewTextBoxColumn As DataGridViewTextBoxColumn

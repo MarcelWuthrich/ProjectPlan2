@@ -22,7 +22,7 @@ Public Class frmProjectsList
             Call btcFilterClear_Click(sender, e)
 
 
-            Me.WindowState = FormWindowState.Maximized
+            'Me.WindowState = FormWindowState.Maximized
 
             pRefreshDisplay()
             dgvProjets.Rows(0).Selected = True
