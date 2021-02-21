@@ -1,31 +1,782 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports Microsoft.Office.Interop.Excel
 
 
 
-
-'Imports Microsoft.VisualBasic
-'Imports Microsoft.Office.Interop.Excel
 
 
 Public Class frmDashboard
 
-    'Définition des couleurs pour les tâches
-    'Dim ColorForTotal As Color = Color.LightBlue
-    'Dim ColorForInfra As Color = Color.LightGreen
-    'Dim ColorForSAP As Color = Color.Yellow
-    'Dim ColorForHelpdesk As Color = Color.Pink
-    'Dim ColorForPlaning As Color = Color.Orange
+
 
     'Définition de diverses variables
     Dim myColWidth As Integer = 60
     Dim i As Integer = 0
 
-    'Définition des variables pour les totaux
-    'Dim myTotalInfra As Single = 0
-    'Dim myTotalSAP As Single = 0
-    'Dim myTotalHelpdesk As Single = 0
-    'Dim myTotalPlaning As Single = 0
 
+
+    Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Try
+
+            'Affiche les projets et leurs heures
+            pDisplayProjects()
+
+            'Affiche les secteurs d'activités (task) sous forme d'onglets 
+            pDisplayTasks()
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub btcFermer_Click(sender As Object, e As EventArgs) Handles btcFermer.Click
+        Try
+            Me.Close()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub btcRefresh_Click(sender As Object, e As EventArgs) Handles btcRefresh.Click
+        Try
+
+            pDisplayTasks()
+            pDisplayProjects()
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub pDisplayProjects()
+
+        Try
+
+            Me.Cursor = Cursors.WaitCursor
+
+
+            Dim thisProject As New myProject
+            Dim thisTask As New myTask
+            Dim thisEstimatedResource As New myEstimatedResource
+            Dim thisExecutedResource As New myExecuteResource
+            Dim thisPlanResource As New myPlanResource
+
+            Dim AllTasks(0) As Integer
+            'La Valeur AllTask(0) contient le nombre d'enregistrements
+            'La Valeur AllTask(1) contient le ID_Task de la première task
+            'La Valeur AllTask(2) contient le ID_Task de la deuxième task
+            '...etc...
+
+            Dim thisTotalEstimated As Integer = 0
+            Dim thisTotalEstimatedTask(0) As Integer
+            'La Valeur thisTotalEstimatedTask(0) contient le nombre d'enregistrements
+            'La Valeur thisTotalEstimatedTask(1) contient le total des ressources estimées par project et pas tâche
+            'La Valeur thisTotalEstimatedTask(2) contient le total des ressources estimées par project et pas tâche
+            '...etc...
+
+            Dim thisTotalExecuted As Integer = 0
+            Dim thisTotalExecutedTask(0) As Integer
+            'La Valeur thisTotalExecutedTask(0) contient le nombre d'enregistrements
+            'La Valeur thisTotalExecutedTask(1) contient le total des ressources exécutées par project et pas tâche
+            'La Valeur thisTotalExecutedTask(2) contient le total des ressources exécutées par project et pas tâche
+            '...etc...
+
+            Dim thisTotalPlaned As Integer = 0
+            Dim thisTotalPlanedTask(0) As Integer
+            'La Valeur thisTotalPlanedTask(0) contient le nombre d'enregistrements
+            'La Valeur thisTotalPlanedTask(1) contient le total des ressources planifiées par project et pas tâche
+            'La Valeur thisTotalPlanedTask(2) contient le total des ressources planifiées par project et pas tâche
+            '...etc...
+
+            Dim thisTotalToBePlaned As Integer = 0
+            Dim thisTotalToBePlanedTask(0) As Integer
+            'La Valeur thisTotalToBePlanedTask(0) contient le nombre d'enregistrements
+            'La Valeur thisTotalToBePlanedTask(1) contient le total des ressources encore à planifier par project et pas tâche
+            'La Valeur thisTotalToBePlanedTask(2) contient le total des ressources encore à planifier par project et pas tâche
+            '...etc...
+
+
+            Dim ActiveRow As Integer = 0
+            Dim TaskCount As Integer = 0
+            Dim ProjectCount As Integer = 0
+
+            Dim MyDBConnection As New MySqlConnection
+
+            Dim myDBDataReaderTask As MySqlDataReader
+            Dim myDBDataReaderProject As MySqlDataReader
+
+            Dim SQL As String = ""
+            SQL = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
+
+
+            'On vide le DataGridView
+            dgvProjects.Rows.Clear()
+            dgvProjects.Columns.Clear()
+
+
+            'Définition du DataGridView
+            dgvProjects.ReadOnly = True
+            dgvProjects.AllowUserToAddRows = False
+            dgvProjects.AllowUserToDeleteRows = False
+            dgvProjects.MultiSelect = False
+
+
+
+            'Définition des colonnes 0 - 6
+            dgvProjects.Columns.Add("ID", "ID")                         '0  ID_Project 
+            dgvProjects.Columns.Add("Projet", "Projet")                 '1  Nom du projet
+            dgvProjects.Columns.Add("Deadline", "Deadline")             '2  Deadline
+            dgvProjects.Columns.Add("Estimées", "Estimées")             '3  Ressources estimées pour tout le projet
+            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '4  Ressources effectuées pour tout le projet
+            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '5  Ressources planifiées pour tout le projet
+            dgvProjects.Columns.Add("A planifier", "A planifier")       '6  Ressources à encore à planifier pour tout le projet
+
+            dgvProjects.Columns(3).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(3).DefaultCellStyle.ForeColor = Color.White
+            dgvProjects.Columns(4).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(4).DefaultCellStyle.ForeColor = Color.White
+            dgvProjects.Columns(5).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(5).DefaultCellStyle.ForeColor = Color.White
+            dgvProjects.Columns(6).DefaultCellStyle.BackColor = Color.Black
+            dgvProjects.Columns(6).DefaultCellStyle.ForeColor = Color.White
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommandTask As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+
+            myDBDataReaderTask = myDBCommandTask.ExecuteReader()
+
+            While myDBDataReaderTask.Read
+
+                'Lecture du projet
+                thisTask.ID_Task = myDBDataReaderTask.GetValue(0)
+                thisTask.Read()
+
+
+                ReDim Preserve AllTasks(AllTasks(0) + 1)
+                AllTasks(0) += 1
+                AllTasks(TaskCount + 1) = thisTask.ID_Task
+
+
+
+
+                dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
+                dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
+                dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
+                dgvProjects.Columns.Add("A planifier", "A planifier")       '10 Ressources à encore à planifier la tâche 1 (11 pour 2, 15 pour 3, etc.)
+
+                dgvProjects.Columns(TaskCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                dgvProjects.Columns(TaskCount * 4 + 8).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                dgvProjects.Columns(TaskCount * 4 + 9).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+                dgvProjects.Columns(TaskCount * 4 + 10).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+
+                TaskCount += 1
+
+            End While
+
+
+            myDBDataReaderTask.Close()
+            MyDBConnection.Close()
+
+
+
+            'La colonne 0 (ID_Project) n'est pas visible
+            dgvProjects.Columns(0).Visible = True
+            For i = 1 To dgvProjects.ColumnCount - 1
+                'Les autres colonnes sont visibles
+                dgvProjects.Columns(i).Visible = True
+                'On empêche de trier les colonnes de manière alphabétiques
+                dgvProjects.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
+            Next i
+
+
+            SQL = "SELECT projects.ID_Project FROM Projects LEFT JOIN ProjectPlan.status ON (projects.CE_ID_Status = status.ID_Status) WHERE (status.StatusProjectInWork =1);"
+
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+
+            Dim myDBCommandProject As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+
+            myDBDataReaderProject = myDBCommandProject.ExecuteReader()
+            While myDBDataReaderProject.Read
+
+                'Lecture du projet
+                thisProject.ID_Project = myDBDataReaderProject.GetValue(0)
+                thisProject.Read()
+
+
+                'On ajoute le projet dans le DataGridView
+                dgvProjects.Rows.Add()
+
+                'Affichages des cellules par projet
+                dgvProjects.Item(0, ProjectCount).Value = thisProject.ID_Project                        'ID du projet
+                dgvProjects.Item(1, ProjectCount).Value = thisProject.Title                             'Titre du projet
+                dgvProjects.Item(2, ProjectCount).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")    'Deadline du projet
+                dgvProjects.Item(3, ProjectCount).Value = thisProject.EstimatedResources                'Ressources estimées totales
+                dgvProjects.Item(4, ProjectCount).Value = thisProject.EffectiveResources                'Ressources effectives totales
+                thisProject.GetPlanResources()                                                          'On calcule le nombre d'heures planifiées
+                dgvProjects.Item(5, ProjectCount).Value = thisProject.PlanRessources                    'Ressources planifiées totales
+
+                'On calcule le nombre d'heures encore à planifier
+                Dim RessourcesToPlan As Single = thisProject.EstimatedResources - thisProject.EffectiveResources - thisProject.PlanRessources
+                If RessourcesToPlan < 0 Then RessourcesToPlan = 0
+                dgvProjects.Item(6, ProjectCount).Value = RessourcesToPlan                                 'nombre d'heures encore à planfier
+
+
+                'On calcule les totaux pour le total des projets
+                thisTotalEstimated += thisProject.EstimatedResources
+                thisTotalExecuted += thisProject.EffectiveResources
+                thisTotalPlaned += thisProject.PlanRessources
+                thisTotalToBePlaned += RessourcesToPlan
+
+                For myTaskNr = 1 To AllTasks(0)
+                    thisTask = New myTask
+                    thisTask.ID_Task = AllTasks(myTaskNr)
+                    thisTask.Read()
+
+                    'Affichage des ressources estimées par projet et secteur d'activités (task)
+                    thisEstimatedResource = New myEstimatedResource
+                    thisEstimatedResource.CE_ID_Project = thisProject.ID_Project
+                    thisEstimatedResource.CE_ID_Task = AllTasks(myTaskNr)
+                    thisEstimatedResource.GetEstimatedResourcesPerTaskAndProject()
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 7, ProjectCount).Value = thisEstimatedResource.EstimatedResourcesPerTaskAndProject
+
+                    'Affichage des ressources exécutées par projet et secteur d'activités (task)
+                    thisExecutedResource = New myExecuteResource
+                    thisExecutedResource.CE_ID_Project = thisProject.ID_Project
+                    thisExecutedResource.CE_ID_Task = AllTasks(myTaskNr)
+                    thisExecutedResource.GetExecutedProjectResourcesPerTaskAndProject()
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 8, ProjectCount).Value = thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject
+
+                    'Affichage des ressources planifiées par projet et secteur d'activités (task)
+                    thisPlanResource = New myPlanResource
+                    thisPlanResource.CE_ID_Project = thisProject.ID_Project
+                    thisPlanResource.CE_ID_Task = AllTasks(myTaskNr)
+                    thisPlanResource.GetPlanProjectResourcesPerTaskAndProject()
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 9, ProjectCount).Value = thisPlanResource.PlanProjectResourcesPerTaskAndProject
+
+                    'Affichage des ressources à planifier par projet et secteur d'activités (task)
+                    Dim RessourcesToPlanPerTask As Single = thisEstimatedResource.EstimatedResourcesPerTaskAndProject - thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject - thisPlanResource.PlanProjectResourcesPerTaskAndProject
+                    If RessourcesToPlanPerTask < 0 Then RessourcesToPlanPerTask = 0
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = RessourcesToPlanPerTask                                 'nombre d'heures encore à planfier
+
+
+                    'On additionne les heures planifiées par task
+                    ReDim Preserve thisTotalEstimatedTask(thisTotalEstimatedTask(0) + 1)
+                    thisTotalEstimatedTask(0) += 1
+                    thisTotalEstimatedTask(myTaskNr) += thisEstimatedResource.EstimatedResourcesPerTaskAndProject
+
+                    'On additionne les heures executées par task
+                    ReDim Preserve thisTotalExecutedTask(thisTotalExecutedTask(0) + 1)
+                    thisTotalExecutedTask(0) += 1
+                    thisTotalExecutedTask(myTaskNr) += thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject
+
+                    'On additionne les heures planifiées par task
+                    ReDim Preserve thisTotalPlanedTask(thisTotalPlanedTask(0) + 1)
+                    thisTotalPlanedTask(0) += 1
+                    thisTotalPlanedTask(myTaskNr) += thisPlanResource.PlanProjectResourcesPerTaskAndProject
+
+                    'On additionne les heures encore à planifier par task
+                    ReDim Preserve thisTotalToBePlanedTask(thisTotalToBePlanedTask(0) + 1)
+                    thisTotalToBePlanedTask(0) += 1
+                    thisTotalToBePlanedTask(myTaskNr) += RessourcesToPlanPerTask
+
+
+
+                Next myTaskNr
+
+                ProjectCount += 1
+
+            End While
+
+
+            myDBDataReaderProject.Close()
+
+
+            'Affichage des totaux
+            dgvProjects.Rows.Add()
+            dgvProjects.Item(1, ProjectCount).Value = "TOTAUX"
+            dgvProjects.Item(3, ProjectCount).Value = thisTotalEstimated                'Total pour le temps estimé de tous les projets
+            dgvProjects.Item(4, ProjectCount).Value = thisTotalExecuted                 'Total pour le temps exécuté de tous les projets
+            dgvProjects.Item(5, ProjectCount).Value = thisTotalPlaned                   'Total pour le temps planfié de tous les projets
+            dgvProjects.Item(6, ProjectCount).Value = thisTotalToBePlaned               'Total pour le temps encore à planfier de tous les projets
+
+
+            'On met la dernière ligne (totaux) en bold
+            dgvProjects.Rows(ProjectCount).DefaultCellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
+
+            'On centre les colonnes
+            dgvProjects.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+
+            For myTaskNr = 1 To AllTasks(0)
+
+                'Affichage des totaux des ressources estimées par projet et secteur d'activités (task)
+                dgvProjects.Item((myTaskNr - 1) * 4 + 7, ProjectCount).Value = thisTotalEstimatedTask(myTaskNr)
+                dgvProjects.Item((myTaskNr - 1) * 4 + 8, ProjectCount).Value = thisTotalExecutedTask(myTaskNr)
+                dgvProjects.Item((myTaskNr - 1) * 4 + 9, ProjectCount).Value = thisTotalPlanedTask(myTaskNr)
+                dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = thisTotalToBePlanedTask(myTaskNr)
+
+
+            Next myTaskNr
+
+            Me.Cursor = Cursors.Default
+
+
+
+        Catch ex As Exception
+
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+
+        End Try
+    End Sub
+
+    Private Sub pDisplayTasks()
+        Try
+
+            Dim thisTB As TabControl = Me.tabTaskType
+
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+            Dim SQL As String = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
+            Dim CountTasks As Integer = 0
+
+
+            Dim myTask As New myTask
+
+            'On met tous les champs textes en haut de la page sur invisible
+            Me.texTask1.Visible = False
+            Me.texTask2.Visible = False
+            Me.texTask3.Visible = False
+            Me.texTask4.Visible = False
+            Me.texTask5.Visible = False
+            Me.texTask6.Visible = False
+            Me.texTask7.Visible = False
+            Me.texTask8.Visible = False
+            Me.texTask9.Visible = False
+            Me.texTask10.Visible = False
+
+            'On définit les couleurs et le fonds uniquement pour les totaux
+            Me.texTaskTotal.BackColor = Color.Black
+            Me.texTaskTotal.ForeColor = Color.White
+
+            'On lit des task
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read
+
+                'Lecture du premier paramètre 
+                Try
+                    'Lecture du nombre d'enregistrement (en demi-jour)
+                    myTask.ID_Task = myDBDataReader.GetValue(0)
+                Catch ex As Exception
+                End Try
+
+                myTask.Read()
+
+                'on définit les caractéristiques des Tab
+                thisTB.TabPages(CountTasks).Text = myTask.Task
+                thisTB.TabPages(CountTasks).BackColor = Color.FromArgb(myTask.BackColor)
+
+
+                'On définit les caractéristiques des textbox
+                Dim myTextBox As TextBox
+                myTextBox = Me.Controls("texTask" & CStr(CountTasks + 1))
+                myTextBox.Visible = True
+                myTextBox.Text = myTask.Task
+                myTextBox.BackColor = Color.FromArgb(myTask.BackColor)
+
+
+                Dim thisDGV As DataGridView
+                Dim thisName As String = ""
+
+
+                'On recherche le datagridview à l'intérieur du tab (0) --> Tab1
+                Dim myControl As Control
+                For Each myControl In Me.tabTaskType.TabPages(CountTasks).Controls
+                    thisName = "dgvTabPage" & CStr(CountTasks + 1)
+                    If myControl.Name = thisName Then
+
+                        'On a trouvé le contrôle qui correspond à la tache, on rempli
+
+                        'Définition du DataGridView
+                        thisDGV = myControl
+                        thisDGV.Columns.Clear()
+                        thisDGV.Rows.Clear()
+                        thisDGV.ReadOnly = True
+                        thisDGV.AllowUserToAddRows = False
+                        thisDGV.AllowUserToDeleteRows = False
+
+                        thisDGV.DefaultCellStyle.BackColor = Color.FromArgb(myTask.BackColor)
+                        thisDGV.RowHeadersVisible = False
+                        thisDGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+
+                        'Définition des colonnes
+                        thisDGV.Columns.Add("", "")
+                        thisDGV.Columns.Add("1 mois", "1 mois")
+                        thisDGV.Columns.Add("3 mois", "3 mois")
+                        thisDGV.Columns.Add("6 mois", "6 mois")
+                        thisDGV.Columns.Add("12 mois", "12 mois")
+                        thisDGV.Columns.Add("fin année", "fin année")
+
+
+                        'On ajoute les lignes
+                        thisDGV.Rows.Add()
+                        thisDGV.Rows.Add()
+                        thisDGV.Rows.Add()
+                        thisDGV.Item(0, 0).Value = "Planifié projet"
+                        thisDGV.Item(0, 1).Value = "Planifié administratif"
+                        thisDGV.Item(0, 2).Value = "Libre"
+
+                        'On calcule les statistique de planification pour les prochaines périodes
+
+
+
+
+
+                    End If
+                Next
+
+
+
+                CountTasks += 1
+
+            End While
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+            'On supprime les Tab que l'on n'utilisent pas
+            For myTabToRemove = 9 To CountTasks Step -1
+                thisTB.Controls.Remove(thisTB.TabPages(myTabToRemove))
+            Next
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub pDisplayNextMonths()
+        Try
+
+            Dim thisDGV As DataGridView = Me.dgvProjects
+            Dim thisTB As TabControl = Me.tabTaskType
+
+            Dim test As New DataGridView
+            test.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+            Dim thisSize As New Drawing.Size
+            thisSize.Width = thisTB.Size.Width - 100
+            thisSize.Height = thisTB.Size.Height - 100
+            test.Size = thisSize
+
+            thisTB.TabPages(0).Controls.Add(test)
+            'thisTB.TabPages(1).Text.ToString()
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+
+
+
+
+
+
+
+
+
+
+    Private Sub pDisplayFreeDates()
+
+        Try
+
+            'Affichage des couleurs de fond
+            'Me.texFreeDateInfra.BackColor = ColorForInfra
+            'Me.texFreeDateSAP.BackColor = ColorForSAP
+            'Me.texFreeDateHelpdesk.BackColor = ColorForHelpdesk
+            'Me.texFreeDatePlaning.BackColor = ColorForPlaning
+
+            'On compte le nombre de membres actifs pour chaque tâche
+            'Dim myCountMembersInfra = fGetProjectMembersForTask(1)
+            'Dim myCountMembersSAP = fGetProjectMembersForTask(2)
+            'Dim myCountMembersHelpdesk = fGetProjectMembersForTask(3)
+            'Dim myCountMembersPlaning = fGetProjectMembersForTask(4)
+
+
+            'Dim thisDate As Date = Today
+            'Dim FreeNow As Boolean = False
+
+            'Dim StillToPlanInfra As Single = myTotalInfra
+            'Dim StillToPlanSAP As Single = myTotalSAP
+            'Dim StillToPlanHelpdesk As Single = myTotalHelpdesk
+            'Dim StillToPlanPlaning As Single = myTotalPlaning
+
+            'Dim FreeDateInfra As Date = Nothing
+            'Dim FreeDateSAP As Date = Nothing
+            'Dim FreeDateHelpdesk As Date = Nothing
+            'Dim FreeDatePlaning As Date = Nothing
+
+            '================================================================
+            'On calcule la première date de libre pour le team infrastructure
+            '================================================================
+            'FreeNow = False
+            'thisDate = Today
+
+            'While FreeNow = False
+
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+
+            '            'On soustrait le nombre de membres de l'infa diminué du nombre de personnes déjà planifiées
+            '            StillToPlanInfra = StillToPlanInfra - (myCountMembersInfra - fGetPlanResourcesForTask(1, thisDate))
+            '            If StillToPlanInfra < 0 Then
+            '                FreeNow = True
+            '                FreeDateInfra = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
+            '================================================================
+            'On calcule la première date de libre pour le team infrastructure
+            '================================================================
+
+
+            '================================================================
+            'On calcule la première date de libre pour le team SAP
+            '================================================================
+            'FreeNow = False
+            'thisDate = Today
+
+            'While FreeNow = False
+
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+
+            '            'On soustrait le nombre de membres de SAP diminué du nombre de personnes déjà planifiées
+            '            StillToPlanSAP = StillToPlanSAP - (myCountMembersSAP - fGetPlanResourcesForTask(2, thisDate))
+            '            If StillToPlanSAP < 0 Then
+            '                FreeNow = True
+            '                FreeDateSAP = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
+            '================================================================
+            'On calcule la première date de libre pour le team SAP
+            '================================================================
+
+
+            '================================================================
+            'On calcule la première date de libre pour le team Helpdesk
+            '================================================================
+            'FreeNow = False
+            'thisDate = Today
+
+            'While FreeNow = False
+
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+
+            '            'On soustrait le nombre de membres du helpdesk diminué du nombre de personnes déjà planifiées
+            '            StillToPlanHelpdesk = StillToPlanHelpdesk - (myCountMembersHelpdesk - fGetPlanResourcesForTask(3, thisDate))
+            '            If StillToPlanHelpdesk < 0 Then
+            '                FreeNow = True
+            '                FreeDateHelpdesk = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
+            '================================================================
+            'On calcule la première date de libre pour le team Helpdesk
+            '================================================================
+
+
+            '================================================================
+            'On calcule la première date de libre pour le team Planification
+            '================================================================
+            'FreeNow = False
+            'thisDate = Today
+
+            'While FreeNow = False
+
+            '    'On décompte uniquement les jours de libre durant les jours de semaine
+            '    Select Case thisDate.DayOfWeek
+            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+
+            '            'On soustrait le nombre de membres de la planification diminué du nombre de personnes déjà planifiées
+            '            StillToPlanPlaning = StillToPlanPlaning - (myCountMembersPlaning - fGetPlanResourcesForTask(4, thisDate))
+            '            If StillToPlanPlaning < 0 Then
+            '                FreeNow = True
+            '                FreeDatePlaning = thisDate
+            '            End If
+            '    End Select
+            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+            'End While
+            '================================================================
+            'On calcule la première date de libre pour le team Planification
+            '================================================================
+
+            'Affichage des soldes
+            'Me.texFreeDateInfra.Text = Format(FreeDateInfra, "D")
+            'Me.texFreeDateSAP.Text = Format(FreeDateSAP, "D")
+            'Me.texFreeDateHelpdesk.Text = Format(FreeDateHelpdesk, "D")
+            'Me.texFreeDatePlaning.Text = Format(FreeDatePlaning, "D")
+
+
+
+
+
+
+
+
+
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Function fGetProjectMembersForTask(ID_Task As Integer) As Integer
+
+        Dim myCount As Integer = 0
+
+        Try
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+            Dim Sql As String = "SELECT COUNT(ID_ProjectMember) FROM ProjectsMembers WHERE Enable = 1 AND CE_ID_Task = " & ID_Task
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read
+
+                'Lecture du premier paramètre COUNT
+                Try
+                    myCount = myDBDataReader.GetValue(0)
+                Catch ex As Exception
+                End Try
+
+            End While
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Return myCount
+
+    End Function
+
+    Private Function fGetPlanResourcesForTask(ID_Task As Integer, myDay As Date) As Single
+
+        Dim myCount As Integer = 0
+
+        Try
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+            Dim Sql As String = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE PlanDate = '" & fConvertDateOnlyMySQL(myDay) & "' AND CE_ID_ProjectMember IN (SELECT ID_ProjectMember FROM ProjectsMembers WHERE CE_ID_Task = " & ID_Task & ");"
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read
+
+                'Lecture du premier paramètre COUNT
+                Try
+                    'Lecture du nombre d'enregistrement (en demi-jour)
+                    myCount = myDBDataReader.GetValue(0)
+
+                    'Lecture du nombre d'enregistrements (en jour)
+                    myCount = myCount / 2
+                Catch ex As Exception
+                End Try
+
+            End While
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Return myCount
+
+    End Function
+
+    Private Sub dgvProjets_CellDoubleClick(ByVal sender As Object, ByVal e As DataGridViewCellEventArgs) Handles dgvProjects.CellDoubleClick
+
+        Try
+
+            dgvProjects.Rows(dgvProjects.CurrentCell.RowIndex).Selected = True
+            ID_Project = dgvProjects.Item(0, dgvProjects.CurrentCell.RowIndex).Value
+
+            Dim myForm As Form = frmProjectDetails
+            myForm.ShowDialog()
+            myForm.Dispose()
+
+            'Affiche les projets
+            pDisplayProjects()
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+    End Sub
+
+    Private Sub btcExportToExcel_Click(sender As Object, e As EventArgs) Handles btcExportToExcel.Click
+        Try
+
+            Me.Cursor = Cursors.WaitCursor
+            pExportToExcel()
+            Me.Cursor = Cursors.Default
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub releaseObject(ByVal obj As Object)
+        Try
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
+            obj = Nothing
+        Catch ex As Exception
+            obj = Nothing
+        Finally
+            GC.Collect()
+        End Try
+    End Sub
 
     Private Sub pExportToExcel()
 
@@ -139,58 +890,6 @@ Public Class frmDashboard
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
-
-    End Sub
-
-    Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        pDisplayTasks()
-
-        pDisplayProjects()
-
-
-
-        'cnProjectPlan = cnProjectPlanWUM
-
-        Exit Sub
-
-        'Me.Cursor = Cursors.WaitCursor
-
-        Try
-
-
-            'Hauteur des colonnes en automatique --> bug ???
-            'tabTaskType.SelectedTab = tabPlaning
-            'tabTaskType.SelectedTab = tabHelpdesk
-            'tabTaskType.SelectedTab = tab2
-            'tabTaskType.SelectedTab = tab1
-
-
-            'Affiche les projets
-            'pDisplayProjects()
-
-            'Affiche les tâches : 1 = infrastructure
-            ''pDisplayResouces(Me.dgvInfrastructure, 1)
-            ''pDisplayResouces(Me.dgvSAP, 2)
-            'pDisplayResouces(Me.dgvHelpdesk, 3)
-            'pDisplayResouces(Me.dgvPlaning, 4)
-
-
-            'Affiche les dates de libres
-            pDisplayFreeDates()
-
-            'Me.Cursor = Cursors.Default
-
-            'myTotalInfra = 0
-            'myTotalSAP = 0
-            'myTotalHelpdesk = 0
-            'myTotalPlaning = 0
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-
-        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -553,699 +1252,6 @@ Public Class frmDashboard
         End Try
     End Sub
 
-    Private Sub grpHelpdesk_Enter(sender As Object, e As EventArgs)
 
-    End Sub
 
-    Private Sub btcFermer_Click(sender As Object, e As EventArgs) Handles btcFermer.Click
-        Try
-            Me.Close()
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
-
-
-    Private Sub pDisplayFreeDates()
-
-        Try
-
-            'Affichage des couleurs de fond
-            'Me.texFreeDateInfra.BackColor = ColorForInfra
-            'Me.texFreeDateSAP.BackColor = ColorForSAP
-            'Me.texFreeDateHelpdesk.BackColor = ColorForHelpdesk
-            'Me.texFreeDatePlaning.BackColor = ColorForPlaning
-
-            'On compte le nombre de membres actifs pour chaque tâche
-            'Dim myCountMembersInfra = fGetProjectMembersForTask(1)
-            'Dim myCountMembersSAP = fGetProjectMembersForTask(2)
-            'Dim myCountMembersHelpdesk = fGetProjectMembersForTask(3)
-            'Dim myCountMembersPlaning = fGetProjectMembersForTask(4)
-
-
-            'Dim thisDate As Date = Today
-            'Dim FreeNow As Boolean = False
-
-            'Dim StillToPlanInfra As Single = myTotalInfra
-            'Dim StillToPlanSAP As Single = myTotalSAP
-            'Dim StillToPlanHelpdesk As Single = myTotalHelpdesk
-            'Dim StillToPlanPlaning As Single = myTotalPlaning
-
-            'Dim FreeDateInfra As Date = Nothing
-            'Dim FreeDateSAP As Date = Nothing
-            'Dim FreeDateHelpdesk As Date = Nothing
-            'Dim FreeDatePlaning As Date = Nothing
-
-            '================================================================
-            'On calcule la première date de libre pour le team infrastructure
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres de l'infa diminué du nombre de personnes déjà planifiées
-            '            StillToPlanInfra = StillToPlanInfra - (myCountMembersInfra - fGetPlanResourcesForTask(1, thisDate))
-            '            If StillToPlanInfra < 0 Then
-            '                FreeNow = True
-            '                FreeDateInfra = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team infrastructure
-            '================================================================
-
-
-            '================================================================
-            'On calcule la première date de libre pour le team SAP
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres de SAP diminué du nombre de personnes déjà planifiées
-            '            StillToPlanSAP = StillToPlanSAP - (myCountMembersSAP - fGetPlanResourcesForTask(2, thisDate))
-            '            If StillToPlanSAP < 0 Then
-            '                FreeNow = True
-            '                FreeDateSAP = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team SAP
-            '================================================================
-
-
-            '================================================================
-            'On calcule la première date de libre pour le team Helpdesk
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres du helpdesk diminué du nombre de personnes déjà planifiées
-            '            StillToPlanHelpdesk = StillToPlanHelpdesk - (myCountMembersHelpdesk - fGetPlanResourcesForTask(3, thisDate))
-            '            If StillToPlanHelpdesk < 0 Then
-            '                FreeNow = True
-            '                FreeDateHelpdesk = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team Helpdesk
-            '================================================================
-
-
-            '================================================================
-            'On calcule la première date de libre pour le team Planification
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres de la planification diminué du nombre de personnes déjà planifiées
-            '            StillToPlanPlaning = StillToPlanPlaning - (myCountMembersPlaning - fGetPlanResourcesForTask(4, thisDate))
-            '            If StillToPlanPlaning < 0 Then
-            '                FreeNow = True
-            '                FreeDatePlaning = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team Planification
-            '================================================================
-
-            'Affichage des soldes
-            'Me.texFreeDateInfra.Text = Format(FreeDateInfra, "D")
-            'Me.texFreeDateSAP.Text = Format(FreeDateSAP, "D")
-            'Me.texFreeDateHelpdesk.Text = Format(FreeDateHelpdesk, "D")
-            'Me.texFreeDatePlaning.Text = Format(FreeDatePlaning, "D")
-
-
-
-
-
-
-
-
-
-
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
-
-    Private Function fGetProjectMembersForTask(ID_Task As Integer) As Integer
-
-        Dim myCount As Integer = 0
-
-        Try
-
-            Dim MyDBConnection As New MySqlConnection
-            Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT COUNT(ID_ProjectMember) FROM ProjectsMembers WHERE Enable = 1 AND CE_ID_Task = " & ID_Task
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
-
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
-            myDBDataReader = myDBCommand.ExecuteReader()
-
-            While myDBDataReader.Read
-
-                'Lecture du premier paramètre COUNT
-                Try
-                    myCount = myDBDataReader.GetValue(0)
-                Catch ex As Exception
-                End Try
-
-            End While
-
-            myDBDataReader.Close()
-            MyDBConnection.Close()
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-
-        Return myCount
-
-    End Function
-
-    Private Function fGetPlanResourcesForTask(ID_Task As Integer, myDay As Date) As Single
-
-        Dim myCount As Integer = 0
-
-        Try
-
-            Dim MyDBConnection As New MySqlConnection
-            Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT COUNT(ID_Resource) FROM PlanResources WHERE PlanDate = '" & fConvertDateOnlyMySQL(myDay) & "' AND CE_ID_ProjectMember IN (SELECT ID_ProjectMember FROM ProjectsMembers WHERE CE_ID_Task = " & ID_Task & ");"
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
-
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
-            myDBDataReader = myDBCommand.ExecuteReader()
-
-            While myDBDataReader.Read
-
-                'Lecture du premier paramètre COUNT
-                Try
-                    'Lecture du nombre d'enregistrement (en demi-jour)
-                    myCount = myDBDataReader.GetValue(0)
-
-                    'Lecture du nombre d'enregistrements (en jour)
-                    myCount = myCount / 2
-                Catch ex As Exception
-                End Try
-
-            End While
-
-            myDBDataReader.Close()
-            MyDBConnection.Close()
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-
-        Return myCount
-
-    End Function
-
-
-
-    Private Sub dgvProjets_CellDoubleClick(ByVal sender As Object, ByVal e As DataGridViewCellEventArgs) Handles dgvProjects.CellDoubleClick
-
-        Try
-
-            dgvProjects.Rows(dgvProjects.CurrentCell.RowIndex).Selected = True
-            ID_Project = dgvProjects.Item(0, dgvProjects.CurrentCell.RowIndex).Value
-
-            Dim myForm As Form = frmProjectDetails
-            myForm.ShowDialog()
-            myForm.Dispose()
-
-            'Affiche les projets
-            pDisplayProjects()
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-
-    End Sub
-
-    Private Sub btcExportToExcel_Click(sender As Object, e As EventArgs) Handles btcExportToExcel.Click
-        Try
-
-            Me.Cursor = Cursors.WaitCursor
-            pExportToExcel()
-            Me.Cursor = Cursors.Default
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
-
-    Private Sub releaseObject(ByVal obj As Object)
-        Try
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
-            obj = Nothing
-        Catch ex As Exception
-            obj = Nothing
-        Finally
-            GC.Collect()
-        End Try
-    End Sub
-
-
-    Private Sub pDisplayTasks()
-        Try
-
-            Me.tabTaskType.TabPages.Clear()
-
-            Dim MyDBConnection As New MySqlConnection
-            Dim myDBDataReader As MySqlDataReader
-            Dim Sql As String = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
-            Dim CountTasks As Integer = 0
-
-            Dim myTask As New myTask
-
-            Me.texTask1.Visible = False
-            Me.texTask2.Visible = False
-            Me.texTask3.Visible = False
-            Me.texTask4.Visible = False
-            Me.texTask5.Visible = False
-            Me.texTask6.Visible = False
-            Me.texTask7.Visible = False
-            Me.texTask8.Visible = False
-            Me.texTask9.Visible = False
-            Me.texTask10.Visible = False
-
-            Me.texTaskTotal.BackColor = Color.Black
-            Me.texTaskTotal.ForeColor = Color.White
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
-
-            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
-            myDBDataReader = myDBCommand.ExecuteReader()
-
-            While myDBDataReader.Read
-
-                'Lecture du premier paramètre 
-                Try
-                    'Lecture du nombre d'enregistrement (en demi-jour)
-                    myTask.ID_Task = myDBDataReader.GetValue(0)
-                Catch ex As Exception
-                End Try
-
-                myTask.Read()
-
-                Dim myPage As New TabPage
-
-                myPage.BackColor = Color.FromArgb(myTask.BackColor)
-                myPage.Text = myTask.Task
-
-                Me.tabTaskType.TabPages.Add(myPage)
-
-                Select Case CountTasks
-                    Case 0
-                        Me.texTask1.Text = myTask.Task
-                        Me.texTask1.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask1.Visible = True
-                    Case 1
-                        Me.texTask2.Text = myTask.Task
-                        Me.texTask2.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask2.Visible = True
-                    Case 2
-                        Me.texTask3.Text = myTask.Task
-                        Me.texTask3.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask3.Visible = True
-                    Case 3
-                        Me.texTask4.Text = myTask.Task
-                        Me.texTask4.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask4.Visible = True
-                    Case 4
-                        Me.texTask5.Text = myTask.Task
-                        Me.texTask5.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask5.Visible = True
-                    Case 5
-                        Me.texTask6.Text = myTask.Task
-                        Me.texTask6.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask6.Visible = True
-                    Case 6
-                        Me.texTask7.Text = myTask.Task
-                        Me.texTask7.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask7.Visible = True
-                    Case 7
-                        Me.texTask8.Text = myTask.Task
-                        Me.texTask8.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask8.Visible = True
-                    Case 8
-                        Me.texTask9.Text = myTask.Task
-                        Me.texTask9.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask9.Visible = True
-                    Case 9
-                        Me.texTask10.Text = myTask.Task
-                        Me.texTask10.BackColor = Color.FromArgb(myTask.BackColor)
-                        Me.texTask10.Visible = True
-                    Case Else
-
-                End Select
-
-                CountTasks += 1
-
-            End While
-
-            myDBDataReader.Close()
-            MyDBConnection.Close()
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
-
-
-
-    Private Sub pDisplayProjects()
-
-        Try
-
-            Me.Cursor = Cursors.WaitCursor
-
-
-            Dim thisProject As New myProject
-            Dim thisTask As New myTask
-            Dim thisEstimatedResource As New myEstimatedResource
-            Dim thisExecutedResource As New myExecuteResource
-            Dim thisPlanResource As New myPlanResource
-
-            Dim AllTasks(0) As Integer
-            'La Valeur AllTask(0) contient le nombre d'enregistrements
-            'La Valeur AllTask(1) contient le ID_Task de la première task
-            'La Valeur AllTask(2) contient le ID_Task de la deuxième task
-            '...etc...
-
-            Dim thisTotalEstimated As Integer = 0
-            Dim thisTotalEstimatedTask(0) As Integer
-            'La Valeur thisTotalEstimatedTask(0) contient le nombre d'enregistrements
-            'La Valeur thisTotalEstimatedTask(1) contient le total des ressources estimées par project et pas tâche
-            'La Valeur thisTotalEstimatedTask(2) contient le total des ressources estimées par project et pas tâche
-            '...etc...
-
-            Dim thisTotalExecuted As Integer = 0
-            Dim thisTotalExecutedTask(0) As Integer
-            'La Valeur thisTotalExecutedTask(0) contient le nombre d'enregistrements
-            'La Valeur thisTotalExecutedTask(1) contient le total des ressources exécutées par project et pas tâche
-            'La Valeur thisTotalExecutedTask(2) contient le total des ressources exécutées par project et pas tâche
-            '...etc...
-
-            Dim thisTotalPlaned As Integer = 0
-            Dim thisTotalPlanedTask(0) As Integer
-            'La Valeur thisTotalPlanedTask(0) contient le nombre d'enregistrements
-            'La Valeur thisTotalPlanedTask(1) contient le total des ressources planifiées par project et pas tâche
-            'La Valeur thisTotalPlanedTask(2) contient le total des ressources planifiées par project et pas tâche
-            '...etc...
-
-            Dim thisTotalToBePlaned As Integer = 0
-            Dim thisTotalToBePlanedTask(0) As Integer
-            'La Valeur thisTotalToBePlanedTask(0) contient le nombre d'enregistrements
-            'La Valeur thisTotalToBePlanedTask(1) contient le total des ressources encore à planifier par project et pas tâche
-            'La Valeur thisTotalToBePlanedTask(2) contient le total des ressources encore à planifier par project et pas tâche
-            '...etc...
-
-
-            Dim ActiveRow As Integer = 0
-            Dim TaskCount As Integer = 0
-            Dim ProjectCount As Integer = 0
-
-            Dim MyDBConnection As New MySqlConnection
-
-            Dim myDBDataReaderTask As MySqlDataReader
-            Dim myDBDataReaderProject As MySqlDataReader
-
-            Dim SQL As String = ""
-            SQL = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
-
-
-            'On vide le DataGridView
-            dgvProjects.Rows.Clear()
-            dgvProjects.Columns.Clear()
-
-
-            'Définition du DataGridView
-            dgvProjects.ReadOnly = True
-            dgvProjects.AllowUserToAddRows = False
-            dgvProjects.AllowUserToDeleteRows = False
-            dgvProjects.MultiSelect = False
-
-
-
-            'Définition des colonnes 0 - 6
-            dgvProjects.Columns.Add("ID", "ID")                         '0  ID_Project 
-            dgvProjects.Columns.Add("Projet", "Projet")                 '1  Nom du projet
-            dgvProjects.Columns.Add("Deadline", "Deadline")             '2  Deadline
-            dgvProjects.Columns.Add("Estimées", "Estimées")             '3  Ressources estimées pour tout le projet
-            dgvProjects.Columns.Add("Effectuées", "Effectuées")         '4  Ressources effectuées pour tout le projet
-            dgvProjects.Columns.Add("Planifiées", "Planifiées")         '5  Ressources planifiées pour tout le projet
-            dgvProjects.Columns.Add("A planifier", "A planifier")       '6  Ressources à encore à planifier pour tout le projet
-
-            dgvProjects.Columns(3).DefaultCellStyle.BackColor = Color.Black
-            dgvProjects.Columns(3).DefaultCellStyle.ForeColor = Color.White
-            dgvProjects.Columns(4).DefaultCellStyle.BackColor = Color.Black
-            dgvProjects.Columns(4).DefaultCellStyle.ForeColor = Color.White
-            dgvProjects.Columns(5).DefaultCellStyle.BackColor = Color.Black
-            dgvProjects.Columns(5).DefaultCellStyle.ForeColor = Color.White
-            dgvProjects.Columns(6).DefaultCellStyle.BackColor = Color.Black
-            dgvProjects.Columns(6).DefaultCellStyle.ForeColor = Color.White
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
-
-            Dim myDBCommandTask As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
-
-            myDBDataReaderTask = myDBCommandTask.ExecuteReader()
-
-            While myDBDataReaderTask.Read
-
-                'Lecture du projet
-                thisTask.ID_Task = myDBDataReaderTask.GetValue(0)
-                thisTask.Read()
-
-
-                ReDim Preserve AllTasks(AllTasks(0) + 1)
-                AllTasks(0) += 1
-                AllTasks(TaskCount + 1) = thisTask.ID_Task
-
-
-
-
-                dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
-                dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
-                dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
-                dgvProjects.Columns.Add("A planifier", "A planifier")       '10 Ressources à encore à planifier la tâche 1 (11 pour 2, 15 pour 3, etc.)
-
-                dgvProjects.Columns(TaskCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
-                dgvProjects.Columns(TaskCount * 4 + 8).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
-                dgvProjects.Columns(TaskCount * 4 + 9).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
-                dgvProjects.Columns(TaskCount * 4 + 10).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
-
-                TaskCount += 1
-
-            End While
-
-
-            myDBDataReaderTask.Close()
-            MyDBConnection.Close()
-
-
-
-            'La colonne 0 (ID_Project) n'est pas visible
-            dgvProjects.Columns(0).Visible = True
-            For i = 1 To dgvProjects.ColumnCount - 1
-                'Les autres colonnes sont visibles
-                dgvProjects.Columns(i).Visible = True
-                'On empêche de trier les colonnes de manière alphabétiques
-                dgvProjects.Columns(i).SortMode = DataGridViewColumnSortMode.NotSortable
-            Next i
-
-
-            SQL = "SELECT projects.ID_Project FROM Projects LEFT JOIN ProjectPlan.status ON (projects.CE_ID_Status = status.ID_Status) WHERE (status.StatusProjectInWork =1);"
-
-
-            MyDBConnection.ConnectionString = cnProjectPlan
-            MyDBConnection.Open()
-
-
-            Dim myDBCommandProject As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
-
-            myDBDataReaderProject = myDBCommandProject.ExecuteReader()
-            While myDBDataReaderProject.Read
-
-                'Lecture du projet
-                thisProject.ID_Project = myDBDataReaderProject.GetValue(0)
-                thisProject.Read()
-
-
-                'On ajoute le projet dans le DataGridView
-                dgvProjects.Rows.Add()
-
-                'Affichages des cellules par projet
-                dgvProjects.Item(0, ProjectCount).Value = thisProject.ID_Project                        'ID du projet
-                dgvProjects.Item(1, ProjectCount).Value = thisProject.Title                             'Titre du projet
-                dgvProjects.Item(2, ProjectCount).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")    'Deadline du projet
-                dgvProjects.Item(3, ProjectCount).Value = thisProject.EstimatedResources                'Ressources estimées totales
-                dgvProjects.Item(4, ProjectCount).Value = thisProject.EffectiveResources                'Ressources effectives totales
-                thisProject.GetPlanResources()                                                          'On calcule le nombre d'heures planifiées
-                dgvProjects.Item(5, ProjectCount).Value = thisProject.PlanRessources                    'Ressources planifiées totales
-
-                'On calcule le nombre d'heures encore à planifier
-                Dim RessourcesToPlan As Single = thisProject.EstimatedResources - thisProject.EffectiveResources - thisProject.PlanRessources
-                If RessourcesToPlan < 0 Then RessourcesToPlan = 0
-                dgvProjects.Item(6, ProjectCount).Value = RessourcesToPlan                                 'nombre d'heures encore à planfier
-
-
-                'On calcule les totaux pour le total des projets
-                thisTotalEstimated += thisProject.EstimatedResources
-                thisTotalExecuted += thisProject.EffectiveResources
-                thisTotalPlaned += thisProject.PlanRessources
-                thisTotalToBePlaned += RessourcesToPlan
-
-                For myTaskNr = 1 To AllTasks(0)
-                    thisTask = New myTask
-                    thisTask.ID_Task = AllTasks(myTaskNr)
-                    thisTask.Read()
-
-                    'Affichage des ressources estimées par projet et secteur d'activités (task)
-                    thisEstimatedResource = New myEstimatedResource
-                    thisEstimatedResource.CE_ID_Project = thisProject.ID_Project
-                    thisEstimatedResource.CE_ID_Task = AllTasks(myTaskNr)
-                    thisEstimatedResource.GetEstimatedResourcesPerTaskAndProject()
-                    dgvProjects.Item((myTaskNr - 1) * 4 + 7, ProjectCount).Value = thisEstimatedResource.EstimatedResourcesPerTaskAndProject
-
-                    'Affichage des ressources exécutées par projet et secteur d'activités (task)
-                    thisExecutedResource = New myExecuteResource
-                    thisExecutedResource.CE_ID_Project = thisProject.ID_Project
-                    thisExecutedResource.CE_ID_Task = AllTasks(myTaskNr)
-                    thisExecutedResource.GetExecutedProjectResourcesPerTaskAndProject()
-                    dgvProjects.Item((myTaskNr - 1) * 4 + 8, ProjectCount).Value = thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject
-
-                    'Affichage des ressources planifiées par projet et secteur d'activités (task)
-                    thisPlanResource = New myPlanResource
-                    thisPlanResource.CE_ID_Project = thisProject.ID_Project
-                    thisPlanResource.CE_ID_Task = AllTasks(myTaskNr)
-                    thisPlanResource.GetPlanProjectResourcesPerTaskAndProject()
-                    dgvProjects.Item((myTaskNr - 1) * 4 + 9, ProjectCount).Value = thisPlanResource.PlanProjectResourcesPerTaskAndProject
-
-                    'Affichage des ressources à planifier par projet et secteur d'activités (task)
-                    Dim RessourcesToPlanPerTask As Single = thisEstimatedResource.EstimatedResourcesPerTaskAndProject - thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject - thisPlanResource.PlanProjectResourcesPerTaskAndProject
-                    If RessourcesToPlanPerTask < 0 Then RessourcesToPlanPerTask = 0
-                    dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = RessourcesToPlanPerTask                                 'nombre d'heures encore à planfier
-
-
-                    'On additionne les heures planifiées par task
-                    ReDim Preserve thisTotalEstimatedTask(thisTotalEstimatedTask(0) + 1)
-                    thisTotalEstimatedTask(0) += 1
-                    thisTotalEstimatedTask(myTaskNr) += thisEstimatedResource.EstimatedResourcesPerTaskAndProject
-
-                    'On additionne les heures executées par task
-                    ReDim Preserve thisTotalExecutedTask(thisTotalExecutedTask(0) + 1)
-                    thisTotalExecutedTask(0) += 1
-                    thisTotalExecutedTask(myTaskNr) += thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject
-
-                    'On additionne les heures planifiées par task
-                    ReDim Preserve thisTotalPlanedTask(thisTotalPlanedTask(0) + 1)
-                    thisTotalPlanedTask(0) += 1
-                    thisTotalPlanedTask(myTaskNr) += thisPlanResource.PlanProjectResourcesPerTaskAndProject
-
-                    'On additionne les heures encore à planifier par task
-                    ReDim Preserve thisTotalToBePlanedTask(thisTotalToBePlanedTask(0) + 1)
-                    thisTotalToBePlanedTask(0) += 1
-                    thisTotalToBePlanedTask(myTaskNr) += RessourcesToPlanPerTask
-
-
-
-                Next myTaskNr
-
-                ProjectCount += 1
-
-            End While
-
-
-            myDBDataReaderProject.Close()
-
-
-            'Affichage des totaux
-            dgvProjects.Rows.Add()
-            dgvProjects.Item(1, ProjectCount).Value = "TOTAUX"
-            dgvProjects.Item(3, ProjectCount).Value = thisTotalEstimated                'Total pour le temps estimé de tous les projets
-            dgvProjects.Item(4, ProjectCount).Value = thisTotalExecuted                 'Total pour le temps exécuté de tous les projets
-            dgvProjects.Item(5, ProjectCount).Value = thisTotalPlaned                   'Total pour le temps planfié de tous les projets
-            dgvProjects.Item(6, ProjectCount).Value = thisTotalToBePlaned               'Total pour le temps encore à planfier de tous les projets
-
-
-            'On met la dernière ligne (totaux) en bold
-            dgvProjects.Rows(ProjectCount).DefaultCellStyle.Font = New Font("Arial", 10, FontStyle.Bold)
-
-            'On centre les colonnes
-            dgvProjects.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-
-
-            For myTaskNr = 1 To AllTasks(0)
-
-                'Affichage des totaux des ressources estimées par projet et secteur d'activités (task)
-                dgvProjects.Item((myTaskNr - 1) * 4 + 7, ProjectCount).Value = thisTotalEstimatedTask(myTaskNr)
-                dgvProjects.Item((myTaskNr - 1) * 4 + 8, ProjectCount).Value = thisTotalExecutedTask(myTaskNr)
-                dgvProjects.Item((myTaskNr - 1) * 4 + 9, ProjectCount).Value = thisTotalPlanedTask(myTaskNr)
-                dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = thisTotalToBePlanedTask(myTaskNr)
-
-
-            Next myTaskNr
-
-            Me.Cursor = Cursors.Default
-
-
-
-        Catch ex As Exception
-
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-
-        End Try
-    End Sub
-
-    Private Sub btcRefresh_Click(sender As Object, e As EventArgs) Handles btcRefresh.Click
-        Try
-
-            pDisplayTasks()
-            pDisplayProjects()
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
 End Class
