@@ -798,20 +798,6 @@ Public Class frmDashboard
 
     End Function
 
-    Private Sub btcChart_Click(sender As Object, e As EventArgs) Handles btcChart.Click
-        Try
-            'Dim myForm As Form = frmChart
-
-            'Affiche la fenêtre en mode non-modal
-            'myForm.Show()
-
-            'Affiche la fenêtre en mode modal
-            'myForm.ShowDialog()
-            'myForm.Dispose()
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
 
 
     Private Sub dgvProjets_CellDoubleClick(ByVal sender As Object, ByVal e As DataGridViewCellEventArgs) Handles dgvProjects.CellDoubleClick
@@ -861,6 +847,7 @@ Public Class frmDashboard
     Private Sub pDisplayTasks()
         Try
 
+            Me.tabTaskType.TabPages.Clear()
 
             Dim MyDBConnection As New MySqlConnection
             Dim myDBDataReader As MySqlDataReader
@@ -970,33 +957,19 @@ Public Class frmDashboard
         Try
 
 
-            'Dim TotalEstimated As Single = 0
-            'Dim TotalExecuted As Single = 0
-            'Dim TotalPlan As Single = 0
-            'Dim TotalToPlan As Single = 0
 
-            'Dim TotalInfraEstimated As Single = 0
-            'Dim TotalInfraExecuted As Single = 0
-            'Dim TotalInfraPlan As Single = 0
-            'Dim TotalInfraToPlan As Single = 0
-
-            'Dim TotalSAPEstimated As Single = 0
-            'Dim TotalSAPExecuted As Single = 0
-            'Dim TotalSAPPlan As Single = 0
-            'Dim TotalSAPToPlan As Single = 0
-
-            'Dim TotalHelpdeskEstimated As Single = 0
-            'Dim TotalHelpdeskExecuted As Single = 0
-            'Dim TotalHelpdeskPlan As Single = 0
-            'Dim TotalHelpdeskToPlan As Single = 0
-
-            'Dim TotalPlaningEstimated As Single = 0
-            'Dim TotalPlaningExecuted As Single = 0
-            'Dim TotalPlaningPlan As Single = 0
-            'Dim TotalPlaningToPlan As Single = 0
 
             Dim thisProject As New myProject
             Dim thisTask As New myTask
+            Dim thisEstimatedResource As New myEstimatedResource
+            Dim thisExecutedResource As New myExecuteResource
+            Dim thisPlanResource As New myPlanResource
+
+            Dim AllTasks(0) As Integer
+            'La Valeur AllTask(0) contient le nombre d'enregistrements
+            'La Valeur AllTask(1) contient le ID_Task de la première task
+            'La Valeur AllTask(2) contient le ID_Task de la deuxième task
+            '...etc...
 
             Dim ActiveRow As Integer = 0
             Dim TaskCount As Integer = 0
@@ -1008,8 +981,6 @@ Public Class frmDashboard
             Dim myDBDataReaderProject As MySqlDataReader
 
             Dim SQL As String = ""
-            'SQL = "SELECT ID_Project FROM Projects WHERE CE_ID_Status IN (6,7,8,9);"
-            'SQL = "SELECT ID_Project FROM Projects ;"
             SQL = "SELECT ID_Task FROM Tasks WHERE Enable =1 ORDER BY DisplayOrder ASC;"
 
             'Me.Cursor = Cursors.WaitCursor
@@ -1060,6 +1031,11 @@ Public Class frmDashboard
                 thisTask.ID_Task = myDBDataReaderTask.GetValue(0)
                 thisTask.Read()
 
+
+                ReDim Preserve AllTasks(AllTasks(0) + 1)
+                AllTasks(0) += 1
+                AllTasks(TaskCount + 1) = thisTask.ID_Task
+
                 dgvProjects.Columns.Add("Estimées", "Estimées")             '7  Ressources estimées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
                 dgvProjects.Columns.Add("Effectuées", "Effectuées")         '8  Ressources effectuées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
                 dgvProjects.Columns.Add("Planifiées", "Planifiées")         '9  Ressources planifiées pour la tâche 1 (11 pour 2, 15 pour 3, etc.)
@@ -1090,7 +1066,7 @@ Public Class frmDashboard
             Next i
 
 
-            SQL = "SELECT ID_Project FROM Projects;"
+            SQL = "SELECT projects.ID_Project FROM Projects LEFT JOIN ProjectPlan.status ON (projects.CE_ID_Status = status.ID_Status) WHERE (status.StatusProjectInWork =1);"
 
 
             MyDBConnection.ConnectionString = cnProjectPlan
@@ -1109,13 +1085,64 @@ Public Class frmDashboard
 
                 'On ajoute le projet dans le DataGridView
                 dgvProjects.Rows.Add()
-                dgvProjects.Item(0, ProjectCount).Value = thisProject.ID_Project           'ID du projet
-                dgvProjects.Item(1, ProjectCount).Value = thisProject.Title                'Titre du projet
-                dgvProjects.Item(2, ProjectCount).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")             'Deadline du projet
-                dgvProjects.Item(3, ProjectCount).Value = thisProject.EstimatedResources   'Ressources estimées totales
-                dgvProjects.Item(4, ProjectCount).Value = thisProject.EffectiveResources   'Ressources effectives totales
-                thisProject.GetPlanResources()
-                dgvProjects.Item(5, ProjectCount).Value = thisProject.PlanRessources       'Ressources planifiées totales
+
+                'Affichages des cellules par projet
+                dgvProjects.Item(0, ProjectCount).Value = thisProject.ID_Project                        'ID du projet
+                dgvProjects.Item(1, ProjectCount).Value = thisProject.Title                             'Titre du projet
+                dgvProjects.Item(2, ProjectCount).Value = Format(thisProject.DeadLine, "dd.MM.yyyy")    'Deadline du projet
+                dgvProjects.Item(3, ProjectCount).Value = thisProject.EstimatedResources                'Ressources estimées totales
+                dgvProjects.Item(4, ProjectCount).Value = thisProject.EffectiveResources                'Ressources effectives totales
+                thisProject.GetPlanResources()                                                          'On calcule le nombre d'heures planifiées
+                dgvProjects.Item(5, ProjectCount).Value = thisProject.PlanRessources                    'Ressources planifiées totales
+
+                'On calcule le nombre d'heures encore à planifier
+                Dim RessourcesToPlan As Single = thisProject.EstimatedResources - thisProject.EffectiveResources - thisProject.PlanRessources
+                If RessourcesToPlan < 0 Then RessourcesToPlan = 0
+                dgvProjects.Item(6, ProjectCount).Value = RessourcesToPlan                                 'nombre d'heures encore à planfier
+
+
+                For myTaskNr = 1 To AllTasks(0)
+                    thisTask = New myTask
+                    thisTask.ID_Task = AllTasks(myTaskNr)
+                    thisTask.Read()
+
+                    'Affichage des ressources estimées par projet et secteur d'activités (task)
+                    thisEstimatedResource = New myEstimatedResource
+                    thisEstimatedResource.CE_ID_Project = thisProject.ID_Project
+                    thisEstimatedResource.CE_ID_Task = AllTasks(myTaskNr)
+                    thisEstimatedResource.GetEstimatedResourcesPerTaskAndProject()
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 7, ProjectCount).Value = thisEstimatedResource.EstimatedResourcesPerTaskAndProject
+
+                    'Affichage des ressources exécutées par projet et secteur d'activités (task)
+                    thisExecutedResource = New myExecuteResource
+                    thisExecutedResource.CE_ID_Project = thisProject.ID_Project
+                    thisExecutedResource.CE_ID_Task = AllTasks(myTaskNr)
+                    thisExecutedResource.GetExecutedProjectResourcesPerTaskAndProject()
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 8, ProjectCount).Value = thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject
+
+                    'Affichage des ressources planifiées par projet et secteur d'activités (task)
+                    thisPlanResource = New myPlanResource
+                    thisPlanResource.CE_ID_Project = thisProject.ID_Project
+                    thisPlanResource.CE_ID_Task = AllTasks(myTaskNr)
+                    thisPlanResource.GetPlanProjectResourcesPerTaskAndProject()
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 9, ProjectCount).Value = thisPlanResource.PlanProjectResourcesPerTaskAndProject
+
+                    'Affichage des ressources à planifier par projet et secteur d'activités (task)
+                    Dim RessourcesToPlanPerTask As Single = thisEstimatedResource.EstimatedResourcesPerTaskAndProject - thisExecutedResource.ExecutedProjectResourcesPerTaskAndProject - thisPlanResource.PlanProjectResourcesPerTaskAndProject
+                    If RessourcesToPlanPerTask < 0 Then RessourcesToPlanPerTask = 0
+                    dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = RessourcesToPlanPerTask                                 'nombre d'heures encore à planfier
+
+
+
+
+                    'dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = "a plnan"
+
+                    'dgvProjects.Columns(ProjectCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
+
+                Next myTaskNr
+
+
+
 
                 'dgvProjects.Columns(ProjectCount * 4 + 7).DefaultCellStyle.BackColor = Color.FromArgb(thisTask.BackColor)
 
@@ -1540,5 +1567,14 @@ Public Class frmDashboard
         End Try
     End Sub
 
+    Private Sub btcRefresh_Click(sender As Object, e As EventArgs) Handles btcRefresh.Click
+        Try
 
+            pDisplayTasks()
+            pDisplayProjects()
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 End Class

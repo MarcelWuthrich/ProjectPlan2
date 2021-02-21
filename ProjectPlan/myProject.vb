@@ -445,7 +445,7 @@ Public Class myProject
                 myProjectDB.ID_Project = Me.ID_Project
                 myProjectDB.Read()
 
-                'on compte les jours travaillés et on calcule le taux de réalisation
+                'on compte les heures travaillées et on calcule le taux de réalisation
                 Me.GetEffectiveResources()
                 If Me.EstimatedResources = 0 Then
                     Me.ImplementationRate = 0
@@ -559,12 +559,10 @@ Public Class myProject
             Dim myDBDataReader As MySqlDataReader
             Dim Sql As String = ""
             Dim ID_Resource As Integer = 0
-            Dim HalfDay As Integer = 0
             Dim Total As Single = 0
-            Dim myResource As New myExecuteResource
 
             If ID_Project <> 0 Then
-                Sql = "SELECT ID_Resource FROM ExecutedResources WHERE CE_ID_Project = " & Me.ID_Project & ";"
+                Sql = "SELECT COUNT(ID_Resource) FROM ExecutedResources WHERE CE_ID_Project = " & Me.ID_Project & ";"
 
                 MyDBConnection.ConnectionString = cnProjectPlan
                 MyDBConnection.Open()
@@ -575,26 +573,12 @@ Public Class myProject
 
                     'Lecture du premier paramètre ID_Resource
                     Try
-                        myResource.ID_Resource = myDBDataReader.GetValue(0)
-                        myResource.Read()
+                        Me.EffectiveResources = myDBDataReader.GetValue(0)
                     Catch ex As Exception
                     End Try
 
-                    '=================================================
-                    'Refaire la fonction et remplacer HalfDay par Hour
-                    '=================================================
-
-                    'Select Case myResource.HalfDay
-                    '    Case 1, 2
-                    '        'Si c'est un demi jour, on ajoute 0.5 jour
-                    '        Total = Total + 0.5
-                    '    Case Else
-                    '        'Dans les autres cas (0, null, etc), on ajoute 1 jour
-                    '        Total = Total + 1
-                    'End Select
                 End While
 
-                Me.EffectiveResources = Total
 
                 myDBDataReader.Close()
                 MyDBConnection.Close()
@@ -612,8 +596,8 @@ Public Class myProject
 
     Public Function GetPlanResources() As myProject
 
-        'Renvoie le nombre de jours planifiés pour un projet donné
-        'On donne la réponse en demi-jour
+        'Renvoie le nombre d'heures planifiées pour un projet donné
+        'On donne la réponse en heures
         Try
 
             Dim MyDBConnection As New MySqlConnection
@@ -631,8 +615,8 @@ Public Class myProject
 
                     'Lecture du premier paramètre HalfDay
                     Try
-                        'On lit et on divise par 2 parce que les valeurs de la DB sont des demi-jours
-                        Me.PlanRessources = myDBDataReader.GetValue(0) / 2
+                        'On lit le nombre d'heures
+                        Me.PlanRessources = myDBDataReader.GetValue(0)
                     Catch ex As Exception
                     End Try
 

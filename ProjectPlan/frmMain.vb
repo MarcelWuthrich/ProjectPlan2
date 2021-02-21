@@ -106,9 +106,11 @@ Public Class frmMain
 
         Try
 
+
+
             ID_Project = 0
 
-            Dim myForm As Form = frmResourcesValidation
+            Dim myForm As Form = frmDashboard
 
             myForm.MdiParent = Me
             myForm.Show()

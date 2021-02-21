@@ -227,6 +227,7 @@ Public Class frmProjectsList
     End Sub
 
 
+
     Private Sub btcFilterClear_Click(sender As Object, e As EventArgs) Handles btcFilterClear.Click
 
         Try
@@ -330,7 +331,6 @@ Public Class frmProjectsList
         End Try
     End Sub
 
-    Private Sub dgvProjets_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProjets.CellContentClick
 
-    End Sub
+
 End Class

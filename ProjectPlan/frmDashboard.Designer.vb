@@ -40,7 +40,6 @@ Partial Class frmDashboard
         Me.labFreeDatePlaning = New System.Windows.Forms.Label()
         Me.texFreeDatePlaning = New System.Windows.Forms.TextBox()
         Me.grpNextFreeDate = New System.Windows.Forms.GroupBox()
-        Me.btcChart = New System.Windows.Forms.Button()
         Me.btcExportToExcel = New System.Windows.Forms.Button()
         Me.texTask8 = New System.Windows.Forms.TextBox()
         Me.texTask7 = New System.Windows.Forms.TextBox()
@@ -48,6 +47,8 @@ Partial Class frmDashboard
         Me.texTask5 = New System.Windows.Forms.TextBox()
         Me.texTask10 = New System.Windows.Forms.TextBox()
         Me.texTask9 = New System.Windows.Forms.TextBox()
+        Me.btcRefresh = New System.Windows.Forms.Button()
+        Me.btcChart = New System.Windows.Forms.Button()
         CType(Me.dgvProjects, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpNextFreeDate.SuspendLayout()
         Me.SuspendLayout()
@@ -220,16 +221,6 @@ Partial Class frmDashboard
         Me.grpNextFreeDate.TabStop = False
         Me.grpNextFreeDate.Text = "Prochaine date de libre"
         '
-        'btcChart
-        '
-        Me.btcChart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btcChart.Image = CType(resources.GetObject("btcChart.Image"), System.Drawing.Image)
-        Me.btcChart.Location = New System.Drawing.Point(1204, 635)
-        Me.btcChart.Name = "btcChart"
-        Me.btcChart.Size = New System.Drawing.Size(134, 134)
-        Me.btcChart.TabIndex = 22
-        Me.btcChart.UseVisualStyleBackColor = True
-        '
         'btcExportToExcel
         '
         Me.btcExportToExcel.Location = New System.Drawing.Point(138, 20)
@@ -299,11 +290,31 @@ Partial Class frmDashboard
         Me.texTask9.Text = "Task9"
         Me.texTask9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
+        'btcRefresh
+        '
+        Me.btcRefresh.Image = Global.ProjectPlan.My.Resources.Resources.refresh_23_23
+        Me.btcRefresh.Location = New System.Drawing.Point(248, 21)
+        Me.btcRefresh.Name = "btcRefresh"
+        Me.btcRefresh.Size = New System.Drawing.Size(23, 23)
+        Me.btcRefresh.TabIndex = 30
+        Me.btcRefresh.UseVisualStyleBackColor = True
+        '
+        'btcChart
+        '
+        Me.btcChart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btcChart.Image = CType(resources.GetObject("btcChart.Image"), System.Drawing.Image)
+        Me.btcChart.Location = New System.Drawing.Point(1204, 635)
+        Me.btcChart.Name = "btcChart"
+        Me.btcChart.Size = New System.Drawing.Size(134, 134)
+        Me.btcChart.TabIndex = 22
+        Me.btcChart.UseVisualStyleBackColor = True
+        '
         'frmDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1577, 896)
+        Me.Controls.Add(Me.btcRefresh)
         Me.Controls.Add(Me.texTask10)
         Me.Controls.Add(Me.texTask9)
         Me.Controls.Add(Me.texTask8)
@@ -358,4 +369,5 @@ Partial Class frmDashboard
     Friend WithEvents texTask5 As TextBox
     Friend WithEvents texTask10 As TextBox
     Friend WithEvents texTask9 As TextBox
+    Friend WithEvents btcRefresh As Button
 End Class

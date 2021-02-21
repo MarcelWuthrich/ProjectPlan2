@@ -133,7 +133,7 @@ Public Class frmProjectDetails
             Me.texDescription.Text = thisProject.Description
             Me.texEstimatedResources.Text = thisProject.EstimatedResources
             Me.texImplementationRate.Text = thisProject.ImplementationRate
-            Me.texExecutedResources.Text = Format(thisProject.EffectiveResources, "0.0")
+            Me.texExecutedResources.Text = thisProject.EffectiveResources
             'Me.texPlanResources.Text = Format(thisResource.CountPlanResource, "0.0")
 
 

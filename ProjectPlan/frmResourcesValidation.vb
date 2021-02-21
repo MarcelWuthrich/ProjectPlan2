@@ -172,10 +172,8 @@ Public Class frmResourcesValidation
 
             End If
 
-
+            'On actualise la liste des ressources encore à valider
             pLoadPlanResources()
-
-
 
             Select Case Count
                 Case 0
@@ -185,6 +183,12 @@ Public Class frmResourcesValidation
                 Case >= 2
                     MessageBox.Show(Count & " ressources validées")
             End Select
+
+            'On met à un le nombre d'heure effectuées pour tous les projets
+            pSetEffectiveResourcesOnProjects()
+
+
+
 
         Catch ex As Exception
         End Try
@@ -218,6 +222,54 @@ Public Class frmResourcesValidation
             If chkDateTo.Checked = True And chkSelection.Checked = True Then
                 Me.chkSelection.Checked = False
             End If
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+
+    Private Sub pSetEffectiveResourcesOnProjects()
+        Try
+
+            'Déclaration des variables
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+            Dim SQL As String = "SELECT ID_Project FROM Projects ;"
+
+            Dim thisProject As New myProject
+
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+
+                myDBDataReader = myDBCommand.ExecuteReader()
+
+                While myDBDataReader.Read
+
+                'Lecture du premier paramètre ID_PROJECT
+                Try
+                    thisProject.ID_Project = myDBDataReader.GetValue(0)
+                    thisProject.Read()
+                    thisProject.GetEffectiveResources()
+                    thisProject.Save()
+                Catch ex As Exception
+                End Try
+
+
+
+
+            End While
+
+                myDBDataReader.Close()
+                MyDBConnection.Close()
+
+
+
+
+
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try

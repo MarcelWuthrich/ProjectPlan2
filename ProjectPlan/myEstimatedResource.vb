@@ -9,7 +9,19 @@ Public Class myEstimatedResource
     Private _EstimatedResource As Integer
     Private _CreationDate As DateTime
     Private _LastModifyDate As DateTime
+    Private _EstimatedResourcesPerTaskAndProject As Single
 
+
+
+
+    Public Property EstimatedResourcesPerTaskAndProject As Single
+        Get
+            Return _EstimatedResourcesPerTaskAndProject
+        End Get
+        Set(value As Single)
+            _EstimatedResourcesPerTaskAndProject = value
+        End Set
+    End Property
 
     Public Property CE_ID_Task As Integer
         Get
@@ -357,6 +369,50 @@ Public Class myEstimatedResource
         End Try
 
         Return TotalEstimatedResouces
+
+    End Function
+
+
+    Public Function GetEstimatedResourcesPerTaskAndProject() As myEstimatedResource
+
+        Dim Total As Integer = 0
+
+        Try
+
+            Dim MyDBConnection As New MySqlConnection
+
+            Dim myDBDataReader As MySqlDataReader
+            Dim Sql As String = "SELECT SUM(EstimatedResource) FROM projectestimatedresources WHERE CE_ID_Project = " & Me.CE_ID_Project & " AND CE_ID_Task = " & Me.CE_ID_Task & ";"
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+
+
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(Sql, MyDBConnection)
+
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read
+
+                'Lecture du premier paramètre COUNT
+                Try
+                    Total = myDBDataReader.GetValue(0)
+                Catch ex As Exception
+                End Try
+
+            End While
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Me.EstimatedResourcesPerTaskAndProject = Total
+        Return Me
 
     End Function
 
