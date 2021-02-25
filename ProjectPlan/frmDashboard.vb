@@ -19,6 +19,7 @@ Public Class frmDashboard
 
         Try
 
+
             'Affiche les projets et leurs heures
             pDisplayProjects()
 
@@ -27,6 +28,7 @@ Public Class frmDashboard
 
 
         Catch ex As Exception
+            Me.Cursor = Cursors.Default
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
 
@@ -440,12 +442,74 @@ Public Class frmDashboard
                         thisDGV.Rows.Add()
                         thisDGV.Item(0, 0).Value = "Planifié projet"
                         thisDGV.Item(0, 1).Value = "Planifié administratif"
-                        thisDGV.Item(0, 2).Value = "Libre"
+                        thisDGV.Item(0, 2).Value = "Libre (semaine)"
+
+
+                        Dim myPlanProject As New myPlanResource
+                        myPlanProject.CE_ID_Task = myTask.ID_Task
+
+
+
+
+
 
                         'On calcule les statistique de planification pour les prochaines périodes
+                        Dim thisPlanProject1Month As String = fGetPlanedResources(myTask.ID_Task, True, False, DateAdd(DateInterval.Month, 1, Today))
+                        thisDGV.Item(1, 0).Value = thisPlanProject1Month
+
+                        Dim thisPlanAdminResource1Month As String = fGetPlanedResources(myTask.ID_Task, False, True, DateAdd(DateInterval.Month, 1, Today))
+                        thisDGV.Item(1, 1).Value = thisPlanAdminResource1Month
+
+                        Dim thisFreeResource1Month As String = fGetFreeResources(myTask.ID_Task, DateAdd(DateInterval.Month, 1, Today))
+                        thisDGV.Item(1, 2).Value = thisFreeResource1Month
+
+                        Dim thisPlanProject3Month As String = fGetPlanedResources(myTask.ID_Task, True, False, DateAdd(DateInterval.Month, 3, Today))
+                        thisDGV.Item(2, 0).Value = thisPlanProject3Month
+
+                        Dim thisPlanAdminResource3Month As String = fGetPlanedResources(myTask.ID_Task, False, True, DateAdd(DateInterval.Month, 3, Today))
+                        thisDGV.Item(2, 1).Value = thisPlanAdminResource3Month
+
+                        Dim thisFreeResource3Month As String = fGetFreeResources(myTask.ID_Task, DateAdd(DateInterval.Month, 3, Today))
+                        thisDGV.Item(2, 2).Value = thisFreeResource3Month
+
+                        Dim thisPlanProject6Month As String = fGetPlanedResources(myTask.ID_Task, True, False, DateAdd(DateInterval.Month, 6, Today))
+                        thisDGV.Item(3, 0).Value = thisPlanProject6Month
+
+                        Dim thisPlanAdminResource6Month As String = fGetPlanedResources(myTask.ID_Task, False, True, DateAdd(DateInterval.Month, 6, Today))
+                        thisDGV.Item(3, 1).Value = thisPlanAdminResource6Month
+
+                        Dim thisFreeResource6Month As String = fGetFreeResources(myTask.ID_Task, DateAdd(DateInterval.Month, 6, Today))
+                        thisDGV.Item(3, 2).Value = thisFreeResource6Month
+
+                        Dim thisPlanProject12Month As String = fGetPlanedResources(myTask.ID_Task, True, False, DateAdd(DateInterval.Year, 1, Today))
+                        thisDGV.Item(4, 0).Value = thisPlanProject6Month
+
+                        Dim thisPlanAdminResource12Month As String = fGetPlanedResources(myTask.ID_Task, False, True, DateAdd(DateInterval.Year, 1, Today))
+                        thisDGV.Item(4, 1).Value = thisPlanAdminResource12Month
+
+                        Dim thisFreeResource12Month As String = fGetFreeResources(myTask.ID_Task, DateAdd(DateInterval.Year, 1, Today))
+                        thisDGV.Item(4, 2).Value = thisFreeResource12Month
+
+                        Dim thisPlanProjectEndOfYear As String = fGetPlanedResources(myTask.ID_Task, True, False, New Date(Year(Today), 12, 31))
+                        thisDGV.Item(5, 0).Value = thisPlanProjectEndOfYear
+
+                        Dim thisPlanAdminResourceEndOfYear As String = fGetPlanedResources(myTask.ID_Task, False, True, New Date(Year(Today), 12, 31))
+                        thisDGV.Item(5, 1).Value = thisPlanAdminResourceEndOfYear
+
+                        Dim thisFreeResourceEndOfYear As String = fGetFreeResources(myTask.ID_Task, New Date(Year(Today), 12, 31))
+                        thisDGV.Item(5, 2).Value = thisFreeResourceEndOfYear
 
 
 
+
+                        'On met la grille en mode multiligne
+                        thisDGV.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+
+                        'On aligne le texte à droite
+                        thisDGV.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+
+                        'On resize les lignes
+                        thisDGV.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
 
                     End If
@@ -461,7 +525,7 @@ Public Class frmDashboard
             MyDBConnection.Close()
 
             'On supprime les Tab que l'on n'utilisent pas
-            For myTabToRemove = 9 To CountTasks Step -1
+            For myTabToRemove = (thisTB.TabCount - 1) To CountTasks Step -1
                 thisTB.Controls.Remove(thisTB.TabPages(myTabToRemove))
             Next
 
@@ -471,27 +535,27 @@ Public Class frmDashboard
         End Try
     End Sub
 
-    Private Sub pDisplayNextMonths()
-        Try
+    'Private Sub pDisplayNextMonths()
+    '    Try
 
-            Dim thisDGV As DataGridView = Me.dgvProjects
-            Dim thisTB As TabControl = Me.tabTaskType
+    '        Dim thisDGV As DataGridView = Me.dgvProjects
+    '        Dim thisTB As TabControl = Me.tabTaskType
 
-            Dim test As New DataGridView
-            test.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-            Dim thisSize As New Drawing.Size
-            thisSize.Width = thisTB.Size.Width - 100
-            thisSize.Height = thisTB.Size.Height - 100
-            test.Size = thisSize
+    '        Dim test As New DataGridView
+    '        test.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+    '        Dim thisSize As New Drawing.Size
+    '        thisSize.Width = thisTB.Size.Width - 400
+    '        thisSize.Height = thisTB.Size.Height - 400
+    '        test.Size = thisSize
 
-            thisTB.TabPages(0).Controls.Add(test)
-            'thisTB.TabPages(1).Text.ToString()
+    '        thisTB.TabPages(0).Controls.Add(test)
+    '        'thisTB.TabPages(1).Text.ToString()
 
 
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
+    '    Catch ex As Exception
+    '        If DebugFlag = True Then MessageBox.Show(ex.ToString)
+    '    End Try
+    'End Sub
 
 
 
@@ -1246,12 +1310,261 @@ Public Class frmDashboard
             Me.Cursor = Cursors.Default
 
         Catch ex As Exception
-
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
-
         End Try
     End Sub
 
 
+    Private Function fGetPlanedResources(ID_Task As Integer, IsProject As Boolean, IsAdminResource As Boolean, CountDate As Date) As String
 
+        Dim SQL As String = ""
+        Dim myTotal As Integer = 0
+        Dim myGrandTotal As Integer = 0
+        Dim myResult As String = ""
+
+
+        Dim myProjectMember As New myProjectMember
+
+        Try
+            'On recherche tous les membres de projets par tâche
+
+            SQL &= "SELECT "
+            SQL &= "    projectsmembers.ID_ProjectMember "
+            SQL &= "FROM "
+            SQL &= "    ProjectPlan.projectsmembers "
+            SQL &= "    LEFT JOIN ProjectPlan.tasks  "
+            SQL &= "        ON (projectsmembers.CE_ID_Task = tasks.ID_Task) "
+            SQL &= "WHERE ( "
+            SQL &= "tasks.Enable =1 "
+            SQL &= "AND CE_ID_Task = " & ID_Task
+            SQL &= "); "
+
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read   'Boucle des membres de projects
+
+                'Lecture des members de projets
+                Try
+                    myProjectMember.ID_ProjectMember = myDBDataReader.GetValue(0)
+                    myProjectMember.Read()
+                Catch ex As Exception
+                End Try
+
+                'Lecture des ressources planifiées par membre de projet
+                SQL = ""
+                SQL &= "SELECT "
+                SQL &= "COUNT(ID_Resource) "
+                SQL &= "FROM "
+                SQL &= "Planresources "
+                SQL &= "WHERE (PlanDate <= '" & fConvertDateOnlyMySQL(CountDate) & "' "
+                SQL &= "AND CE_ID_ProjectMember = " & myProjectMember.ID_ProjectMember & " "
+                If IsAdminResource = True Then
+                    SQL &= "AND CE_ID_Project = 0 "
+                    SQL &= "AND CE_ID_AdminResource <> 0) "
+                End If
+                If IsProject = True Then
+                    SQL &= "AND CE_ID_Project <> 0 "
+                    SQL &= "AND CE_ID_AdminResource = 0) "
+                End If
+
+                SQL &= ";"
+
+                'On compte ce qui planifié pour chaque membre de projet
+
+                Dim MyDBConnection2 As New MySqlConnection
+                Dim myDBDataReader2 As MySqlDataReader
+                MyDBConnection2.ConnectionString = cnProjectPlan
+                MyDBConnection2.Open()
+                Dim myDBCommand2 As MySqlCommand = New MySqlCommand(SQL, MyDBConnection2)
+                myDBDataReader2 = myDBCommand2.ExecuteReader()
+                While myDBDataReader2.Read  'Boucle des ressources planifiées par membre de projet
+                    Try
+                        myTotal = myDBDataReader2.GetValue(0)
+                    Catch ex As Exception
+                    End Try
+
+                    myGrandTotal += myTotal
+
+                    If myResult = "" Then
+                        myResult &= myProjectMember.FirstName & " : " & myTotal
+                    Else
+                        myResult &= vbCrLf & myProjectMember.FirstName & " : " & myTotal
+                    End If
+
+
+                End While  'Boucle des ressources planifiées par membre de projet
+                myDBDataReader2.Close()
+                MyDBConnection2.Close()
+
+            End While   'Boucle des membres de projects
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+            If myResult <> "" Then
+                myResult &= vbCrLf
+            End If
+            myResult &= "TOTAL : " & myGrandTotal
+
+
+
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Return myResult
+
+    End Function
+
+    Private Function fGetFreeResources(ID_Task As Integer, CountDate As Date) As String
+
+
+        Dim SQL As String = ""
+        Dim myTotalResources As Integer = 0
+        Dim myTotalPlanedResources As Integer = 0
+        Dim myFreeResources As Integer = 0
+        Dim myGrandTotal As Integer = 0
+        Dim myResult As String = ""
+
+
+        Dim myProjectMember As New myProjectMember
+
+        Try
+
+
+            'On compte le nombre de ressources totales jusqu'à la date données
+            SQL = ""
+            SQL &= "SELECT "
+            SQL &= "COUNT(ID_Resource) "
+            SQL &= "FROM "
+            SQL &= "Planresources "
+            SQL &= "WHERE (PlanDate <= '" & fConvertDateOnlyMySQL(CountDate) & "' "
+            SQL &= "AND CE_ID_ProjectMember = 0) "
+            'On ne calcule que les dates de libre en semaine
+            SQL &= "AND (WEEKDAY(PlanDate)=0 Or WEEKDAY(PlanDate)=1 Or WEEKDAY(PlanDate)=2 Or WEEKDAY(PlanDate)=3 Or WEEKDAY(PlanDate)=4)"
+            SQL &= ";"
+            '================================================================================================
+            'WEEKDAY
+            'Syntax : WEEKDAY(date)
+            'Description : returns the weekday index for date (0 = Monday, 1 = Tuesday, ... 6 = Sunday).
+            '================================================================================================
+
+            Dim MyDBConnection2 As New MySqlConnection
+            Dim myDBDataReader2 As MySqlDataReader
+            MyDBConnection2.ConnectionString = cnProjectPlan
+            MyDBConnection2.Open()
+            Dim myDBCommand2 As MySqlCommand = New MySqlCommand(SQL, MyDBConnection2)
+            myDBDataReader2 = myDBCommand2.ExecuteReader()
+            While myDBDataReader2.Read  'Boucle des ressources planifiées par membre de projet
+                Try
+                    myTotalResources = myDBDataReader2.GetValue(0)
+                Catch ex As Exception
+                End Try
+
+            End While  'Boucle des ressources planifiées par membre de projet
+            myDBDataReader2.Close()
+            MyDBConnection2.Close()
+
+
+
+
+            'On recherche tous les membres de projets par tâche
+
+            SQL = ""
+            SQL &= "SELECT "
+            SQL &= "    projectsmembers.ID_ProjectMember "
+            SQL &= "FROM "
+            SQL &= "    ProjectPlan.projectsmembers "
+            SQL &= "    LEFT JOIN ProjectPlan.tasks  "
+            SQL &= "        ON (projectsmembers.CE_ID_Task = tasks.ID_Task) "
+            SQL &= "WHERE ( "
+            SQL &= "tasks.Enable =1 "
+            SQL &= "And CE_ID_Task = " & ID_Task
+            SQL &= "); "
+
+
+            Dim MyDBConnection As New MySqlConnection
+            Dim myDBDataReader As MySqlDataReader
+
+            MyDBConnection.ConnectionString = cnProjectPlan
+            MyDBConnection.Open()
+
+            Dim myDBCommand As MySqlCommand = New MySqlCommand(SQL, MyDBConnection)
+            myDBDataReader = myDBCommand.ExecuteReader()
+
+            While myDBDataReader.Read   'Boucle des membres de projects
+
+                'Lecture des members de projets
+                Try
+                    myProjectMember.ID_ProjectMember = myDBDataReader.GetValue(0)
+                    myProjectMember.Read()
+                Catch ex As Exception
+                End Try
+
+
+
+                'On compte le nombre de ressources totales planifiées par membre de projet
+                SQL = ""
+                SQL &= "SELECT "
+                SQL &= "COUNT(ID_Resource) "
+                SQL &= "FROM "
+                SQL &= "Planresources "
+                SQL &= "WHERE (PlanDate <= '" & fConvertDateOnlyMySQL(CountDate) & "' "
+                SQL &= "AND CE_ID_ProjectMember = " & myProjectMember.ID_ProjectMember & ");"
+
+                Dim MyDBConnection3 As New MySqlConnection
+                Dim myDBDataReader3 As MySqlDataReader
+                MyDBConnection3.ConnectionString = cnProjectPlan
+                MyDBConnection3.Open()
+                Dim myDBCommand3 As MySqlCommand = New MySqlCommand(SQL, MyDBConnection3)
+                myDBDataReader3 = myDBCommand3.ExecuteReader()
+                While myDBDataReader3.Read  'Boucle des ressources planifiées par membre de projet
+                    Try
+                        myTotalPlanedResources = myDBDataReader3.GetValue(0)
+                    Catch ex As Exception
+                    End Try
+
+                End While  'Boucle des ressources planifiées par membre de projet
+                myDBDataReader3.Close()
+                MyDBConnection3.Close()
+
+                myFreeResources = myTotalResources - myTotalPlanedResources
+                myGrandTotal += myFreeResources
+
+                If myResult = "" Then
+                    myResult &= myProjectMember.FirstName & " : " & myFreeResources
+                Else
+                    myResult &= vbCrLf & myProjectMember.FirstName & " : " & myFreeResources
+                End If
+
+
+            End While   'Boucle des membres de projects
+
+            myDBDataReader.Close()
+            MyDBConnection.Close()
+
+            If myResult <> "" Then
+                myResult &= vbCrLf
+            End If
+            myResult &= "TOTAL : " & myGrandTotal
+
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+        Return myResult
+
+    End Function
 End Class

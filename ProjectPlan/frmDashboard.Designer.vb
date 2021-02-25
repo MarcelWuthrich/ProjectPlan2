@@ -31,6 +31,19 @@ Partial Class frmDashboard
         Me.texTaskTotal = New System.Windows.Forms.TextBox()
         Me.btcFermer = New System.Windows.Forms.Button()
         Me.tabTaskType = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.dgvTabPage1 = New System.Windows.Forms.DataGridView()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.dgvTabPage2 = New System.Windows.Forms.DataGridView()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.dgvTabPage3 = New System.Windows.Forms.DataGridView()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.TabPage8 = New System.Windows.Forms.TabPage()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
+        Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.texFreeDateInfra = New System.Windows.Forms.TextBox()
         Me.labFreeDateInfra = New System.Windows.Forms.Label()
         Me.labFreeDateSAP = New System.Windows.Forms.Label()
@@ -49,28 +62,15 @@ Partial Class frmDashboard
         Me.texTask9 = New System.Windows.Forms.TextBox()
         Me.btcRefresh = New System.Windows.Forms.Button()
         Me.btcChart = New System.Windows.Forms.Button()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.TabPage5 = New System.Windows.Forms.TabPage()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.TabPage7 = New System.Windows.Forms.TabPage()
-        Me.TabPage8 = New System.Windows.Forms.TabPage()
-        Me.TabPage9 = New System.Windows.Forms.TabPage()
-        Me.TabPage10 = New System.Windows.Forms.TabPage()
-        Me.dgvTabPage1 = New System.Windows.Forms.DataGridView()
-        Me.dgvTabPage2 = New System.Windows.Forms.DataGridView()
-        Me.dgvTabPage3 = New System.Windows.Forms.DataGridView()
         CType(Me.dgvProjects, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabTaskType.SuspendLayout()
-        Me.grpNextFreeDate.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
         CType(Me.dgvTabPage1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage2.SuspendLayout()
         CType(Me.dgvTabPage2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
         CType(Me.dgvTabPage3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpNextFreeDate.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgvProjects
@@ -162,8 +162,138 @@ Partial Class frmDashboard
         Me.tabTaskType.Location = New System.Drawing.Point(23, 581)
         Me.tabTaskType.Name = "tabTaskType"
         Me.tabTaskType.SelectedIndex = 0
-        Me.tabTaskType.Size = New System.Drawing.Size(565, 298)
+        Me.tabTaskType.Size = New System.Drawing.Size(723, 298)
         Me.tabTaskType.TabIndex = 11
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.dgvTabPage1)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(715, 272)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'dgvTabPage1
+        '
+        Me.dgvTabPage1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvTabPage1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvTabPage1.Location = New System.Drawing.Point(3, 3)
+        Me.dgvTabPage1.Name = "dgvTabPage1"
+        Me.dgvTabPage1.Size = New System.Drawing.Size(709, 266)
+        Me.dgvTabPage1.TabIndex = 0
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.dgvTabPage2)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'dgvTabPage2
+        '
+        Me.dgvTabPage2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvTabPage2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvTabPage2.Location = New System.Drawing.Point(3, 3)
+        Me.dgvTabPage2.Name = "dgvTabPage2"
+        Me.dgvTabPage2.Size = New System.Drawing.Size(551, 266)
+        Me.dgvTabPage2.TabIndex = 0
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.dgvTabPage3)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "TabPage3"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'dgvTabPage3
+        '
+        Me.dgvTabPage3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvTabPage3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvTabPage3.Location = New System.Drawing.Point(3, 3)
+        Me.dgvTabPage3.Name = "dgvTabPage3"
+        Me.dgvTabPage3.Size = New System.Drawing.Size(551, 266)
+        Me.dgvTabPage3.TabIndex = 0
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "TabPage4"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage5.TabIndex = 4
+        Me.TabPage5.Text = "TabPage5"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'TabPage6
+        '
+        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage6.Name = "TabPage6"
+        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage6.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage6.TabIndex = 5
+        Me.TabPage6.Text = "TabPage6"
+        Me.TabPage6.UseVisualStyleBackColor = True
+        '
+        'TabPage7
+        '
+        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage7.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage7.TabIndex = 6
+        Me.TabPage7.Text = "TabPage7"
+        Me.TabPage7.UseVisualStyleBackColor = True
+        '
+        'TabPage8
+        '
+        Me.TabPage8.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage8.Name = "TabPage8"
+        Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage8.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage8.TabIndex = 7
+        Me.TabPage8.Text = "TabPage8"
+        Me.TabPage8.UseVisualStyleBackColor = True
+        '
+        'TabPage9
+        '
+        Me.TabPage9.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage9.Name = "TabPage9"
+        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage9.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage9.TabIndex = 8
+        Me.TabPage9.Text = "TabPage9"
+        Me.TabPage9.UseVisualStyleBackColor = True
+        '
+        'TabPage10
+        '
+        Me.TabPage10.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage10.Name = "TabPage10"
+        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage10.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage10.TabIndex = 9
+        Me.TabPage10.Text = "TabPage10"
+        Me.TabPage10.UseVisualStyleBackColor = True
         '
         'texFreeDateInfra
         '
@@ -244,7 +374,7 @@ Partial Class frmDashboard
         Me.grpNextFreeDate.Controls.Add(Me.labFreeDateHelpdesk)
         Me.grpNextFreeDate.Controls.Add(Me.labFreeDateSAP)
         Me.grpNextFreeDate.Controls.Add(Me.texFreeDateHelpdesk)
-        Me.grpNextFreeDate.Location = New System.Drawing.Point(682, 603)
+        Me.grpNextFreeDate.Location = New System.Drawing.Point(783, 603)
         Me.grpNextFreeDate.Name = "grpNextFreeDate"
         Me.grpNextFreeDate.Size = New System.Drawing.Size(374, 266)
         Me.grpNextFreeDate.TabIndex = 21
@@ -339,136 +469,6 @@ Partial Class frmDashboard
         Me.btcChart.TabIndex = 22
         Me.btcChart.UseVisualStyleBackColor = True
         '
-        'TabPage1
-        '
-        Me.TabPage1.Controls.Add(Me.dgvTabPage1)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "TabPage1"
-        Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.dgvTabPage2)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "TabPage2"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Controls.Add(Me.dgvTabPage3)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "TabPage3"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'TabPage4
-        '
-        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "TabPage4"
-        Me.TabPage4.UseVisualStyleBackColor = True
-        '
-        'TabPage5
-        '
-        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage5.TabIndex = 4
-        Me.TabPage5.Text = "TabPage5"
-        Me.TabPage5.UseVisualStyleBackColor = True
-        '
-        'TabPage6
-        '
-        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage6.TabIndex = 5
-        Me.TabPage6.Text = "TabPage6"
-        Me.TabPage6.UseVisualStyleBackColor = True
-        '
-        'TabPage7
-        '
-        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage7.TabIndex = 6
-        Me.TabPage7.Text = "TabPage7"
-        Me.TabPage7.UseVisualStyleBackColor = True
-        '
-        'TabPage8
-        '
-        Me.TabPage8.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage8.Name = "TabPage8"
-        Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage8.TabIndex = 7
-        Me.TabPage8.Text = "TabPage8"
-        Me.TabPage8.UseVisualStyleBackColor = True
-        '
-        'TabPage9
-        '
-        Me.TabPage9.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage9.Name = "TabPage9"
-        Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage9.TabIndex = 8
-        Me.TabPage9.Text = "TabPage9"
-        Me.TabPage9.UseVisualStyleBackColor = True
-        '
-        'TabPage10
-        '
-        Me.TabPage10.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage10.Name = "TabPage10"
-        Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(557, 272)
-        Me.TabPage10.TabIndex = 9
-        Me.TabPage10.Text = "TabPage10"
-        Me.TabPage10.UseVisualStyleBackColor = True
-        '
-        'dgvTabPage1
-        '
-        Me.dgvTabPage1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvTabPage1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvTabPage1.Location = New System.Drawing.Point(3, 3)
-        Me.dgvTabPage1.Name = "dgvTabPage1"
-        Me.dgvTabPage1.Size = New System.Drawing.Size(551, 266)
-        Me.dgvTabPage1.TabIndex = 0
-        '
-        'dgvTabPage2
-        '
-        Me.dgvTabPage2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvTabPage2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvTabPage2.Location = New System.Drawing.Point(3, 3)
-        Me.dgvTabPage2.Name = "dgvTabPage2"
-        Me.dgvTabPage2.Size = New System.Drawing.Size(551, 266)
-        Me.dgvTabPage2.TabIndex = 0
-        '
-        'dgvTabPage3
-        '
-        Me.dgvTabPage3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvTabPage3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvTabPage3.Location = New System.Drawing.Point(3, 3)
-        Me.dgvTabPage3.Name = "dgvTabPage3"
-        Me.dgvTabPage3.Size = New System.Drawing.Size(551, 266)
-        Me.dgvTabPage3.TabIndex = 0
-        '
         'frmDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -498,14 +498,14 @@ Partial Class frmDashboard
         Me.Text = "Dashboard"
         CType(Me.dgvProjects, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabTaskType.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        CType(Me.dgvTabPage1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage2.ResumeLayout(False)
+        CType(Me.dgvTabPage2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
+        CType(Me.dgvTabPage3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpNextFreeDate.ResumeLayout(False)
         Me.grpNextFreeDate.PerformLayout()
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage3.ResumeLayout(False)
-        CType(Me.dgvTabPage1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvTabPage2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvTabPage3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
