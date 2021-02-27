@@ -1,5 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
-Imports Microsoft.Office.Interop.Excel
+'Imports Microsoft.Office.Interop.Excel
 
 
 
@@ -13,7 +13,16 @@ Public Class frmDashboard
     Dim myColWidth As Integer = 60
     Dim i As Integer = 0
 
+    Dim HourToPlanPerTask(0) As Integer
+    'La Valeur HourToPlanPerTask(0) contient le nombre d'enregistrements
+    'La Valeur HourToPlanPerTask(1) contient les heures encore à planifier de la première tâche
+    'La Valeur HourToPlanPerTask(2) contient les heures encore à planifier de la deuxième tâche
 
+    Dim AllTasks(0) As Integer
+    'La Valeur AllTask(0) contient le nombre d'enregistrements
+    'La Valeur AllTask(1) contient le ID_Task de la première task
+    'La Valeur AllTask(2) contient le ID_Task de la deuxième task
+    '...etc...
 
     Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -25,6 +34,9 @@ Public Class frmDashboard
 
             'Affiche les secteurs d'activités (task) sous forme d'onglets 
             pDisplayTasks()
+
+            'Affiche le premier jour de libre par secteur d'activité (task)
+            pDisplayFirstFreeDay()
 
 
         Catch ex As Exception
@@ -68,11 +80,6 @@ Public Class frmDashboard
             Dim thisExecutedResource As New myExecuteResource
             Dim thisPlanResource As New myPlanResource
 
-            Dim AllTasks(0) As Integer
-            'La Valeur AllTask(0) contient le nombre d'enregistrements
-            'La Valeur AllTask(1) contient le ID_Task de la première task
-            'La Valeur AllTask(2) contient le ID_Task de la deuxième task
-            '...etc...
 
             Dim thisTotalEstimated As Integer = 0
             Dim thisTotalEstimatedTask(0) As Integer
@@ -292,7 +299,6 @@ Public Class frmDashboard
                     thisTotalToBePlanedTask(myTaskNr) += RessourcesToPlanPerTask
 
 
-
                 Next myTaskNr
 
                 ProjectCount += 1
@@ -326,6 +332,11 @@ Public Class frmDashboard
                 dgvProjects.Item((myTaskNr - 1) * 4 + 8, ProjectCount).Value = thisTotalExecutedTask(myTaskNr)
                 dgvProjects.Item((myTaskNr - 1) * 4 + 9, ProjectCount).Value = thisTotalPlanedTask(myTaskNr)
                 dgvProjects.Item((myTaskNr - 1) * 4 + 10, ProjectCount).Value = thisTotalToBePlanedTask(myTaskNr)
+
+                'On mémorise le total des heures encore à planifier par tâche pour la recherche de la prochaine date de libre (par tâche)
+                ReDim Preserve HourToPlanPerTask(myTaskNr)
+                HourToPlanPerTask(0) += 1
+                HourToPlanPerTask(myTaskNr) = thisTotalToBePlanedTask(myTaskNr)
 
 
             Next myTaskNr
@@ -566,162 +577,7 @@ Public Class frmDashboard
 
 
 
-
-    Private Sub pDisplayFreeDates()
-
-        Try
-
-            'Affichage des couleurs de fond
-            'Me.texFreeDateInfra.BackColor = ColorForInfra
-            'Me.texFreeDateSAP.BackColor = ColorForSAP
-            'Me.texFreeDateHelpdesk.BackColor = ColorForHelpdesk
-            'Me.texFreeDatePlaning.BackColor = ColorForPlaning
-
-            'On compte le nombre de membres actifs pour chaque tâche
-            'Dim myCountMembersInfra = fGetProjectMembersForTask(1)
-            'Dim myCountMembersSAP = fGetProjectMembersForTask(2)
-            'Dim myCountMembersHelpdesk = fGetProjectMembersForTask(3)
-            'Dim myCountMembersPlaning = fGetProjectMembersForTask(4)
-
-
-            'Dim thisDate As Date = Today
-            'Dim FreeNow As Boolean = False
-
-            'Dim StillToPlanInfra As Single = myTotalInfra
-            'Dim StillToPlanSAP As Single = myTotalSAP
-            'Dim StillToPlanHelpdesk As Single = myTotalHelpdesk
-            'Dim StillToPlanPlaning As Single = myTotalPlaning
-
-            'Dim FreeDateInfra As Date = Nothing
-            'Dim FreeDateSAP As Date = Nothing
-            'Dim FreeDateHelpdesk As Date = Nothing
-            'Dim FreeDatePlaning As Date = Nothing
-
-            '================================================================
-            'On calcule la première date de libre pour le team infrastructure
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres de l'infa diminué du nombre de personnes déjà planifiées
-            '            StillToPlanInfra = StillToPlanInfra - (myCountMembersInfra - fGetPlanResourcesForTask(1, thisDate))
-            '            If StillToPlanInfra < 0 Then
-            '                FreeNow = True
-            '                FreeDateInfra = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team infrastructure
-            '================================================================
-
-
-            '================================================================
-            'On calcule la première date de libre pour le team SAP
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres de SAP diminué du nombre de personnes déjà planifiées
-            '            StillToPlanSAP = StillToPlanSAP - (myCountMembersSAP - fGetPlanResourcesForTask(2, thisDate))
-            '            If StillToPlanSAP < 0 Then
-            '                FreeNow = True
-            '                FreeDateSAP = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team SAP
-            '================================================================
-
-
-            '================================================================
-            'On calcule la première date de libre pour le team Helpdesk
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres du helpdesk diminué du nombre de personnes déjà planifiées
-            '            StillToPlanHelpdesk = StillToPlanHelpdesk - (myCountMembersHelpdesk - fGetPlanResourcesForTask(3, thisDate))
-            '            If StillToPlanHelpdesk < 0 Then
-            '                FreeNow = True
-            '                FreeDateHelpdesk = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team Helpdesk
-            '================================================================
-
-
-            '================================================================
-            'On calcule la première date de libre pour le team Planification
-            '================================================================
-            'FreeNow = False
-            'thisDate = Today
-
-            'While FreeNow = False
-
-            '    'On décompte uniquement les jours de libre durant les jours de semaine
-            '    Select Case thisDate.DayOfWeek
-            '        Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
-
-            '            'On soustrait le nombre de membres de la planification diminué du nombre de personnes déjà planifiées
-            '            StillToPlanPlaning = StillToPlanPlaning - (myCountMembersPlaning - fGetPlanResourcesForTask(4, thisDate))
-            '            If StillToPlanPlaning < 0 Then
-            '                FreeNow = True
-            '                FreeDatePlaning = thisDate
-            '            End If
-            '    End Select
-            '    thisDate = DateAdd(DateInterval.Day, 1, thisDate)
-            'End While
-            '================================================================
-            'On calcule la première date de libre pour le team Planification
-            '================================================================
-
-            'Affichage des soldes
-            'Me.texFreeDateInfra.Text = Format(FreeDateInfra, "D")
-            'Me.texFreeDateSAP.Text = Format(FreeDateSAP, "D")
-            'Me.texFreeDateHelpdesk.Text = Format(FreeDateHelpdesk, "D")
-            'Me.texFreeDatePlaning.Text = Format(FreeDatePlaning, "D")
-
-
-
-
-
-
-
-
-
-
-
-        Catch ex As Exception
-            If DebugFlag = True Then MessageBox.Show(ex.ToString)
-        End Try
-    End Sub
-
-    Private Function fGetProjectMembersForTask(ID_Task As Integer) As Integer
+    Private Function fGetProjectMembersCountPerTask(ID_Task As Integer) As Integer
 
         Dim myCount As Integer = 0
 
@@ -758,7 +614,7 @@ Public Class frmDashboard
 
     End Function
 
-    Private Function fGetPlanResourcesForTask(ID_Task As Integer, myDay As Date) As Single
+    Private Function fGetPlanResourcesPerTaskAndPerDate(ID_Task As Integer, myDay As Date) As Single
 
         Dim myCount As Integer = 0
 
@@ -781,8 +637,6 @@ Public Class frmDashboard
                     'Lecture du nombre d'enregistrement (en demi-jour)
                     myCount = myDBDataReader.GetValue(0)
 
-                    'Lecture du nombre d'enregistrements (en jour)
-                    myCount = myCount / 2
                 Catch ex As Exception
                 End Try
 
@@ -1567,4 +1421,81 @@ Public Class frmDashboard
         Return myResult
 
     End Function
+
+    Private Sub pDisplayFirstFreeDay()
+
+        Try
+
+            Dim thisDate As Date = Nothing
+
+            Dim FreeNow As Boolean = False
+            Dim StillToPlanForTask As Integer = 0
+            Dim FreeDateTask As Date = Nothing
+            Dim NumberOfProjectMemberPerTask As Integer = 0
+
+
+            For TaskNr = 1 To AllTasks(0)
+
+                'On compte les heures de libre à partir du lendemain
+                thisDate = DateAdd(DateInterval.Day, 1, Today)
+                FreeNow = False
+                StillToPlanForTask = HourToPlanPerTask(TaskNr)
+
+                NumberOfProjectMemberPerTask = fGetProjectMembersCountPerTask(AllTasks(TaskNr))
+
+                'Cela ne sert à rien de vouloir planifier si on a aucun membre de projet dans la tâche
+                If NumberOfProjectMemberPerTask > 0 Then
+
+                    While FreeNow = False
+
+                        'On décompte uniquement les jours de libre durant les jours de semaine
+                        Select Case thisDate.DayOfWeek
+                            Case DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday
+
+                                'On soustrait le nombre de membres de l'infa diminué du nombre de personnes déjà planifiées
+
+                                Dim NumberOfPlanHourPerTaskAndPerDate As Integer = fGetPlanResourcesPerTaskAndPerDate(AllTasks(TaskNr), thisDate)
+
+                                'Le nombre d'heures planifiable est de 8h par jour multiplié par le nombre de membres de projets par tâches et soustrait du nombre d'heures déjà planifiées
+                                Dim NumberOfPlanableHourPerDate As Integer = (NumberOfProjectMemberPerTask * 8) - NumberOfPlanHourPerTaskAndPerDate
+
+
+                                'On soustrait du total du nombre d'heures encore à planifier
+                                StillToPlanForTask = StillToPlanForTask - NumberOfPlanableHourPerDate
+
+                                If StillToPlanForTask < 0 Then
+                                    FreeNow = True
+                                    FreeDateTask = thisDate
+
+                                    Dim ThisTask As New myTask
+                                    ThisTask.ID_Task = AllTasks(TaskNr)
+                                    ThisTask.Read()
+
+
+                                    MessageBox.Show("Tâche : " & ThisTask.Task & vbCrLf & thisDate)
+                                End If
+                        End Select
+                        thisDate = DateAdd(DateInterval.Day, 1, thisDate)
+                    End While
+
+                End If
+
+
+            Next TaskNr
+
+
+
+
+
+
+
+
+
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+
+    End Sub
+
+
 End Class
