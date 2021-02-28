@@ -44,15 +44,27 @@ Partial Class frmDashboard
         Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
-        Me.texFreeDateInfra = New System.Windows.Forms.TextBox()
-        Me.labFreeDateInfra = New System.Windows.Forms.Label()
-        Me.labFreeDateSAP = New System.Windows.Forms.Label()
-        Me.texFreeDateSAP = New System.Windows.Forms.TextBox()
-        Me.labFreeDateHelpdesk = New System.Windows.Forms.Label()
-        Me.texFreeDateHelpdesk = New System.Windows.Forms.TextBox()
-        Me.labFreeDatePlaning = New System.Windows.Forms.Label()
-        Me.texFreeDatePlaning = New System.Windows.Forms.TextBox()
+        Me.texFreeDateTask1 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask1 = New System.Windows.Forms.Label()
+        Me.labFreeDateTask2 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask2 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask3 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask3 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask4 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask4 = New System.Windows.Forms.TextBox()
         Me.grpNextFreeDate = New System.Windows.Forms.GroupBox()
+        Me.texFreeDateTask10 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask10 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask9 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask9 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask8 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask8 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask7 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask7 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask6 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask6 = New System.Windows.Forms.Label()
+        Me.texFreeDateTask5 = New System.Windows.Forms.TextBox()
+        Me.labFreeDateTask5 = New System.Windows.Forms.Label()
         Me.btcExportToExcel = New System.Windows.Forms.Button()
         Me.texTask8 = New System.Windows.Forms.TextBox()
         Me.texTask7 = New System.Windows.Forms.TextBox()
@@ -84,7 +96,7 @@ Partial Class frmDashboard
         Me.dgvProjects.Location = New System.Drawing.Point(23, 73)
         Me.dgvProjects.Name = "dgvProjects"
         Me.dgvProjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvProjects.Size = New System.Drawing.Size(1550, 495)
+        Me.dgvProjects.Size = New System.Drawing.Size(1550, 489)
         Me.dgvProjects.TabIndex = 0
         '
         'texTask1
@@ -191,7 +203,7 @@ Partial Class frmDashboard
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage2.Size = New System.Drawing.Size(715, 272)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -202,7 +214,7 @@ Partial Class frmDashboard
         Me.dgvTabPage2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvTabPage2.Location = New System.Drawing.Point(3, 3)
         Me.dgvTabPage2.Name = "dgvTabPage2"
-        Me.dgvTabPage2.Size = New System.Drawing.Size(551, 266)
+        Me.dgvTabPage2.Size = New System.Drawing.Size(709, 266)
         Me.dgvTabPage2.TabIndex = 0
         '
         'TabPage3
@@ -211,7 +223,7 @@ Partial Class frmDashboard
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage3.Size = New System.Drawing.Size(715, 272)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "TabPage3"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -222,7 +234,7 @@ Partial Class frmDashboard
         Me.dgvTabPage3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvTabPage3.Location = New System.Drawing.Point(3, 3)
         Me.dgvTabPage3.Name = "dgvTabPage3"
-        Me.dgvTabPage3.Size = New System.Drawing.Size(551, 266)
+        Me.dgvTabPage3.Size = New System.Drawing.Size(709, 266)
         Me.dgvTabPage3.TabIndex = 0
         '
         'TabPage4
@@ -230,7 +242,7 @@ Partial Class frmDashboard
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage4.Size = New System.Drawing.Size(715, 272)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "TabPage4"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -240,7 +252,7 @@ Partial Class frmDashboard
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage5.Size = New System.Drawing.Size(715, 272)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "TabPage5"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -250,7 +262,7 @@ Partial Class frmDashboard
         Me.TabPage6.Location = New System.Drawing.Point(4, 22)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage6.Size = New System.Drawing.Size(715, 272)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "TabPage6"
         Me.TabPage6.UseVisualStyleBackColor = True
@@ -260,7 +272,7 @@ Partial Class frmDashboard
         Me.TabPage7.Location = New System.Drawing.Point(4, 22)
         Me.TabPage7.Name = "TabPage7"
         Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage7.Size = New System.Drawing.Size(715, 272)
         Me.TabPage7.TabIndex = 6
         Me.TabPage7.Text = "TabPage7"
         Me.TabPage7.UseVisualStyleBackColor = True
@@ -270,7 +282,7 @@ Partial Class frmDashboard
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage8.Size = New System.Drawing.Size(715, 272)
         Me.TabPage8.TabIndex = 7
         Me.TabPage8.Text = "TabPage8"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -280,7 +292,7 @@ Partial Class frmDashboard
         Me.TabPage9.Location = New System.Drawing.Point(4, 22)
         Me.TabPage9.Name = "TabPage9"
         Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage9.Size = New System.Drawing.Size(715, 272)
         Me.TabPage9.TabIndex = 8
         Me.TabPage9.Text = "TabPage9"
         Me.TabPage9.UseVisualStyleBackColor = True
@@ -290,96 +302,210 @@ Partial Class frmDashboard
         Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(557, 272)
+        Me.TabPage10.Size = New System.Drawing.Size(715, 272)
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "TabPage10"
         Me.TabPage10.UseVisualStyleBackColor = True
         '
-        'texFreeDateInfra
+        'texFreeDateTask1
         '
-        Me.texFreeDateInfra.Location = New System.Drawing.Point(138, 42)
-        Me.texFreeDateInfra.Name = "texFreeDateInfra"
-        Me.texFreeDateInfra.ReadOnly = True
-        Me.texFreeDateInfra.Size = New System.Drawing.Size(154, 20)
-        Me.texFreeDateInfra.TabIndex = 12
+        Me.texFreeDateTask1.Location = New System.Drawing.Point(138, 19)
+        Me.texFreeDateTask1.Name = "texFreeDateTask1"
+        Me.texFreeDateTask1.ReadOnly = True
+        Me.texFreeDateTask1.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask1.TabIndex = 12
         '
-        'labFreeDateInfra
+        'labFreeDateTask1
         '
-        Me.labFreeDateInfra.AutoSize = True
-        Me.labFreeDateInfra.Location = New System.Drawing.Point(34, 45)
-        Me.labFreeDateInfra.Name = "labFreeDateInfra"
-        Me.labFreeDateInfra.Size = New System.Drawing.Size(69, 13)
-        Me.labFreeDateInfra.TabIndex = 13
-        Me.labFreeDateInfra.Text = "Infrastructure"
+        Me.labFreeDateTask1.AutoSize = True
+        Me.labFreeDateTask1.Location = New System.Drawing.Point(34, 22)
+        Me.labFreeDateTask1.Name = "labFreeDateTask1"
+        Me.labFreeDateTask1.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask1.TabIndex = 13
+        Me.labFreeDateTask1.Text = "Task1"
         '
-        'labFreeDateSAP
+        'labFreeDateTask2
         '
-        Me.labFreeDateSAP.AutoSize = True
-        Me.labFreeDateSAP.Location = New System.Drawing.Point(34, 97)
-        Me.labFreeDateSAP.Name = "labFreeDateSAP"
-        Me.labFreeDateSAP.Size = New System.Drawing.Size(28, 13)
-        Me.labFreeDateSAP.TabIndex = 15
-        Me.labFreeDateSAP.Text = "SAP"
+        Me.labFreeDateTask2.AutoSize = True
+        Me.labFreeDateTask2.Location = New System.Drawing.Point(34, 48)
+        Me.labFreeDateTask2.Name = "labFreeDateTask2"
+        Me.labFreeDateTask2.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask2.TabIndex = 15
+        Me.labFreeDateTask2.Text = "Task2"
         '
-        'texFreeDateSAP
+        'texFreeDateTask2
         '
-        Me.texFreeDateSAP.Location = New System.Drawing.Point(138, 94)
-        Me.texFreeDateSAP.Name = "texFreeDateSAP"
-        Me.texFreeDateSAP.ReadOnly = True
-        Me.texFreeDateSAP.Size = New System.Drawing.Size(154, 20)
-        Me.texFreeDateSAP.TabIndex = 14
+        Me.texFreeDateTask2.Location = New System.Drawing.Point(138, 45)
+        Me.texFreeDateTask2.Name = "texFreeDateTask2"
+        Me.texFreeDateTask2.ReadOnly = True
+        Me.texFreeDateTask2.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask2.TabIndex = 14
         '
-        'labFreeDateHelpdesk
+        'labFreeDateTask3
         '
-        Me.labFreeDateHelpdesk.AutoSize = True
-        Me.labFreeDateHelpdesk.Location = New System.Drawing.Point(34, 149)
-        Me.labFreeDateHelpdesk.Name = "labFreeDateHelpdesk"
-        Me.labFreeDateHelpdesk.Size = New System.Drawing.Size(52, 13)
-        Me.labFreeDateHelpdesk.TabIndex = 17
-        Me.labFreeDateHelpdesk.Text = "Helpdesk"
+        Me.labFreeDateTask3.AutoSize = True
+        Me.labFreeDateTask3.Location = New System.Drawing.Point(34, 74)
+        Me.labFreeDateTask3.Name = "labFreeDateTask3"
+        Me.labFreeDateTask3.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask3.TabIndex = 17
+        Me.labFreeDateTask3.Text = "Task3"
         '
-        'texFreeDateHelpdesk
+        'texFreeDateTask3
         '
-        Me.texFreeDateHelpdesk.Location = New System.Drawing.Point(138, 146)
-        Me.texFreeDateHelpdesk.Name = "texFreeDateHelpdesk"
-        Me.texFreeDateHelpdesk.ReadOnly = True
-        Me.texFreeDateHelpdesk.Size = New System.Drawing.Size(154, 20)
-        Me.texFreeDateHelpdesk.TabIndex = 16
+        Me.texFreeDateTask3.Location = New System.Drawing.Point(138, 71)
+        Me.texFreeDateTask3.Name = "texFreeDateTask3"
+        Me.texFreeDateTask3.ReadOnly = True
+        Me.texFreeDateTask3.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask3.TabIndex = 16
         '
-        'labFreeDatePlaning
+        'labFreeDateTask4
         '
-        Me.labFreeDatePlaning.AutoSize = True
-        Me.labFreeDatePlaning.Location = New System.Drawing.Point(34, 201)
-        Me.labFreeDatePlaning.Name = "labFreeDatePlaning"
-        Me.labFreeDatePlaning.Size = New System.Drawing.Size(64, 13)
-        Me.labFreeDatePlaning.TabIndex = 19
-        Me.labFreeDatePlaning.Text = "Planification"
+        Me.labFreeDateTask4.AutoSize = True
+        Me.labFreeDateTask4.Location = New System.Drawing.Point(34, 100)
+        Me.labFreeDateTask4.Name = "labFreeDateTask4"
+        Me.labFreeDateTask4.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask4.TabIndex = 19
+        Me.labFreeDateTask4.Text = "Task4"
         '
-        'texFreeDatePlaning
+        'texFreeDateTask4
         '
-        Me.texFreeDatePlaning.Location = New System.Drawing.Point(138, 198)
-        Me.texFreeDatePlaning.Name = "texFreeDatePlaning"
-        Me.texFreeDatePlaning.ReadOnly = True
-        Me.texFreeDatePlaning.Size = New System.Drawing.Size(154, 20)
-        Me.texFreeDatePlaning.TabIndex = 20
+        Me.texFreeDateTask4.Location = New System.Drawing.Point(138, 97)
+        Me.texFreeDateTask4.Name = "texFreeDateTask4"
+        Me.texFreeDateTask4.ReadOnly = True
+        Me.texFreeDateTask4.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask4.TabIndex = 20
         '
         'grpNextFreeDate
         '
         Me.grpNextFreeDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateSAP)
-        Me.grpNextFreeDate.Controls.Add(Me.texFreeDatePlaning)
-        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateInfra)
-        Me.grpNextFreeDate.Controls.Add(Me.labFreeDatePlaning)
-        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateInfra)
-        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateHelpdesk)
-        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateSAP)
-        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateHelpdesk)
-        Me.grpNextFreeDate.Location = New System.Drawing.Point(783, 603)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask10)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask10)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask9)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask9)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask8)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask8)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask7)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask7)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask6)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask6)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask5)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask5)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask2)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask4)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask1)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask4)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask1)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask3)
+        Me.grpNextFreeDate.Controls.Add(Me.labFreeDateTask2)
+        Me.grpNextFreeDate.Controls.Add(Me.texFreeDateTask3)
+        Me.grpNextFreeDate.Location = New System.Drawing.Point(783, 581)
         Me.grpNextFreeDate.Name = "grpNextFreeDate"
-        Me.grpNextFreeDate.Size = New System.Drawing.Size(374, 266)
+        Me.grpNextFreeDate.Size = New System.Drawing.Size(374, 288)
         Me.grpNextFreeDate.TabIndex = 21
         Me.grpNextFreeDate.TabStop = False
-        Me.grpNextFreeDate.Text = "Prochaine date de libre"
+        Me.grpNextFreeDate.Text = "Prochaines dates de libre"
+        '
+        'texFreeDateTask10
+        '
+        Me.texFreeDateTask10.Location = New System.Drawing.Point(138, 253)
+        Me.texFreeDateTask10.Name = "texFreeDateTask10"
+        Me.texFreeDateTask10.ReadOnly = True
+        Me.texFreeDateTask10.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask10.TabIndex = 32
+        '
+        'labFreeDateTask10
+        '
+        Me.labFreeDateTask10.AutoSize = True
+        Me.labFreeDateTask10.Location = New System.Drawing.Point(34, 256)
+        Me.labFreeDateTask10.Name = "labFreeDateTask10"
+        Me.labFreeDateTask10.Size = New System.Drawing.Size(43, 13)
+        Me.labFreeDateTask10.TabIndex = 31
+        Me.labFreeDateTask10.Text = "Task10"
+        '
+        'texFreeDateTask9
+        '
+        Me.texFreeDateTask9.Location = New System.Drawing.Point(138, 227)
+        Me.texFreeDateTask9.Name = "texFreeDateTask9"
+        Me.texFreeDateTask9.ReadOnly = True
+        Me.texFreeDateTask9.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask9.TabIndex = 30
+        '
+        'labFreeDateTask9
+        '
+        Me.labFreeDateTask9.AutoSize = True
+        Me.labFreeDateTask9.Location = New System.Drawing.Point(34, 230)
+        Me.labFreeDateTask9.Name = "labFreeDateTask9"
+        Me.labFreeDateTask9.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask9.TabIndex = 29
+        Me.labFreeDateTask9.Text = "Task9"
+        '
+        'texFreeDateTask8
+        '
+        Me.texFreeDateTask8.Location = New System.Drawing.Point(138, 201)
+        Me.texFreeDateTask8.Name = "texFreeDateTask8"
+        Me.texFreeDateTask8.ReadOnly = True
+        Me.texFreeDateTask8.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask8.TabIndex = 28
+        '
+        'labFreeDateTask8
+        '
+        Me.labFreeDateTask8.AutoSize = True
+        Me.labFreeDateTask8.Location = New System.Drawing.Point(34, 204)
+        Me.labFreeDateTask8.Name = "labFreeDateTask8"
+        Me.labFreeDateTask8.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask8.TabIndex = 27
+        Me.labFreeDateTask8.Text = "Task8"
+        '
+        'texFreeDateTask7
+        '
+        Me.texFreeDateTask7.Location = New System.Drawing.Point(138, 175)
+        Me.texFreeDateTask7.Name = "texFreeDateTask7"
+        Me.texFreeDateTask7.ReadOnly = True
+        Me.texFreeDateTask7.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask7.TabIndex = 26
+        '
+        'labFreeDateTask7
+        '
+        Me.labFreeDateTask7.AutoSize = True
+        Me.labFreeDateTask7.Location = New System.Drawing.Point(34, 178)
+        Me.labFreeDateTask7.Name = "labFreeDateTask7"
+        Me.labFreeDateTask7.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask7.TabIndex = 25
+        Me.labFreeDateTask7.Text = "Task7"
+        '
+        'texFreeDateTask6
+        '
+        Me.texFreeDateTask6.Location = New System.Drawing.Point(138, 149)
+        Me.texFreeDateTask6.Name = "texFreeDateTask6"
+        Me.texFreeDateTask6.ReadOnly = True
+        Me.texFreeDateTask6.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask6.TabIndex = 24
+        '
+        'labFreeDateTask6
+        '
+        Me.labFreeDateTask6.AutoSize = True
+        Me.labFreeDateTask6.Location = New System.Drawing.Point(34, 152)
+        Me.labFreeDateTask6.Name = "labFreeDateTask6"
+        Me.labFreeDateTask6.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask6.TabIndex = 23
+        Me.labFreeDateTask6.Text = "Task6"
+        '
+        'texFreeDateTask5
+        '
+        Me.texFreeDateTask5.Location = New System.Drawing.Point(138, 123)
+        Me.texFreeDateTask5.Name = "texFreeDateTask5"
+        Me.texFreeDateTask5.ReadOnly = True
+        Me.texFreeDateTask5.Size = New System.Drawing.Size(154, 20)
+        Me.texFreeDateTask5.TabIndex = 22
+        '
+        'labFreeDateTask5
+        '
+        Me.labFreeDateTask5.AutoSize = True
+        Me.labFreeDateTask5.Location = New System.Drawing.Point(34, 126)
+        Me.labFreeDateTask5.Name = "labFreeDateTask5"
+        Me.labFreeDateTask5.Size = New System.Drawing.Size(37, 13)
+        Me.labFreeDateTask5.TabIndex = 21
+        Me.labFreeDateTask5.Text = "Task5"
         '
         'btcExportToExcel
         '
@@ -519,14 +645,14 @@ Partial Class frmDashboard
     Friend WithEvents texTaskTotal As TextBox
     Friend WithEvents btcFermer As Button
     Friend WithEvents tabTaskType As TabControl
-    Friend WithEvents texFreeDateInfra As TextBox
-    Friend WithEvents labFreeDateInfra As Label
-    Friend WithEvents labFreeDateSAP As Label
-    Friend WithEvents texFreeDateSAP As TextBox
-    Friend WithEvents labFreeDateHelpdesk As Label
-    Friend WithEvents texFreeDateHelpdesk As TextBox
-    Friend WithEvents labFreeDatePlaning As Label
-    Friend WithEvents texFreeDatePlaning As TextBox
+    Friend WithEvents texFreeDateTask1 As TextBox
+    Friend WithEvents labFreeDateTask1 As Label
+    Friend WithEvents labFreeDateTask2 As Label
+    Friend WithEvents texFreeDateTask2 As TextBox
+    Friend WithEvents labFreeDateTask3 As Label
+    Friend WithEvents texFreeDateTask3 As TextBox
+    Friend WithEvents labFreeDateTask4 As Label
+    Friend WithEvents texFreeDateTask4 As TextBox
     Friend WithEvents grpNextFreeDate As GroupBox
     Friend WithEvents btcChart As Button
     Friend WithEvents btcExportToExcel As Button
@@ -550,4 +676,16 @@ Partial Class frmDashboard
     Friend WithEvents dgvTabPage1 As DataGridView
     Friend WithEvents dgvTabPage2 As DataGridView
     Friend WithEvents dgvTabPage3 As DataGridView
+    Friend WithEvents texFreeDateTask9 As TextBox
+    Friend WithEvents labFreeDateTask9 As Label
+    Friend WithEvents texFreeDateTask8 As TextBox
+    Friend WithEvents labFreeDateTask8 As Label
+    Friend WithEvents texFreeDateTask7 As TextBox
+    Friend WithEvents labFreeDateTask7 As Label
+    Friend WithEvents texFreeDateTask6 As TextBox
+    Friend WithEvents labFreeDateTask6 As Label
+    Friend WithEvents texFreeDateTask5 As TextBox
+    Friend WithEvents labFreeDateTask5 As Label
+    Friend WithEvents texFreeDateTask10 As TextBox
+    Friend WithEvents labFreeDateTask10 As Label
 End Class

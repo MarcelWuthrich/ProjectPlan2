@@ -1434,6 +1434,35 @@ Public Class frmDashboard
             Dim NumberOfProjectMemberPerTask As Integer = 0
 
 
+            'On met tous les champs textes en haut de la page sur invisible
+            Me.texFreeDateTask1.Visible = False
+            Me.texFreeDateTask2.Visible = False
+            Me.texFreeDateTask3.Visible = False
+            Me.texFreeDateTask4.Visible = False
+            Me.texFreeDateTask5.Visible = False
+            Me.texFreeDateTask6.Visible = False
+            Me.texFreeDateTask7.Visible = False
+            Me.texFreeDateTask8.Visible = False
+            Me.texFreeDateTask9.Visible = False
+            Me.texFreeDateTask10.Visible = False
+
+            Me.labFreeDateTask1.Visible = False
+            Me.labFreeDateTask2.Visible = False
+            Me.labFreeDateTask3.Visible = False
+            Me.labFreeDateTask4.Visible = False
+            Me.labFreeDateTask5.Visible = False
+            Me.labFreeDateTask6.Visible = False
+            Me.labFreeDateTask7.Visible = False
+            Me.labFreeDateTask8.Visible = False
+            Me.labFreeDateTask9.Visible = False
+            Me.labFreeDateTask10.Visible = False
+
+
+
+
+
+
+
             For TaskNr = 1 To AllTasks(0)
 
                 'On compte les heures de libre à partir du lendemain
@@ -1442,6 +1471,11 @@ Public Class frmDashboard
                 StillToPlanForTask = HourToPlanPerTask(TaskNr)
 
                 NumberOfProjectMemberPerTask = fGetProjectMembersCountPerTask(AllTasks(TaskNr))
+
+                Dim ThisTask As New myTask
+                ThisTask.ID_Task = AllTasks(TaskNr)
+                ThisTask.Read()
+
 
                 'Cela ne sert à rien de vouloir planifier si on a aucun membre de projet dans la tâche
                 If NumberOfProjectMemberPerTask > 0 Then
@@ -1467,16 +1501,43 @@ Public Class frmDashboard
                                     FreeNow = True
                                     FreeDateTask = thisDate
 
-                                    Dim ThisTask As New myTask
-                                    ThisTask.ID_Task = AllTasks(TaskNr)
-                                    ThisTask.Read()
 
 
-                                    MessageBox.Show("Tâche : " & ThisTask.Task & vbCrLf & thisDate)
+                                    'On définit les caractéristiques des textbox
+                                    Dim myTextBox As TextBox
+                                    myTextBox = Me.grpNextFreeDate.Controls("texFreeDateTask" & CStr(TaskNr))
+                                    myTextBox.Visible = True
+                                    myTextBox.Text = Format(thisDate, "D")
+                                    myTextBox.BackColor = Color.FromArgb(ThisTask.BackColor)
+
+
+                                    'On définit les caractéristiques des label
+                                    Dim mylabel As Label
+                                    mylabel = Me.grpNextFreeDate.Controls("labFreeDateTask" & CStr(TaskNr))
+                                    mylabel.Visible = True
+                                    mylabel.Text = ThisTask.Task
+
+
+
                                 End If
                         End Select
                         thisDate = DateAdd(DateInterval.Day, 1, thisDate)
                     End While
+
+                Else
+                    'S'il n'y a personne dans la tâche, il y a une date vide
+                    Dim myTextBox As System.Windows.Forms.TextBox
+                    myTextBox = Me.grpNextFreeDate.Controls("texFreeDateTask" & CStr(TaskNr))
+                    myTextBox.Visible = True
+                    myTextBox.Text = "Inconnue"
+                    myTextBox.BackColor = Color.FromArgb(ThisTask.BackColor)
+
+
+                    'On définit les caractéristiques des label
+                    Dim mylabel As Label
+                    mylabel = Me.grpNextFreeDate.Controls("labFreeDateTask" & CStr(TaskNr))
+                    mylabel.Visible = True
+                    mylabel.Text = ThisTask.Task
 
                 End If
 
