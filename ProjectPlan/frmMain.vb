@@ -247,4 +247,14 @@ Public Class frmMain
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
     End Sub
+
+    Private Sub mniReportingProjectStatistic_Click(sender As Object, e As EventArgs) Handles mniReportingProjectStatistic.Click
+        Try
+            Dim myForm As Form = frmStatistiquesProjects
+            myForm.MdiParent = Me
+            myForm.Show()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
 End Class

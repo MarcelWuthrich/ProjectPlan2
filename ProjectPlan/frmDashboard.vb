@@ -28,6 +28,7 @@ Public Class frmDashboard
 
         Try
 
+            Me.Cursor = Cursors.WaitCursor
 
             'Affiche les projets et leurs heures
             pDisplayProjects()
@@ -70,8 +71,6 @@ Public Class frmDashboard
     Private Sub pDisplayProjects()
 
         Try
-
-            Me.Cursor = Cursors.WaitCursor
 
 
             Dim thisProject As New myProject
@@ -341,9 +340,6 @@ Public Class frmDashboard
 
             Next myTaskNr
 
-            Me.Cursor = Cursors.Default
-
-
 
         Catch ex As Exception
 
@@ -444,7 +440,7 @@ Public Class frmDashboard
                         thisDGV.Columns.Add("3 mois", "3 mois")
                         thisDGV.Columns.Add("6 mois", "6 mois")
                         thisDGV.Columns.Add("12 mois", "12 mois")
-                        thisDGV.Columns.Add("fin année", "fin année")
+                        thisDGV.Columns.Add("fin de l'année", "fin de l'année")
 
 
                         'On ajoute les lignes
@@ -676,9 +672,9 @@ Public Class frmDashboard
     Private Sub btcExportToExcel_Click(sender As Object, e As EventArgs) Handles btcExportToExcel.Click
         Try
 
-            Me.Cursor = Cursors.WaitCursor
-            pExportToExcel()
-            Me.Cursor = Cursors.Default
+            'Me.Cursor = Cursors.WaitCursor
+            'pExportToExcel()
+            'Me.Cursor = Cursors.Default
 
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
@@ -1161,8 +1157,6 @@ Public Class frmDashboard
             MyDBConnection.Close()
 
 
-            Me.Cursor = Cursors.Default
-
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
@@ -1248,9 +1242,9 @@ Public Class frmDashboard
                     myGrandTotal += myTotal
 
                     If myResult = "" Then
-                        myResult &= myProjectMember.FirstName & " : " & myTotal
+                        myResult &= myProjectMember.FirstName & " " & myProjectMember.Lastname & " : " & myTotal
                     Else
-                        myResult &= vbCrLf & myProjectMember.FirstName & " : " & myTotal
+                        myResult &= vbCrLf & myProjectMember.FirstName & " " & myProjectMember.Lastname & " : " & myTotal
                     End If
 
 
@@ -1556,6 +1550,21 @@ Public Class frmDashboard
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
 
+    End Sub
+
+    Private Sub btcChart_Click(sender As Object, e As EventArgs) Handles btcChart.Click
+        Try
+            Dim myForm As Form = frmChart
+
+            'Affiche la fenêtre en mode non-modal
+            myForm.Show()
+
+                'Affiche la fenêtre en mode modal
+                'myForm.ShowDialog()
+                'myForm.Dispose()
+            Catch ex As Exception
+                If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
     End Sub
 
 

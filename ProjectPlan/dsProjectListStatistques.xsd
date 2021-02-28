@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsProjectListStatistques" targetNamespace="http://tempuri.org/dsProjectListStatistques.xsd" xmlns:mstns="http://tempuri.org/dsProjectListStatistques.xsd" xmlns="http://tempuri.org/dsProjectListStatistques.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="cnProjectplan_mySQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="cnProjectplan_mySQL (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ProjectPlan.My.MySettings.GlobalReference.Default.cnProjectplan_mySQL" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vprojectliststatistiquesTableAdapter" GeneratorDataComponentClassName="vprojectliststatistiquesTableAdapter" Name="vprojectliststatistiques" UserDataComponentName="vprojectliststatistiquesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vprojectliststatistiques" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT        ID_Project, Title, StatusProjectInWork
+FROM            vprojectliststatistiques</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+              <Mapping SourceColumn="StatusProjectInWork" DataSetColumn="StatusProjectInWork" />
+              <Mapping SourceColumn="ID_Project" DataSetColumn="ID_Project" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsProjectListStatistques" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="dsProjectListStatistques" msprop:Generator_UserDSName="dsProjectListStatistques">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vprojectliststatistiques" msprop:Generator_TableClassName="vprojectliststatistiquesDataTable" msprop:Generator_TableVarName="tablevprojectliststatistiques" msprop:Generator_RowChangedName="vprojectliststatistiquesRowChanged" msprop:Generator_TablePropName="vprojectliststatistiques" msprop:Generator_RowDeletingName="vprojectliststatistiquesRowDeleting" msprop:Generator_RowChangingName="vprojectliststatistiquesRowChanging" msprop:Generator_RowEvHandlerName="vprojectliststatistiquesRowChangeEventHandler" msprop:Generator_RowDeletedName="vprojectliststatistiquesRowDeleted" msprop:Generator_RowClassName="vprojectliststatistiquesRow" msprop:Generator_UserTableName="vprojectliststatistiques" msprop:Generator_RowEvArgName="vprojectliststatistiquesRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StatusProjectInWork" msprop:Generator_ColumnVarNameInTable="columnStatusProjectInWork" msprop:Generator_ColumnPropNameInRow="StatusProjectInWork" msprop:Generator_ColumnPropNameInTable="StatusProjectInWorkColumn" msprop:Generator_UserColumnName="StatusProjectInWork" type="xs:unsignedLong" minOccurs="0" />
+              <xs:element name="ID_Project" msprop:Generator_ColumnVarNameInTable="columnID_Project" msprop:Generator_ColumnPropNameInRow="ID_Project" msprop:Generator_ColumnPropNameInTable="ID_ProjectColumn" msprop:Generator_UserColumnName="ID_Project" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
