@@ -82,6 +82,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsCustomers.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dsNumberPlanedHourOnAdmin.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsNumberPlanedHourOnAdmin.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsNumberPlanedHourOnProjects.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsNumberPlanedHourOnProjects.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dsProjectEstimatedResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,6 +156,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsvprojectliststatistiquesexecutedresources.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsvProjectMembers.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsvProjectMembers.xsd</DependentUpon>
     </Compile>
     <Compile Include="dsVResourceToday.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -246,6 +261,12 @@
       <DependentUpon>frmResourcesValidation.vb</DependentUpon>
     </Compile>
     <Compile Include="frmResourcesValidation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatistiquesMembers.Designer.vb">
+      <DependentUpon>frmStatistiquesMembers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStatistiquesMembers.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmStatistiquesProjects.Designer.vb">
@@ -391,6 +412,9 @@
     <EmbeddedResource Include="frmResourcesValidation.resx">
       <DependentUpon>frmResourcesValidation.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmStatistiquesMembers.resx">
+      <DependentUpon>frmStatistiquesMembers.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmStatistiquesProjects.resx">
       <DependentUpon>frmStatistiquesProjects.vb</DependentUpon>
     </EmbeddedResource>
@@ -436,6 +460,28 @@
     </None>
     <None Include="dsCustomers.xss">
       <DependentUpon>dsCustomers.xsd</DependentUpon>
+    </None>
+    <None Include="dsNumberPlanedHourOnAdmin.xsc">
+      <DependentUpon>dsNumberPlanedHourOnAdmin.xsd</DependentUpon>
+    </None>
+    <None Include="dsNumberPlanedHourOnAdmin.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsNumberPlanedHourOnAdmin.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsNumberPlanedHourOnAdmin.xss">
+      <DependentUpon>dsNumberPlanedHourOnAdmin.xsd</DependentUpon>
+    </None>
+    <None Include="dsNumberPlanedHourOnProjects.xsc">
+      <DependentUpon>dsNumberPlanedHourOnProjects.xsd</DependentUpon>
+    </None>
+    <None Include="dsNumberPlanedHourOnProjects.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsNumberPlanedHourOnProjects.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsNumberPlanedHourOnProjects.xss">
+      <DependentUpon>dsNumberPlanedHourOnProjects.xsd</DependentUpon>
     </None>
     <None Include="dsProjectEstimatedResources.xsc">
       <DependentUpon>dsProjectEstimatedResources.xsd</DependentUpon>
@@ -579,6 +625,17 @@
     </None>
     <None Include="dsvprojectliststatistiquesexecutedresources.xss">
       <DependentUpon>dsvprojectliststatistiquesexecutedresources.xsd</DependentUpon>
+    </None>
+    <None Include="dsvProjectMembers.xsc">
+      <DependentUpon>dsvProjectMembers.xsd</DependentUpon>
+    </None>
+    <None Include="dsvProjectMembers.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsvProjectMembers.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dsvProjectMembers.xss">
+      <DependentUpon>dsvProjectMembers.xsd</DependentUpon>
     </None>
     <None Include="dsVResourceToday.xsc">
       <DependentUpon>dsVResourceToday.xsd</DependentUpon>

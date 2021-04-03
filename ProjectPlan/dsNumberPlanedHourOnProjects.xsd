@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsNumberPlanedHourOnProjects" targetNamespace="http://tempuri.org/dsNumberPlanedHourOnProjects.xsd" xmlns:mstns="http://tempuri.org/dsNumberPlanedHourOnProjects.xsd" xmlns="http://tempuri.org/dsNumberPlanedHourOnProjects.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="cnProjectplan_mySQL" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="cnProjectplan_mySQL (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ProjectPlan.My.MySettings.GlobalReference.Default.cnProjectplan_mySQL" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vstatistiquesnumberofdaysplanonprojectsTableAdapter" GeneratorDataComponentClassName="vstatistiquesnumberofdaysplanonprojectsTableAdapter" Name="vstatistiquesnumberofdaysplanonprojects" UserDataComponentName="vstatistiquesnumberofdaysplanonprojectsTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="cnProjectplan_mySQL (MySettings)" DbObjectName="projectplan.vstatistiquesnumberofdaysplanonprojects" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `Count_ID_Resource`, `CE_ID_ProjectMember`, `CE_ID_Project`, `Title`, `Total` FROM `projectplan`.`vstatistiquesnumberofdaysplanonprojects`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Count_ID_Resource" DataSetColumn="Count_ID_Resource" />
+              <Mapping SourceColumn="CE_ID_ProjectMember" DataSetColumn="CE_ID_ProjectMember" />
+              <Mapping SourceColumn="CE_ID_Project" DataSetColumn="CE_ID_Project" />
+              <Mapping SourceColumn="Title" DataSetColumn="Title" />
+              <Mapping SourceColumn="Total" DataSetColumn="Total" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsNumberPlanedHourOnProjects" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="dsNumberPlanedHourOnProjects" msprop:Generator_UserDSName="dsNumberPlanedHourOnProjects">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vstatistiquesnumberofdaysplanonprojects" msprop:Generator_TableClassName="vstatistiquesnumberofdaysplanonprojectsDataTable" msprop:Generator_TableVarName="tablevstatistiquesnumberofdaysplanonprojects" msprop:Generator_TablePropName="vstatistiquesnumberofdaysplanonprojects" msprop:Generator_RowDeletingName="vstatistiquesnumberofdaysplanonprojectsRowDeleting" msprop:Generator_RowChangingName="vstatistiquesnumberofdaysplanonprojectsRowChanging" msprop:Generator_RowEvHandlerName="vstatistiquesnumberofdaysplanonprojectsRowChangeEventHandler" msprop:Generator_RowDeletedName="vstatistiquesnumberofdaysplanonprojectsRowDeleted" msprop:Generator_UserTableName="vstatistiquesnumberofdaysplanonprojects" msprop:Generator_RowChangedName="vstatistiquesnumberofdaysplanonprojectsRowChanged" msprop:Generator_RowEvArgName="vstatistiquesnumberofdaysplanonprojectsRowChangeEvent" msprop:Generator_RowClassName="vstatistiquesnumberofdaysplanonprojectsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Count_ID_Resource" msprop:Generator_ColumnVarNameInTable="columnCount_ID_Resource" msprop:Generator_ColumnPropNameInRow="Count_ID_Resource" msprop:Generator_ColumnPropNameInTable="Count_ID_ResourceColumn" msprop:Generator_UserColumnName="Count_ID_Resource" type="xs:long" />
+              <xs:element name="CE_ID_ProjectMember" msprop:Generator_ColumnVarNameInTable="columnCE_ID_ProjectMember" msprop:Generator_ColumnPropNameInRow="CE_ID_ProjectMember" msprop:Generator_ColumnPropNameInTable="CE_ID_ProjectMemberColumn" msprop:Generator_UserColumnName="CE_ID_ProjectMember" type="xs:int" minOccurs="0" />
+              <xs:element name="CE_ID_Project" msprop:Generator_ColumnVarNameInTable="columnCE_ID_Project" msprop:Generator_ColumnPropNameInRow="CE_ID_Project" msprop:Generator_ColumnPropNameInTable="CE_ID_ProjectColumn" msprop:Generator_UserColumnName="CE_ID_Project" type="xs:int" minOccurs="0" />
+              <xs:element name="Title" msprop:Generator_ColumnVarNameInTable="columnTitle" msprop:Generator_ColumnPropNameInRow="Title" msprop:Generator_ColumnPropNameInTable="TitleColumn" msprop:Generator_UserColumnName="Title" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Total" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="233" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -90,9 +90,7 @@ Public Class frmProjectMembers
         End Try
     End Sub
 
-    Private Sub dgvProjectsMembers_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProjectsMembers.CellContentClick
 
-    End Sub
 
     Private Sub btcDelete_Click(sender As Object, e As EventArgs) Handles btcDelete.Click
         Try

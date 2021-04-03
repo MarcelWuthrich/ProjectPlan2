@@ -913,9 +913,9 @@ Public Class frmDashboard
                 End Try
 
                 myStat.ID_ProjectMember = myMember.ID_ProjectMember
-                myStat.GetProjectDays()
-                myStat.GetAdminDays()
-                myStat.GetFreeDays()
+                myStat.GetProjectHours()
+                myStat.GetAdminHours()
+                myStat.GetFreeHours()
 
                 'Nom de la personne
                 Dim thisName As String = UCase(Microsoft.VisualBasic.Left(myMember.Lastname, 2) & Microsoft.VisualBasic.Left(myMember.FirstName, 1))
@@ -940,40 +940,40 @@ Public Class frmDashboard
 
                 'Projets planifiés
 
-                PPTotal1mois = PPTotal1mois + myStat.DaysOnProjects1Month
-                PPTotal3mois = PPTotal3mois + myStat.DaysOnProjects3Month
-                PPTotal6mois = PPTotal6mois + myStat.DaysOnProjects6Month
-                PPTotal12mois = PPTotal12mois + myStat.DaysOnProjects12Month
-                PPTotalYear = PPTotalYear + myStat.DaysOnProjectsEndYear
+                PPTotal1mois = PPTotal1mois + myStat.HoursOnProjects1Month
+                PPTotal3mois = PPTotal3mois + myStat.HoursOnProjects3Month
+                PPTotal6mois = PPTotal6mois + myStat.HoursOnProjects6Month
+                PPTotal12mois = PPTotal12mois + myStat.HoursOnProjects12Month
+                PPTotalYear = PPTotalYear + myStat.HoursOnProjectsEndYear
 
                 If PP1mois = "" Then
-                    PP1mois = thisName & " : " & Format(myStat.DaysOnProjects1Month, "0.0")
+                    PP1mois = thisName & " : " & Format(myStat.HoursOnProjects1Month, "0.0")
                 Else
-                    PP1mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnProjects1Month, "0.0")
+                    PP1mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnProjects1Month, "0.0")
                 End If
 
                 If PP3mois = "" Then
-                    PP3mois = thisName & " : " & Format(myStat.DaysOnProjects3Month, "0.0")
+                    PP3mois = thisName & " : " & Format(myStat.HoursOnProjects3Month, "0.0")
                 Else
-                    PP3mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnProjects3Month, "0.0")
+                    PP3mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnProjects3Month, "0.0")
                 End If
 
                 If PP6mois = "" Then
-                    PP6mois = thisName & " : " & Format(myStat.DaysOnProjects6Month, "0.0")
+                    PP6mois = thisName & " : " & Format(myStat.HoursOnProjects6Month, "0.0")
                 Else
-                    PP6mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnProjects6Month, "0.0")
+                    PP6mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnProjects6Month, "0.0")
                 End If
 
                 If PP12mois = "" Then
-                    PP12mois = thisName & " : " & Format(myStat.DaysOnProjects12Month, "0.0")
+                    PP12mois = thisName & " : " & Format(myStat.HoursOnProjects12Month, "0.0")
                 Else
-                    PP12mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnProjects12Month, "0.0")
+                    PP12mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnProjects12Month, "0.0")
                 End If
 
                 If PPYear = "" Then
-                    PPYear = thisName & " : " & Format(myStat.DaysOnProjectsEndYear, "0.0")
+                    PPYear = thisName & " : " & Format(myStat.HoursOnProjectsEndYear, "0.0")
                 Else
-                    PPYear &= vbCrLf & thisName & " : " & Format(myStat.DaysOnProjectsEndYear, "0.0")
+                    PPYear &= vbCrLf & thisName & " : " & Format(myStat.HoursOnProjectsEndYear, "0.0")
                 End If
 
 
@@ -982,40 +982,40 @@ Public Class frmDashboard
 
                 'Administrtatif planifié
 
-                APTotal1mois = APTotal1mois + myStat.DaysOnAdmin1Month
-                APTotal3mois = APTotal3mois + myStat.DaysOnAdmin3Month
-                APTotal6mois = APTotal6mois + myStat.DaysOnAdmin6Month
-                APTotal12mois = APTotal12mois + myStat.DaysOnAdmin12Month
-                APTotalYear = APTotalYear + myStat.DaysOnAdminEndYear
+                APTotal1mois = APTotal1mois + myStat.HoursOnAdmin1Month
+                APTotal3mois = APTotal3mois + myStat.HoursOnAdmin3Month
+                APTotal6mois = APTotal6mois + myStat.HoursOnAdmin6Month
+                APTotal12mois = APTotal12mois + myStat.HoursOnAdmin12Month
+                APTotalYear = APTotalYear + myStat.HoursOnAdminEndYear
 
                 If AP1mois = "" Then
-                    AP1mois = thisName & " : " & Format(myStat.DaysOnAdmin1Month, "0.0")
+                    AP1mois = thisName & " : " & Format(myStat.HoursOnAdmin1Month, "0.0")
                 Else
-                    AP1mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnAdmin1Month, "0.0")
+                    AP1mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnAdmin1Month, "0.0")
                 End If
 
                 If AP3mois = "" Then
-                    AP3mois = thisName & " : " & Format(myStat.DaysOnAdmin3Month, "0.0")
+                    AP3mois = thisName & " : " & Format(myStat.HoursOnAdmin3Month, "0.0")
                 Else
-                    AP3mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnAdmin3Month)
+                    AP3mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnAdmin3Month)
                 End If
 
                 If AP6mois = "" Then
-                    AP6mois = thisName & " : " & Format(myStat.DaysOnAdmin6Month, "0.0")
+                    AP6mois = thisName & " : " & Format(myStat.HoursOnAdmin6Month, "0.0")
                 Else
-                    AP6mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnAdmin6Month, "0.0")
+                    AP6mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnAdmin6Month, "0.0")
                 End If
 
                 If AP12mois = "" Then
-                    AP12mois = thisName & " : " & Format(myStat.DaysOnAdmin12Month, "0.0")
+                    AP12mois = thisName & " : " & Format(myStat.HoursOnAdmin12Month, "0.0")
                 Else
-                    AP12mois &= vbCrLf & thisName & " : " & Format(myStat.DaysOnAdmin12Month, "0.0")
+                    AP12mois &= vbCrLf & thisName & " : " & Format(myStat.HoursOnAdmin12Month, "0.0")
                 End If
 
                 If APYear = "" Then
-                    APYear = thisName & " : " & Format(myStat.DaysOnAdminEndYear, "0.0")
+                    APYear = thisName & " : " & Format(myStat.HoursOnAdminEndYear, "0.0")
                 Else
-                    APYear &= vbCrLf & thisName & " : " & Format(myStat.DaysOnAdminEndYear, "0.0")
+                    APYear &= vbCrLf & thisName & " : " & Format(myStat.HoursOnAdminEndYear, "0.0")
                 End If
 
 
@@ -1024,40 +1024,40 @@ Public Class frmDashboard
 
                 'Ressources libres
 
-                FTotal1mois = FTotal1mois + myStat.DaysFree1Month
-                FTotal3mois = FTotal3mois + myStat.DaysFree3Month
-                FTotal6mois = FTotal6mois + myStat.DaysFree6Month
-                FTotal12mois = FTotal12mois + myStat.DaysFree12Month
-                FTotalYear = FTotalYear + myStat.DaysFreeEndYear
+                FTotal1mois = FTotal1mois + myStat.HoursFree1Month
+                FTotal3mois = FTotal3mois + myStat.HoursFree3Month
+                FTotal6mois = FTotal6mois + myStat.HoursFree6Month
+                FTotal12mois = FTotal12mois + myStat.HoursFree12Month
+                FTotalYear = FTotalYear + myStat.HoursFreeEndYear
 
                 If F1mois = "" Then
-                    F1mois = thisName & " : " & Format(myStat.DaysFree1Month, "0.0")
+                    F1mois = thisName & " : " & Format(myStat.HoursFree1Month, "0.0")
                 Else
-                    F1mois &= vbCrLf & thisName & " : " & Format(myStat.DaysFree1Month, "0.0")
+                    F1mois &= vbCrLf & thisName & " : " & Format(myStat.HoursFree1Month, "0.0")
                 End If
 
                 If F3mois = "" Then
-                    F3mois = thisName & " : " & Format(myStat.DaysFree3Month, "0.0")
+                    F3mois = thisName & " : " & Format(myStat.HoursFree3Month, "0.0")
                 Else
-                    F3mois &= vbCrLf & thisName & " : " & Format(myStat.DaysFree3Month, "0.0")
+                    F3mois &= vbCrLf & thisName & " : " & Format(myStat.HoursFree3Month, "0.0")
                 End If
 
                 If F6mois = "" Then
-                    F6mois = thisName & " : " & Format(myStat.DaysFree6Month, "0.0")
+                    F6mois = thisName & " : " & Format(myStat.HoursFree6Month, "0.0")
                 Else
-                    F6mois &= vbCrLf & thisName & " : " & Format(myStat.DaysFree6Month, "0.0")
+                    F6mois &= vbCrLf & thisName & " : " & Format(myStat.HoursFree6Month, "0.0")
                 End If
 
                 If F12mois = "" Then
-                    F12mois = thisName & " : " & Format(myStat.DaysFree12Month, "0.0")
+                    F12mois = thisName & " : " & Format(myStat.HoursFree12Month, "0.0")
                 Else
-                    F12mois &= vbCrLf & thisName & " : " & Format(myStat.DaysFree12Month, "0.0")
+                    F12mois &= vbCrLf & thisName & " : " & Format(myStat.HoursFree12Month, "0.0")
                 End If
 
                 If FYear = "" Then
-                    FYear = thisName & " : " & Format(myStat.DaysFreeEndYear, "0.0")
+                    FYear = thisName & " : " & Format(myStat.HoursFreeEndYear, "0.0")
                 Else
-                    FYear &= vbCrLf & thisName & " : " & Format(myStat.DaysFreeEndYear, "0.0")
+                    FYear &= vbCrLf & thisName & " : " & Format(myStat.HoursFreeEndYear, "0.0")
                 End If
 
 

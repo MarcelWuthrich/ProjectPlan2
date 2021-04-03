@@ -90,7 +90,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
 
@@ -253,6 +253,20 @@ Public Class frmMain
             Dim myForm As Form = frmStatistiquesProjects
             myForm.MdiParent = Me
             myForm.Show()
+        Catch ex As Exception
+            If DebugFlag = True Then MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub mniReportingPersonStatistic_Click(sender As Object, e As EventArgs) Handles mniReportingPersonStatistic.Click
+        Try
+            Me.Cursor = Cursors.WaitCursor
+
+            Dim myForm As Form = frmStatistiquesMembers
+            myForm.MdiParent = Me
+            myForm.Show()
+
+            Me.Cursor = Cursors.Default
         Catch ex As Exception
             If DebugFlag = True Then MessageBox.Show(ex.ToString)
         End Try
